@@ -467,7 +467,7 @@ class SystemSecurityAuditTest extends TestCase
         $team = ResponseTeam::create([
             'office_id' => $office->id,
             'team_name' => 'Alpha Unit',
-            'call_sign' => 'ALPHA-'.rand(10, 99),
+            'call_sign' => 'ALPHA-'.strtoupper(Str::random(6)),
             'team_type' => 'rescue',
             'is_active' => true,
         ]);

@@ -630,9 +630,23 @@ class EmergencyAssessmentService
                     if ($requiredQualifications === []) {
                         return true;
                     }
-                    $certs = array_map('strtolower', (array) ($p->qualifications ?? []));
+
+                    $authorizedTokens = array_map(
+                        static fn (mixed $item): string => strtolower(trim((string) $item)),
+                        (array) ($p->authorized_categories ?? [])
+                    );
+                    $profileSummary = strtolower(trim((string) ($p->specialization ?? '').' '.(string) ($p->rank_designation ?? '')));
+
                     foreach ($requiredQualifications as $req) {
-                        if (! in_array(strtolower($req), $certs, true)) {
+                        $normalizedReq = strtolower(trim((string) $req));
+                        if ($normalizedReq === '') {
+                            continue;
+                        }
+
+                        $matchesCategory = in_array($normalizedReq, $authorizedTokens, true);
+                        $matchesProfile = $profileSummary !== '' && str_contains($profileSummary, $normalizedReq);
+
+                        if (! $matchesCategory && ! $matchesProfile) {
                             return false;
                         }
                     }
@@ -779,7 +793,7 @@ class EmergencyAssessmentService
 
     protected function notifyOfficeOfCoverageGap(Incident $incident, Office $office): void
     {
-        foreach ($office->users()->wherePivot('is_office_admin', true)->get() as $officeAdmin) {
+        foreach ($office->users()->wherePivot('office_level', 'office_admin')->get() as $officeAdmin) {
             Notification::create([
                 'user_id' => $officeAdmin->id,
                 'title' => "Responder Coverage Warning: {$incident->reference_number}",

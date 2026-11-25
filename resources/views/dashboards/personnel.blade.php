@@ -84,8 +84,8 @@
             sender-type="personnel"
             :sender-name="$user->name"
             :sender-phone="$user->phone_number"
-            :last-known-lat="$personnel?->last_latitude"
-            :last-known-lng="$personnel?->last_longitude"
+            :last-known-lat="$personnel?->latestLocation?->latitude"
+            :last-known-lng="$personnel?->latestLocation?->longitude"
         />
 
         {{-- Statistics Row --}}
@@ -173,7 +173,7 @@
                             <div>
                                 <div class="flex flex-wrap items-center gap-2 mb-1.5">
                                     <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#173957] text-white">
-                                        {{ $incident?->incident_number }}
+                                        {{ $incident?->reference_number }}
                                     </span>
                                     <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-rose-100 text-rose-800">
                                         {{ $incident?->category?->name ?? 'Emergency Incident' }}
@@ -185,7 +185,7 @@
                                         Assigned {{ $assignment->assigned_at ? $assignment->assigned_at->diffForHumans() : '' }}
                                     </span>
                                 </div>
-                                <h4 class="text-base font-bold text-slate-900">{{ $incident?->title }}</h4>
+                                <h4 class="text-base font-bold text-slate-900">{{ $incident?->title ?? ($incident?->category?->name ?? 'Emergency Incident') }}</h4>
                                 <p class="text-xs text-slate-600 mt-1 line-clamp-2">{{ $incident?->description }}</p>
                             </div>
 
@@ -209,7 +209,7 @@
 
                             <div class="p-2.5 rounded-xl bg-white border border-slate-200/80">
                                 <span class="text-[10px] uppercase font-bold text-slate-400 block">Street / Landmark</span>
-                                <span class="font-bold text-slate-800">{{ $incident?->location?->street_name ?? 'Coordinates Provided' }}</span>
+                                <span class="font-bold text-slate-800">{{ $incident?->location?->street_address ?? $incident?->location?->street_name ?? 'Coordinates Provided' }}</span>
                                 @if($incident?->location?->landmark)
                                     <span class="text-[11px] text-slate-500 block">Near: {{ $incident->location->landmark }}</span>
                                 @endif
@@ -263,7 +263,7 @@
                                     </button>
                                 </form>
 
-                                <form method="POST" action="{{ route('personnel.milestone', $assignment->id) }}" onsubmit="if(!window.AlertoPwa?.network.isOnline()) { return true; } return confirm('Are you sure you want to mark this incident as RESOLVED? This clears your active assignment.');" @submit.prevent="submitMilestone($event, {{ $assignment->id }}, '{{ $incident?->reference_number }}', {{ $incident?->version_lock ?? 1 }})">
+                                <form method="POST" action="{{ route('personnel.milestone', $assignment->id) }}" @submit.prevent="submitMilestone($event, {{ $assignment->id }}, '{{ $incident?->reference_number }}', {{ $incident?->version_lock ?? 1 }})">
                                     @csrf
                                     <input type="hidden" name="milestone" value="resolved">
                                     <button type="submit" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs flex items-center gap-1.5 transition-all">
@@ -323,6 +323,10 @@
                     const isOnline = window.AlertoPwa ? window.AlertoPwa.network.isOnline() : navigator.onLine;
                     const milestoneInput = e.target.querySelector('input[name="milestone"]');
                     const milestone = milestoneInput ? milestoneInput.value : 'acknowledged';
+
+                    if (milestone === 'resolved' && isOnline && !confirm('Are you sure you want to mark this incident as RESOLVED? This clears your active assignment.')) {
+                        return;
+                    }
 
                     if (!isOnline) {
                         const uid = {{ auth()->id() ?? 'null' }};

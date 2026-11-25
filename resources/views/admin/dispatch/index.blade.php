@@ -32,7 +32,11 @@
                             <span class="font-bold text-white block">{{ $asg->office?->name }} {{ $asg->team ? "· {$asg->team->team_name}" : '' }}</span>
                             <span class="text-slate-400">{{ $asg->personnel?->user?->name ?? 'Office Pool' }} · {{ $asg->incident?->reference_number }}</span>
                         </div>
-                        <a href="{{ route('admin.incidents.show', $asg->incident?->reference_number) }}" class="px-2.5 py-1 rounded bg-white/10 text-white font-bold">Inspect</a>
+                        @if($asg->incident?->reference_number)
+                            <a href="{{ route('admin.incidents.show', $asg->incident->reference_number) }}" class="px-2.5 py-1 rounded bg-white/10 text-white font-bold">Inspect</a>
+                        @else
+                            <span class="px-2.5 py-1 rounded bg-white/5 text-slate-500 font-bold">Unavailable</span>
+                        @endif
                     </div>
                 @empty
                     <p class="text-xs text-slate-400">No active unit assignments.</p>

@@ -5,20 +5,41 @@
 
 <div x-data="{
         drawerOpen: false,
+        wasOnline: window.AlertoPwa?.network?.isOnline() ?? navigator.onLine,
         pendingItems: [],
         conflicts: [],
         lastSyncStr: '',
         async loadDetails() {
             const uid = {{ auth()->id() ?? 'null' }};
-            if (!uid || !window.AlertoPwa) return;
+            let sosItems = [];
+            try {
+                const rawSos = JSON.parse(localStorage.getItem('alerto_pending_sos') || '[]');
+                if (Array.isArray(rawSos)) {
+                    sosItems = rawSos.map((s, idx) => ({
+                        id: s.idempotency_key || ('sos_' + idx),
+                        type: 'sos_alert',
+                        status: 'pending',
+                        title: 'Emergency SOS Alert (' + (s.sender_name || 'Distress') + ')'
+                    }));
+                }
+            } catch (err) {
+                sosItems = [];
+            }
+
+            if (!uid || !window.AlertoPwa) {
+                this.pendingItems = sosItems;
+                this.conflicts = [];
+                await window.AlertoPwa?.sync?.refreshPendingCount(uid);
+                return;
+            }
             const drafts = await window.AlertoPwa.storage.getDraftIncidents(uid);
             const updates = await window.AlertoPwa.storage.getQueuedMilestones(uid);
-            this.pendingItems = [...drafts.filter(d => d.status !== 'submitted'), ...updates.filter(u => u.status !== 'synced')];
+            this.pendingItems = [...sosItems, ...drafts.filter(d => d.status !== 'submitted'), ...updates.filter(u => u.status !== 'synced')];
             this.conflicts = updates.filter(u => u.status === 'conflict');
         },
         async triggerSync() {
             const uid = {{ auth()->id() ?? 'null' }};
-            if (uid && window.AlertoPwa) {
+            if (window.AlertoPwa) {
                 await window.AlertoPwa.sync.syncAll(uid);
                 await this.loadDetails();
             }
@@ -26,7 +47,14 @@
     }" 
     x-init="
         loadDetails();
-        window.addEventListener('alerto:network-status', () => loadDetails());
+        window.addEventListener('alerto:network-status', (e) => {
+            loadDetails();
+            const isOnlineNow = Boolean(e?.detail?.isOnline);
+            if (!wasOnline && isOnlineNow && window.AlertoPwa?.sync) {
+                window.AlertoPwa.sync.syncAll({{ auth()->id() ?? 'null' }}).then(() => loadDetails());
+            }
+            wasOnline = isOnlineNow;
+        });
         window.addEventListener('alerto:sync-complete', () => loadDetails());
     "
     class="relative z-50">

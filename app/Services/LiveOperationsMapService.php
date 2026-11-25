@@ -78,8 +78,12 @@ class LiveOperationsMapService
 
         $incidents = $incidentsQuery->get()->map(fn (Incident $i) => $this->formatIncidentMarker($i, false));
 
-        // Responders belonging to this office
-        $personnelQuery = PersonnelProfile::whereHas('teams', fn ($t) => $t->where('office_id', $office->id));
+        // Responders belonging to this office (direct office assignment or via team membership)
+        $personnelQuery = PersonnelProfile::with(['user.presence', 'office.location', 'availability', 'teams', 'latestLocation'])
+            ->where(function ($query) use ($office) {
+                $query->where('office_id', $office->id)
+                    ->orWhereHas('teams', fn ($t) => $t->where('office_id', $office->id));
+            });
         $responders = $this->formatRespondersCollection($personnelQuery->get());
 
         $offices = $this->getOfficesData(['office_id' => $office->id]);
@@ -157,10 +161,15 @@ class LiveOperationsMapService
             $destLat = (float) $activeAssignment->incident->location->latitude;
             $destLng = (float) $activeAssignment->incident->location->longitude;
 
-            // Use latest personnel location or assigned base
-            $lastLoc = $personnel->locations()->latest('recorded_at')->first();
-            $originLat = $lastLoc ? (float) $lastLoc->latitude : 9.4975;
-            $originLng = $lastLoc ? (float) $lastLoc->longitude : 122.5850;
+            // Use latest personnel location or assigned office base
+            $lastLoc = $personnel->latestLocation ?? $personnel->locations()->latest('recorded_at')->first();
+            $officeLoc = $personnel->office?->location;
+            $originLat = $lastLoc
+                ? (float) $lastLoc->latitude
+                : ($officeLoc ? (float) $officeLoc->latitude : 9.4975);
+            $originLng = $lastLoc
+                ? (float) $lastLoc->longitude
+                : ($officeLoc ? (float) $officeLoc->longitude : 122.5850);
 
             $routes[] = array_merge(
                 $this->geoService->calculateRoute($originLat, $originLng, $destLat, $destLng),
@@ -519,7 +528,9 @@ class LiveOperationsMapService
     protected function formatRespondersCollection($personnels): array
     {
         return $personnels->map(function (PersonnelProfile $p) {
-            $lastLoc = $p->latestLocation ?? $p->locations()->latest('recorded_at')->first();
+            $lastLoc = $p->relationLoaded('latestLocation')
+                ? $p->latestLocation
+                : $p->latestLocation()->first();
             $presence = $p->user?->presence;
             $availability = $p->availability;
             $team = $p->teams->first();
@@ -557,7 +568,7 @@ class LiveOperationsMapService
 
     protected function getOfficesData(array $filters = []): array
     {
-        $query = Office::where('is_active', true);
+        $query = Office::with('location')->where('is_active', true);
         if (! empty($filters['office_id'])) {
             $query->where('id', $filters['office_id']);
         }
@@ -568,8 +579,8 @@ class LiveOperationsMapService
             'code' => $o->code,
             'contact' => $o->contact_phone,
             'email' => $o->contact_email,
-            'latitude' => 9.4975, // Station default center
-            'longitude' => 122.5850,
+            'latitude' => $o->location ? (float) $o->location->latitude : null,
+            'longitude' => $o->location ? (float) $o->location->longitude : null,
         ])->toArray();
     }
 

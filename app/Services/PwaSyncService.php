@@ -249,10 +249,13 @@ class PwaSyncService
                 default => 'busy',
             };
 
-            $personnel->availability()->update([
-                'operational_status' => $dutyStatus,
-                'status_updated_at' => now(),
-            ]);
+            $personnel->availability()->updateOrCreate(
+                ['personnel_id' => $personnel->id],
+                [
+                    'operational_status' => $dutyStatus,
+                    'status_updated_at' => now(),
+                ]
+            );
 
             $responsePayload = [
                 'status' => 'success',

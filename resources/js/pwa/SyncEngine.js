@@ -15,8 +15,7 @@ class SyncEngine {
     /**
      * Synchronize all pending offline items for the current authenticated user.
      */
-    async syncAll(userId) {
-        if (!userId) return { succeeded: 0, failed: 0, conflicts: 0 };
+    async syncAll(userId = null) {
         if (this.isSyncing) return { inProgress: true };
 
         // Verify active server connectivity first
@@ -34,26 +33,33 @@ class SyncEngine {
         let conflicts = 0;
 
         try {
-            // 1. Sync Citizen Offline Drafts
-            const drafts = await OfflineStorage.getDraftIncidents(userId);
-            const pendingDrafts = drafts.filter((d) => d.status === 'pending' || d.status === 'failed');
+            if (userId) {
+                // 1. Sync Citizen Offline Drafts
+                const drafts = await OfflineStorage.getDraftIncidents(userId);
+                const pendingDrafts = drafts.filter((d) => d.status === 'pending' || d.status === 'failed');
 
-            for (const draft of pendingDrafts) {
-                const result = await this.syncSingleDraft(draft);
-                if (result.success) succeeded++;
-                else failed++;
+                for (const draft of pendingDrafts) {
+                    const result = await this.syncSingleDraft(draft);
+                    if (result.success) succeeded++;
+                    else failed++;
+                }
+
+                // 2. Sync Personnel Queued Milestone Updates
+                const updates = await OfflineStorage.getQueuedMilestones(userId);
+                const pendingUpdates = updates.filter((u) => u.status === 'pending' || u.status === 'failed');
+
+                for (const update of pendingUpdates) {
+                    const result = await this.syncSingleMilestone(update);
+                    if (result.success) succeeded++;
+                    else if (result.conflict) conflicts++;
+                    else failed++;
+                }
             }
 
-            // 2. Sync Personnel Queued Milestone Updates
-            const updates = await OfflineStorage.getQueuedMilestones(userId);
-            const pendingUpdates = updates.filter((u) => u.status === 'pending' || u.status === 'failed');
-
-            for (const update of pendingUpdates) {
-                const result = await this.syncSingleMilestone(update);
-                if (result.success) succeeded++;
-                else if (result.conflict) conflicts++;
-                else failed++;
-            }
+            // 3. Sync Queued Emergency SOS Alerts (Guest, Citizen, or Personnel)
+            const sosResult = await this.syncPendingSos(userId);
+            succeeded += sosResult.succeeded;
+            failed += sosResult.failed;
 
             // Update remaining pending count
             await this.refreshPendingCount(userId);
@@ -89,10 +95,10 @@ class SyncEngine {
             const formData = new FormData();
             formData.append('idempotency_key', draft.idempotency_key);
             formData.append('client_uuid', draft.client_uuid);
-            formData.append('category_id', draft.category_id);
+            if (draft.category_id) formData.append('category_id', draft.category_id);
             formData.append('caller_phone', draft.caller_phone);
             if (draft.caller_name) formData.append('caller_name', draft.caller_name);
-            formData.append('barangay_id', draft.barangay_id);
+            if (draft.barangay_id) formData.append('barangay_id', draft.barangay_id);
             formData.append('latitude', draft.latitude);
             formData.append('longitude', draft.longitude);
             if (draft.accuracy) formData.append('accuracy', draft.accuracy);
@@ -229,15 +235,93 @@ class SyncEngine {
     /**
      * Refresh the total pending unsynced count in NetworkManager.
      */
+    async syncPendingSos(userId = null) {
+        let queue = [];
+        try {
+            queue = JSON.parse(localStorage.getItem('alerto_pending_sos') || '[]');
+            if (!Array.isArray(queue) || queue.length === 0) {
+                return { succeeded: 0, failed: 0 };
+            }
+        } catch (err) {
+            return { succeeded: 0, failed: 0 };
+        }
+
+        const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+        const csrfToken = tokenMeta ? tokenMeta.getAttribute('content') : '';
+        const remaining = [];
+        let succeeded = 0;
+        let failed = 0;
+
+        for (const item of queue) {
+            const isGuestItem = !item?.sender_type || item.sender_type === 'guest';
+            if (!userId && !isGuestItem) {
+                remaining.push(item);
+                continue;
+            }
+
+            const endpoint = userId ? '/pwa/sync/sos' : '/pwa/sync/guest-sos';
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        ...item,
+                        is_offline_queued: true,
+                    }),
+                });
+
+                if (res.ok) {
+                    succeeded++;
+                } else {
+                    failed++;
+                    remaining.push(item);
+                }
+            } catch (err) {
+                failed++;
+                remaining.push(item);
+            }
+        }
+
+        try {
+            if (remaining.length === 0) {
+                localStorage.removeItem('alerto_pending_sos');
+            } else {
+                localStorage.setItem('alerto_pending_sos', JSON.stringify(remaining));
+            }
+        } catch (err) {
+            // Storage quota / availability guard
+        }
+
+        return { succeeded, failed };
+    }
+
     async refreshPendingCount(userId) {
-        if (!userId) return 0;
+        let pendingSosCount = 0;
+        try {
+            const queue = JSON.parse(localStorage.getItem('alerto_pending_sos') || '[]');
+            if (Array.isArray(queue)) {
+                pendingSosCount = queue.length;
+            }
+        } catch (err) {
+            pendingSosCount = 0;
+        }
+
+        if (!userId) {
+            NetworkManager.setPendingCount(pendingSosCount);
+            return pendingSosCount;
+        }
+
         const drafts = await OfflineStorage.getDraftIncidents(userId);
         const updates = await OfflineStorage.getQueuedMilestones(userId);
 
         const pendingDrafts = drafts.filter((d) => d.status === 'pending' || d.status === 'failed');
         const pendingUpdates = updates.filter((u) => u.status === 'pending' || u.status === 'failed');
 
-        const total = pendingDrafts.length + pendingUpdates.length;
+        const total = pendingDrafts.length + pendingUpdates.length + pendingSosCount;
         NetworkManager.setPendingCount(total);
         return total;
     }

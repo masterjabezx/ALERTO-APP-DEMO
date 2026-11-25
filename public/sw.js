@@ -31,7 +31,15 @@ const NEVER_CACHE_PATTERNS = [
     /\/broadcasting/,
     /\/reverb/,
     /\/storage\/evidence/,
-    /\/admin\/audit/
+    /\/media\//,
+    /\/super-admin/,
+    /\/command-center/,
+    /\/admin/,
+    /\/office/,
+    /\/personnel/,
+    /\/citizen\/records/,
+    /\/incidents\//,
+    /\/calls\//
 ];
 
 self.addEventListener('install', (event) => {

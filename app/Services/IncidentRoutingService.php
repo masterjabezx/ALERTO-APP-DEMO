@@ -206,6 +206,10 @@ class IncidentRoutingService
             throw new InvalidArgumentException("Incident cannot be dispatched from status '{$incident->status}'. Incident must be ACCEPTED first.");
         }
 
+        if ($incident->category_id === null) {
+            throw new InvalidArgumentException('Incident must be assessed and assigned an emergency category before dispatch.');
+        }
+
         return DB::transaction(function () use ($dispatcher, $incident, $dispatchNotes) {
             $lockedIncident = Incident::where('id', $incident->id)->lockForUpdate()->firstOrFail();
 

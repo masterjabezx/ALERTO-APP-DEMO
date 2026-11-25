@@ -112,10 +112,10 @@
                         @foreach($sos->logs as $log)
                             <div class="p-3 rounded-xl bg-white/5 border border-white/10">
                                 <div class="flex justify-between font-bold text-white">
-                                    <span class="uppercase text-[10px] text-amber-300">{{ str_replace('_', ' ', $log->action) }}</span>
+                                    <span class="uppercase text-[10px] text-amber-300">{{ str_replace('_', ' ', (string) ($log->action_type ?? $log->action ?? 'event')) }}</span>
                                     <span class="font-mono text-[10px] text-slate-400">{{ $log->created_at?->format('H:i:s') }}</span>
                                 </div>
-                                <p class="text-slate-300 mt-1">{{ $log->details }}</p>
+                                <p class="text-slate-300 mt-1">{{ $log->notes ?? $log->details }}</p>
                             </div>
                         @endforeach
                     </div>

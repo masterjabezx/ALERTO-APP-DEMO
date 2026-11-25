@@ -70,7 +70,7 @@
                         @forelse($assignments as $assignment)
                             <tr class="hover:bg-slate-50/50 transition-colors">
                                 <td class="py-3.5 px-4 font-mono font-bold text-slate-900">
-                                    {{ $assignment->incident?->incident_number ?? '#INC-' . $assignment->incident_id }}
+                                    {{ $assignment->incident?->reference_number ?? '#INC-' . $assignment->incident_id }}
                                 </td>
 
                                 <td class="py-3.5 px-4">
@@ -81,7 +81,7 @@
 
                                 <td class="py-3.5 px-4 text-slate-700">
                                     <div class="font-bold">{{ $assignment->incident?->barangay?->name ?? 'Hinoba-an' }}</div>
-                                    <div class="text-[11px] text-slate-500">{{ $assignment->incident?->location?->street_name ?? 'Scene coordinates' }}</div>
+                                    <div class="text-[11px] text-slate-500">{{ $assignment->incident?->location?->street_address ?? $assignment->incident?->location?->street_name ?? 'Scene coordinates' }}</div>
                                 </td>
 
                                 <td class="py-3.5 px-4">
@@ -108,10 +108,14 @@
                                 </td>
 
                                 <td class="py-3.5 px-4 text-right">
-                                    <a href="{{ route('admin.incidents.show', $assignment->incident?->incident_number ?? $assignment->incident_id) }}" 
-                                       class="px-3 py-1.5 rounded-lg text-xs font-bold text-[#173957] hover:bg-slate-100 transition-colors">
-                                        Review Scene
-                                    </a>
+                                    @if($assignment->incident?->reference_number)
+                                        <a href="{{ route('admin.incidents.show', $assignment->incident->reference_number) }}" 
+                                           class="px-3 py-1.5 rounded-lg text-xs font-bold text-[#173957] hover:bg-slate-100 transition-colors">
+                                            Review Scene
+                                        </a>
+                                    @else
+                                        <span class="px-3 py-1.5 text-xs text-slate-400">Unavailable</span>
+                                    @endif
                                 </td>
                             </tr>
                         @empty

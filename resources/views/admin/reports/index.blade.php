@@ -46,7 +46,7 @@
                 </select>
                 <select name="status" class="px-3 py-2 rounded-xl border">
                     <option value="all">All Statuses</option>
-                    @foreach(['pending_review', 'accepted', 'dispatched', 'in_progress', 'resolved', 'closed', 'rejected'] as $st)
+                    @foreach(['submitted', 'pending_review', 'accepted', 'dispatched', 'in_progress', 'resolved', 'closed', 'rejected'] as $st)
                         <option value="{{ $st }}" {{ ($filters['status'] ?? '') === $st ? 'selected' : '' }}>{{ strtoupper(str_replace('_', ' ', $st)) }}</option>
                     @endforeach
                 </select>

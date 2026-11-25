@@ -150,9 +150,10 @@ class SosAlertService
             $lat = isset($data['latitude']) && is_numeric($data['latitude']) ? (float) $data['latitude'] : null;
             $lng = isset($data['longitude']) && is_numeric($data['longitude']) ? (float) $data['longitude'] : null;
 
+            $latestLocation = $profile?->latestLocation;
             $locationStatus = $this->resolveLocationStatus($data, $lat, $lng);
-            $lastKnownLat = $profile?->last_latitude !== null ? (float) $profile->last_latitude : null;
-            $lastKnownLng = $profile?->last_longitude !== null ? (float) $profile->last_longitude : null;
+            $lastKnownLat = $latestLocation?->latitude !== null ? (float) $latestLocation->latitude : null;
+            $lastKnownLng = $latestLocation?->longitude !== null ? (float) $latestLocation->longitude : null;
 
             if ($lat === null && $lng === null && $lastKnownLat !== null && $lastKnownLng !== null) {
                 $lat = $lastKnownLat;
@@ -172,7 +173,7 @@ class SosAlertService
                 'personnel_id' => $profile?->id,
                 'office_id' => $officeId,
                 'current_assignment_id' => isset($data['current_assignment_id']) ? (int) $data['current_assignment_id'] : null,
-                'position_role' => $profile?->position_title ?? 'Field Responder',
+                'position_role' => $profile?->rank_designation ?? 'Field Responder',
                 'duty_status' => $profile?->availability?->operational_status ?? 'active',
                 'sender_name' => $personnelUser->name,
                 'contact_number' => $personnelUser->phone_number ?? 'Not provided',
@@ -184,7 +185,7 @@ class SosAlertService
                 'location_status' => $locationStatus,
                 'last_known_latitude' => $lastKnownLat,
                 'last_known_longitude' => $lastKnownLng,
-                'last_known_at' => $profile?->last_location_at,
+                'last_known_at' => $latestLocation?->recorded_at,
                 'barangay_id' => $verifiedBarangay?->id,
                 'status' => 'active',
                 'call_status' => 'not_called',
@@ -209,7 +210,7 @@ class SosAlertService
 
             if ($officeId !== null) {
                 $officeAdmins = OfficeUser::where('office_id', $officeId)
-                    ->where('is_office_admin', true)
+                    ->where('office_level', 'office_admin')
                     ->pluck('user_id');
 
                 foreach ($officeAdmins as $officeUserId) {

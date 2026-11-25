@@ -1,4 +1,7 @@
 <x-layouts.admin title="SOS Alerts Command Console — DIAL DAPH">
+    @php
+        $sosRoutePrefix = auth()->user()?->isSuperAdmin() ? 'super-admin.sos' : 'admin.sos';
+    @endphp
     <div class="space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -9,10 +12,10 @@
                 <p class="text-xs text-slate-400 mt-1">Immediate Citizen, Guest, and Responder Distress SOS Alerts.</p>
             </div>
             <div class="flex flex-wrap gap-2 text-xs">
-                <a href="{{ route('admin.sos.index', ['tab' => 'active']) }}" class="px-3 py-1.5 rounded-xl font-bold {{ $tab === 'active' ? 'bg-rose-600 text-white' : 'eoc-card border border-white/10 text-slate-300' }}">Active ({{ $counts['active'] }})</a>
-                <a href="{{ route('admin.sos.index', ['tab' => 'citizen']) }}" class="px-3 py-1.5 rounded-xl font-bold {{ $tab === 'citizen' ? 'bg-rose-600 text-white' : 'eoc-card border border-white/10 text-slate-300' }}">Citizen/Guest ({{ $counts['citizen'] }})</a>
-                <a href="{{ route('admin.sos.index', ['tab' => 'personnel']) }}" class="px-3 py-1.5 rounded-xl font-bold {{ $tab === 'personnel' ? 'bg-rose-600 text-white' : 'eoc-card border border-white/10 text-slate-300' }}">Responder SOS ({{ $counts['personnel'] }})</a>
-                <a href="{{ route('admin.sos.index', ['tab' => 'resolved']) }}" class="px-3 py-1.5 rounded-xl font-bold {{ $tab === 'resolved' ? 'bg-emerald-600 text-white' : 'eoc-card border border-white/10 text-slate-300' }}">Resolved ({{ $counts['resolved'] }})</a>
+                <a href="{{ route($sosRoutePrefix.'.index', ['tab' => 'active']) }}" class="px-3 py-1.5 rounded-xl font-bold {{ $tab === 'active' ? 'bg-rose-600 text-white' : 'eoc-card border border-white/10 text-slate-300' }}">Active ({{ $counts['active'] }})</a>
+                <a href="{{ route($sosRoutePrefix.'.index', ['tab' => 'citizen']) }}" class="px-3 py-1.5 rounded-xl font-bold {{ $tab === 'citizen' ? 'bg-rose-600 text-white' : 'eoc-card border border-white/10 text-slate-300' }}">Citizen/Guest ({{ $counts['citizen'] }})</a>
+                <a href="{{ route($sosRoutePrefix.'.index', ['tab' => 'personnel']) }}" class="px-3 py-1.5 rounded-xl font-bold {{ $tab === 'personnel' ? 'bg-rose-600 text-white' : 'eoc-card border border-white/10 text-slate-300' }}">Responder SOS ({{ $counts['personnel'] }})</a>
+                <a href="{{ route($sosRoutePrefix.'.index', ['tab' => 'resolved']) }}" class="px-3 py-1.5 rounded-xl font-bold {{ $tab === 'resolved' ? 'bg-emerald-600 text-white' : 'eoc-card border border-white/10 text-slate-300' }}">Resolved ({{ $counts['resolved'] }})</a>
             </div>
         </div>
 
@@ -43,7 +46,7 @@
                                 <button type="submit" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black cursor-pointer">Acknowledge</button>
                             </form>
                         @endif
-                        <a href="{{ route('admin.sos.show', $sos->id) }}" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold">
+                        <a href="{{ route($sosRoutePrefix.'.show', $sos->id) }}" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold">
                             Open Handling Panel &rarr;
                         </a>
                     </div>

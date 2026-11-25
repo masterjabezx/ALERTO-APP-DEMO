@@ -116,10 +116,12 @@ class InternalMessengerController extends Controller
         ];
 
         return match ($user->account_type) {
-            'admin' => view('admin.messages.index', $viewData),
+            'admin', 'super_admin' => view('admin.messages.index', $viewData),
             'office' => view('office.messages', array_merge($viewData, [
                 'office' => $user->primaryOffice(),
-                'adminUser' => User::where('account_type', 'admin')->first(),
+                'adminUser' => User::whereIn('account_type', ['admin', 'super_admin'])
+                    ->orderByRaw("account_type = 'admin' DESC")
+                    ->first(),
             ])),
             default => view('personnel.messages', $viewData),
         };
@@ -158,6 +160,7 @@ class InternalMessengerController extends Controller
         }
 
         $prefix = match ($user->account_type) {
+            'super_admin' => 'super-admin.messages.index',
             'admin' => 'admin.messages.index',
             'office' => 'office.messages',
             default => 'personnel.messages',
@@ -231,6 +234,7 @@ class InternalMessengerController extends Controller
         $conversation = $this->messengerService->getOrCreateDirectConversation($user, $targetUser);
 
         $routeName = match ($user->account_type) {
+            'super_admin' => 'super-admin.messages.index',
             'admin' => 'admin.messages.index',
             'office' => 'office.messages',
             default => 'personnel.messages',
@@ -251,6 +255,7 @@ class InternalMessengerController extends Controller
         $conversation = $this->messengerService->getOrCreateIncidentConversation($user, $incident);
 
         $routeName = match ($user->account_type) {
+            'super_admin' => 'super-admin.messages.index',
             'admin' => 'admin.messages.index',
             'office' => 'office.messages',
             default => 'personnel.messages',
@@ -281,7 +286,7 @@ class InternalMessengerController extends Controller
             ], 201);
         }
 
-        return redirect()->route('admin.messages.index', ['conversation_id' => $conversation->id])
+        return redirect()->route($user->isSuperAdmin() ? 'super-admin.messages.index' : 'admin.messages.index', ['conversation_id' => $conversation->id])
             ->with('success', 'Group conversation initialized.');
     }
 

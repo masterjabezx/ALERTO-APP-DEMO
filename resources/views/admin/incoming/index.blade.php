@@ -1,4 +1,7 @@
 <x-layouts.admin title="Incoming Unclassified Reports — DIAL DAPH Command Center">
+    @php
+        $incomingRoute = auth()->user()?->isSuperAdmin() ? 'super-admin.incoming.index' : 'admin.incoming.index';
+    @endphp
     <div class="space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -7,7 +10,7 @@
             </div>
             <div class="flex flex-wrap gap-2 text-xs">
                 @foreach(['all' => 'All Unclassified', 'new_report' => 'New Reports', 'awaiting_call' => 'Awaiting Call', 'assessment_in_progress' => 'Assessment In Progress'] as $key => $label)
-                    <a href="{{ route('admin.incoming.index', ['stage' => $key]) }}"
+                    <a href="{{ route($incomingRoute, ['stage' => $key]) }}"
                        class="px-3 py-1.5 rounded-xl font-bold {{ $stage === $key ? 'bg-amber-500 text-slate-950' : 'eoc-card border border-white/10 text-slate-300' }}">
                         {{ $label }}
                     </a>

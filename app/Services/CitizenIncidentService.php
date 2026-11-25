@@ -266,7 +266,7 @@ class CitizenIncidentService
             $user->update([
                 'name' => $newName,
                 'phone_number' => $newPhone,
-                'is_phone_verified' => $phoneChanged ? false : $user->is_phone_verified,
+                'phone_verified_at' => $phoneChanged ? null : $user->phone_verified_at,
             ]);
 
             if ($user->citizenProfile) {
@@ -293,7 +293,7 @@ class CitizenIncidentService
                 'created_at' => now(),
             ]);
 
-            return $user->fresh(['citizenProfile', 'addresses']);
+            return $user->fresh(['citizenProfile', 'citizenAddresses']);
         });
     }
 

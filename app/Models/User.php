@@ -63,6 +63,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function getIsPhoneVerifiedAttribute(): bool
+    {
+        return $this->phone_verified_at !== null;
+    }
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'role_user');

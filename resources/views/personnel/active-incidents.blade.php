@@ -24,7 +24,7 @@
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
                         <div class="flex items-center gap-2">
                             <span class="px-2.5 py-1 rounded-md font-mono text-xs font-bold bg-[#173957] text-white">
-                                {{ $incident->incident_number }}
+                                {{ $incident->reference_number }}
                             </span>
                             <span class="px-2.5 py-1 rounded-md text-xs font-bold uppercase bg-rose-100 text-rose-800">
                                 {{ $incident->category?->name ?? 'Emergency' }}
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="my-3">
-                        <h3 class="text-base font-bold text-slate-900">{{ $incident->title }}</h3>
+                        <h3 class="text-base font-bold text-slate-900">{{ $incident->title ?? ($incident->category?->name ?? 'Emergency Incident') }}</h3>
                         <p class="text-xs text-slate-600 mt-1">{{ $incident->description }}</p>
                     </div>
 

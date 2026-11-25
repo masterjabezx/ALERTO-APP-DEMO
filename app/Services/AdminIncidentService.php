@@ -257,7 +257,7 @@ class AdminIncidentService
             // Lock incident row to prevent concurrent conflicting decisions
             $lockedIncident = Incident::where('id', $incident->id)->lockForUpdate()->firstOrFail();
 
-            if ($lockedIncident->status !== 'pending_review' && ! $reviewer->isAdmin()) {
+            if (! in_array($lockedIncident->status, ['submitted', 'pending_review'], true) && ! $reviewer->isAdmin()) {
                 throw new InvalidArgumentException("Incident is not currently pending review (Current status: {$lockedIncident->status}).");
             }
 

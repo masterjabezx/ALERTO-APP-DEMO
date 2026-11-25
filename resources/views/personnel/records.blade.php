@@ -35,7 +35,7 @@
                         @forelse($assignments as $assignment)
                             <tr class="hover:bg-slate-50/50 transition-colors">
                                 <td class="py-3.5 px-4 font-mono font-bold text-slate-900">
-                                    {{ $assignment->incident?->incident_number ?? '#INC-' . $assignment->incident_id }}
+                                    {{ $assignment->incident?->reference_number ?? '#INC-' . $assignment->incident_id }}
                                 </td>
 
                                 <td class="py-3.5 px-4">

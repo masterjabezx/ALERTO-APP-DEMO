@@ -211,8 +211,9 @@ class InternalMessengerService
             'joined_at' => now(),
         ]);
 
-        // Add all active Admin users to ensure LDRRMO Command is notified
-        $admins = User::where('account_type', 'admin')
+        // Add all active Admin and Super Admin users to ensure LDRRMO Command is notified
+        $admins = User::whereIn('account_type', ['admin', 'super_admin'])
+            ->where('is_active', true)
             ->where('id', '!=', $creator->id)
             ->get();
 

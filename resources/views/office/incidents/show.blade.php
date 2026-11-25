@@ -110,7 +110,7 @@
                         </div>
                         <div>
                             <span class="text-[10px] font-bold uppercase text-slate-400 block">Street Location</span>
-                            <span class="font-bold text-slate-800">{{ $incident->location?->street_name ?? 'Coordinates On File' }}</span>
+                            <span class="font-bold text-slate-800">{{ $incident->location?->street_address ?? $incident->location?->street_name ?? 'Coordinates On File' }}</span>
                         </div>
                     </div>
                 </div>

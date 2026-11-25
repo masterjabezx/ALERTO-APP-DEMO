@@ -116,7 +116,7 @@
 
                                 <td class="py-3.5 px-4">
                                     <div class="font-bold text-slate-800">{{ $inc->barangay?->name }}</div>
-                                    <div class="text-[11px] text-slate-500">{{ $inc->location?->street_name ?? 'Coordinates on file' }}</div>
+                                    <div class="text-[11px] text-slate-500">{{ $inc->location?->street_address ?? $inc->location?->street_name ?? 'Coordinates on file' }}</div>
                                 </td>
 
                                 <td class="py-3.5 px-4">

@@ -191,7 +191,7 @@ class Incident extends Model
     public function scopeIncomingReports(Builder $query): Builder
     {
         return $query->whereIn('workflow_stage', ['new_report', 'awaiting_call', 'assessment_in_progress'])
-            ->where('status', 'pending_review');
+            ->whereIn('status', ['submitted', 'pending_review']);
     }
 
     public function scopeDispatched(Builder $query): Builder
