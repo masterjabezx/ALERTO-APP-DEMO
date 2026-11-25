@@ -25,6 +25,7 @@
     </style>
 </head>
 <body class="h-full antialiased {{ $bodyClass ?? 'bg-[#101214] text-[#F5F3EF]' }}">
+    <x-demo-environment-banner fixed />
 
     <!-- Flash Notifications -->
     <div class="fixed top-4 right-4 z-50 max-w-md w-full space-y-2 pointer-events-none px-4 sm:px-0">

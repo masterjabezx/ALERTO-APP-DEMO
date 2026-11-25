@@ -6,7 +6,7 @@
 
     <div class="bg-[#292D32]/90 border border-white/15 rounded-3xl p-6 space-y-4">
         <h1 class="text-2xl font-extrabold text-white">Emergency SOS Assistance</h1>
-        <p class="text-xs text-[#D1CEC9]">Optionally provide your callback contact number before pressing Trigger SOS so Command Center operators can reach you.</p>
+        <p class="text-xs text-[#D1CEC9]">Use synthetic details only. This demo stores a test SOS and does not contact command center staff or responders.</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <input type="text" name="caller_name" placeholder="Your Name (Optional)" class="px-3.5 py-2.5 rounded-xl bg-[#17191C] border border-white/15 text-white text-sm placeholder:text-[#A39E98] focus-visible:border-[#E87524] outline-hidden">
             <input type="text" name="caller_phone" placeholder="Active Phone e.g. 09171234567" class="px-3.5 py-2.5 rounded-xl bg-[#17191C] border border-white/15 text-white text-sm placeholder:text-[#A39E98] focus-visible:border-[#E87524] outline-hidden">

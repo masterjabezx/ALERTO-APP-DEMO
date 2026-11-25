@@ -22,6 +22,7 @@
 
     {{-- Personnel Header --}}
     <header class="sticky top-0 z-30 bg-[#17191C] text-[#F5F3EF] border-b border-white/10 shadow-md">
+        <x-demo-environment-banner />
         <div class="h-1 bg-gradient-to-r from-[#E87524] via-[#F29A56] to-[#E87524]"></div>
         <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
             <a href="{{ route('personnel.dashboard') }}" class="flex items-center gap-3 min-w-0">

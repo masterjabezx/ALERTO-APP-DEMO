@@ -189,14 +189,8 @@
                                 <p class="text-xs text-[var(--text-secondary)] mt-1 line-clamp-2">{{ $incident?->description }}</p>
                             </div>
 
-                            <div class="shrink-0 flex items-center gap-2">
-                                @if($incident?->caller_phone)
-                                    <a href="tel:{{ $incident->caller_phone }}" 
-                                       class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-[#27845B]/15 text-[#1B6644] dark:text-[#5BD19A] hover:bg-[#27845B]/25 border border-[#27845B]/35 transition-colors flex items-center gap-1.5">
-                                        <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-                                        <span>Call Reporter ({{ $incident->caller_phone }})</span>
-                                    </a>
-                                @endif
+                            <div class="shrink-0 text-xs font-semibold text-amber-700 dark:text-amber-200">
+                                Caller contact is hidden in this demo
                             </div>
                         </div>
 

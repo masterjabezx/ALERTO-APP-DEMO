@@ -174,7 +174,9 @@
     {{-- Workspace Column --}}
     <div class="flex-1 flex flex-col min-w-0 transition-all duration-300 alerto-grid-canvas"
          :class="sidebarOpen ? 'lg:pl-72' : 'lg:pl-20'">
-        <header class="alerto-topbar sticky top-0 z-30 h-16 px-4 sm:px-8 flex items-center justify-between gap-3">
+        <header class="alerto-topbar sticky top-0 z-30">
+            <x-demo-environment-banner />
+            <div class="h-16 px-4 sm:px-8 flex items-center justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
                 <button type="button" @click="mobileOpen = true" aria-label="Open navigation menu" class="lg:hidden p-2 rounded-xl border border-white/15 hover:border-[#E87524] transition-colors cursor-pointer">
                     <i data-lucide="menu" class="w-5 h-5"></i>
@@ -194,6 +196,7 @@
                     Incoming: {{ (int) ($telemetry['incoming_reports_count'] ?? 0) }}
                 </a>
                 <x-theme-toggle />
+            </div>
             </div>
         </header>
 

@@ -1,20 +1,13 @@
 <x-layouts.citizen>
     <div class="space-y-6">
 
-        {{-- Header & Hotline Shortcut --}}
+        {{-- Test record header --}}
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <h1 class="text-2xl font-black text-[var(--text-primary)] tracking-tight">Your Incident Records</h1>
                 <p class="text-xs text-[var(--text-secondary)] mt-0.5">Track the live progress and response timeline of your submitted reports.</p>
             </div>
 
-            @if(!empty($hotline))
-                <a href="tel:{{ preg_replace('/[^0-9]/', '', $hotline) }}" 
-                   class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#C83F43]/12 text-[#9F292D] dark:text-[#F27D80] border border-[#C83F43]/30 text-xs font-bold hover:bg-[#C83F43]/20 transition-all">
-                    <i data-lucide="phone" class="w-4 h-4"></i>
-                    <span>Hotline: {{ $hotline }}</span>
-                </a>
-            @endif
         </div>
 
         {{-- Filter Tabs --}}

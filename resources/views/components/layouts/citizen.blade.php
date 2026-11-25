@@ -23,6 +23,7 @@
 
     {{-- Citizen Top Header --}}
     <header class="sticky top-0 z-30 bg-[var(--surface-card)]/95 border-b border-[var(--border-subtle)] backdrop-blur-md shadow-xs">
+        <x-demo-environment-banner />
         <div class="h-1 bg-gradient-to-r from-[#17191C] via-[#E87524] to-[#17191C]"></div>
         <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
             <a href="{{ route('citizen.dashboard') }}" class="flex items-center gap-3 min-w-0">

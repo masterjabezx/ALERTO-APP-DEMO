@@ -9,11 +9,11 @@
         <div class="space-y-1">
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#27845B]/15 text-[#1B6644] dark:text-[#5BD19A] text-xs font-extrabold uppercase tracking-wider border border-[#27845B]/25">
                 <span class="w-2 h-2 rounded-full bg-[#27845B] dark:bg-[#5BD19A]"></span>
-                Report Received
+                Demo Report Recorded
             </span>
-            <h1 class="text-3xl font-black text-[var(--text-primary)] tracking-tight">SUCCESSFUL REPORT SUBMISSION</h1>
+            <h1 class="text-3xl font-black text-[var(--text-primary)] tracking-tight">DEMO REPORT SAVED</h1>
             <p class="text-xs sm:text-sm text-[var(--text-secondary)] max-w-md mx-auto">
-                Your incident report has been registered into the Hinoba-an LDRRMO intake queue.
+                This record stays in the testing application. It was not sent to Hinoba-an LDRRMO or any real response unit. Use synthetic data only.
             </p>
         </div>
 
@@ -33,7 +33,7 @@
             <div class="grid grid-cols-2 gap-4 text-xs">
                 <div>
                     <span class="text-[var(--text-muted)] font-medium block">Classification Status</span>
-                    <span class="font-bold text-[var(--text-primary)]">{{ $incident->category?->name ?? 'Awaiting DIAL DAPH Call Assessment' }}</span>
+                    <span class="font-bold text-[var(--text-primary)]">{{ $incident->category?->name ?? 'Demo classification pending' }}</span>
                 </div>
                 <div>
                     <span class="text-[var(--text-muted)] font-medium block">Verified Barangay</span>
@@ -44,8 +44,8 @@
                     <span class="font-bold text-[var(--text-primary)]">{{ $incident->submitted_at?->format('M d, Y · h:i A') }}</span>
                 </div>
                 <div>
-                    <span class="text-[var(--text-muted)] font-medium block">Callback Number</span>
-                    <span class="font-bold text-[var(--text-primary)]">{{ $incident->caller_phone }}</span>
+                    <span class="text-[var(--text-muted)] font-medium block">Test Contact</span>
+                    <span class="font-bold text-[var(--text-primary)]">Hidden in demo</span>
                 </div>
             </div>
 
@@ -59,7 +59,7 @@
 
         {{-- Dual Configurable Emergency Call Buttons --}}
         <div class="bg-[#17191C] rounded-[24px] p-5 border border-white/10 space-y-3 text-left text-[#F5F3EF]">
-            <p class="text-xs font-bold uppercase tracking-wider text-[#D1CEC9]">Need Immediate Voice Assistance?</p>
+            <p class="text-xs font-bold uppercase tracking-wider text-[#D1CEC9]">Real emergency calls are disabled in this demo.</p>
             <x-dual-hotlines :hotlines="$hotlines" />
         </div>
 

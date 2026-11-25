@@ -24,7 +24,7 @@
             </span>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Report an Emergency Immediately</h1>
             <p class="text-xs sm:text-sm text-[#D1CEC9] mt-1">
-                Provide your name, active callback phone number, and exact location pin. DIAL DAPH Command Center will call you right away to assess the emergency and dispatch help.
+        Use synthetic test details only. This demo stores a test report and does not call DIAL DAPH or dispatch responders.
             </p>
         </div>
 
@@ -38,7 +38,7 @@
                            class="w-full px-4 py-3 rounded-xl bg-[#17191C] border border-white/15 text-white text-sm placeholder:text-[#A39E98] focus-visible:border-[#E87524] outline-hidden">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-[#F5F3EF] mb-1.5">Active Phone Number (for Command Center Callback) *</label>
+            <label class="block text-xs font-bold text-[#F5F3EF] mb-1.5">Synthetic Test Phone Number *</label>
                     <input type="text" name="caller_phone" value="{{ old('caller_phone') }}" required placeholder="09171234567"
                            class="w-full px-4 py-3 rounded-xl bg-[#17191C] border border-white/15 text-white text-sm placeholder:text-[#A39E98] focus-visible:border-[#E87524] outline-hidden">
                 </div>

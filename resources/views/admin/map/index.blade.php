@@ -396,8 +396,8 @@
                                     ></span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <i data-lucide="phone" class="w-3.5 h-3.5 text-[#27845B]"></i>
-                                    <a :href="'tel:' + selectedIncident.caller.phone" class="font-mono font-bold text-[#27845B] hover:underline" x-text="selectedIncident.caller.phone"></a>
+                                    <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-600"></i>
+                                    <span class="font-semibold text-amber-700 dark:text-amber-200">Contact calls disabled in demo</span>
                                 </div>
                             </div>
                         </template>

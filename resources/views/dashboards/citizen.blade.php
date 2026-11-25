@@ -68,7 +68,7 @@
                 </span>
                 <h1 class="text-xl sm:text-2xl font-black text-[var(--text-primary)] mt-1.5">Report an Emergency Now</h1>
                 <p class="text-xs text-[var(--text-secondary)] mt-0.5">
-                    No category forms needed. Confirm your name, callback number, and GPS/map location — DIAL DAPH Command Center will call you immediately to assess and dispatch responders.
+        Use synthetic test details only. This demo stores a test report and does not call DIAL DAPH or dispatch responders.
                 </p>
             </div>
 
@@ -85,7 +85,7 @@
 
                     <div>
                         <div class="flex items-center justify-between mb-1">
-                            <label class="block text-xs font-bold text-[var(--text-primary)]">Contact Phone Number *</label>
+            <label class="block text-xs font-bold text-[var(--text-primary)]">Synthetic Test Phone Number *</label>
                             <span class="text-[10px] font-bold px-2 py-0.5 rounded {{ $user->is_phone_verified ? 'bg-[#27845B]/15 text-[#1B6644] dark:text-[#5BD19A]' : 'bg-[#D99024]/15 text-[#9A5D07] dark:text-[#F6BA53]' }}">
                                 {{ $user->is_phone_verified ? 'Verified' : 'Unverified' }}
                             </span>
@@ -123,7 +123,7 @@
         <div class="alerto-card p-6 space-y-4">
             <div>
                 <h2 class="text-base font-extrabold text-[var(--text-primary)]">My Saved Contact Details</h2>
-                <p class="text-xs text-[var(--text-secondary)]">Update the name and phone number pre-filled on future emergency reports.</p>
+                <p class="text-xs text-[var(--text-secondary)]">Use synthetic names and contact details for future demo reports.</p>
             </div>
 
             <form action="{{ route('citizen.profile.update') }}" method="POST" class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
@@ -135,7 +135,7 @@
                            class="w-full px-3.5 py-2.5 rounded-xl bg-[var(--surface-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] text-sm focus-visible:border-[#E87524] outline-hidden">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-[var(--text-primary)] mb-1">Mobile Phone Number</label>
+            <label class="block text-xs font-bold text-[var(--text-primary)] mb-1">Synthetic Test Mobile Number</label>
                     <input type="text" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" required
                            class="w-full px-3.5 py-2.5 rounded-xl bg-[var(--surface-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] text-sm focus-visible:border-[#E87524] outline-hidden">
                 </div>

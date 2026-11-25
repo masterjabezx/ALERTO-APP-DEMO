@@ -217,7 +217,9 @@
         <x-pwa-connection-indicator />
 
         {{-- Top Command Bar --}}
-        <header class="eoc-topbar sticky top-0 z-30 h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
+        <header class="eoc-topbar sticky top-0 z-30">
+            <x-demo-environment-banner />
+            <div class="h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
                 <button
                     type="button"
@@ -301,6 +303,7 @@
                     <i data-lucide="radar" class="w-4 h-4"></i>
                     <span class="hidden sm:inline">Live Map</span>
                 </a>
+            </div>
             </div>
         </header>
 

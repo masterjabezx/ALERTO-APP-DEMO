@@ -109,14 +109,11 @@
             </div>
 
             <div class="flex items-center gap-2">
-                {{-- Quick Hotline Link when Offline --}}
+                {{-- Real hotline calls are disabled in the demo --}}
                 <template x-if="!$store.pwa.isOnline">
-                    <a href="tel:{{ preg_replace('/[^0-9]/', '', $hotline) }}" 
-                       class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[#DB4545] hover:bg-red-600 text-white shadow-xs transition-colors">
-                        <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-                        <span class="hidden sm:inline">Call Hotline</span>
-                        <span class="sm:hidden">Hotline</span>
-                    </a>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-300/10 text-amber-200 border border-amber-300/30">
+                        No real calls in demo
+                    </span>
                 </template>
 
                 {{-- Sync Drawer Button --}}
@@ -192,16 +189,12 @@
                     </p>
                 </div>
 
-                {{-- Emergency Hotline --}}
-                <div class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-between">
+                {{-- Demo-safe emergency contact notice --}}
+                <div class="p-3.5 rounded-xl bg-amber-300/10 border border-amber-300/30">
                     <div>
-                        <div class="text-[10px] font-bold uppercase tracking-wider text-rose-400">Emergency Dispatch</div>
-                        <div class="text-xs font-bold text-white">{{ $hotlineTitle }}</div>
+                        <div class="text-[10px] font-bold uppercase tracking-wider text-amber-200">Testing Environment</div>
+                        <div class="text-xs font-bold text-amber-100">Emergency calls are disabled in this demo.</div>
                     </div>
-                    <a href="tel:{{ preg_replace('/[^0-9]/', '', $hotline) }}" 
-                       class="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#DB4545] text-white hover:bg-red-600 transition-colors">
-                        {{ $hotline }}
-                    </a>
                 </div>
 
                 {{-- Pending Items Section --}}

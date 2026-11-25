@@ -1,4 +1,4 @@
-@extends('layouts.auth', ['title' => 'Emergency Report Received — ALERTO APP'])
+@extends('layouts.auth', ['title' => 'Demo Report Recorded — ALERTO APP'])
 
 @section('content')
 <div class="max-w-3xl mx-auto px-4 py-10 space-y-6">
@@ -8,10 +8,10 @@
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div>
-                <span class="text-xs font-bold uppercase tracking-wider text-[#5BD19A]">Confirmed by DIAL DAPH Command Center Server</span>
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Emergency Report Received</h1>
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-200">Demo record saved — not sent to responders</span>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Demo Report Recorded</h1>
                 <p class="text-sm text-[#D1CEC9] mt-1">
-                    Keep your phone line (<strong class="text-white">{{ $incident->caller_phone }}</strong>) nearby — a DIAL DAPH Command Center operator will call you to verify details and dispatch response teams.
+                    This report is stored only in the testing environment. No call will be placed and no real responder or emergency service has been notified. Use synthetic test details only.
                 </p>
             </div>
         </div>
@@ -28,22 +28,22 @@
                 </p>
             </div>
             <div>
-                <span class="text-[#A39E98]">Verified Location / Status</span>
+                    <span class="text-[#A39E98]">Test Location / Status</span>
                 <p class="text-white font-semibold mt-0.5">
-                    {{ $incident->barangay?->name ?? 'Unverified Area (GPS Captured)' }} · Awaiting Call Verification
+                    {{ $incident->barangay?->name ?? 'Unverified Test Area' }} · Test record
                 </p>
             </div>
         </div>
 
-        {{-- Citizen Account Onboarding CTA (Required after 1st Guest Report) --}}
+        {{-- Demo citizen account onboarding --}}
         <div class="rounded-2xl border border-[#E87524]/40 bg-[#E87524]/12 p-5 space-y-3">
-            <h2 class="text-base font-extrabold text-white">Create or Log In to Your Citizen Account to Track This Report</h2>
+            <h2 class="text-base font-extrabold text-white">Link This Demo Report to a Test Citizen Account</h2>
             <p class="text-xs text-[#F5F3EF]/85">
-                Your session holds a secure one-time verification token for <strong>{{ $incident->reference_number }}</strong>. Creating or logging in to your Citizen account right now automatically links this emergency report so you can track responder status and report future incidents quickly.
+                Use a synthetic account only. This report stays inside the testing application and will not be sent to an LDRRMO office or response unit.
             </p>
             <div class="flex flex-wrap gap-3">
                 <a href="{{ route('citizen.register') }}" class="px-5 py-2.5 rounded-xl bg-[#E87524] hover:bg-[#D16419] text-white text-xs font-extrabold transition-colors">
-                    Register Citizen Account (Link This Report)
+                    Register Demo Citizen Account
                 </a>
                 <a href="{{ route('citizen.login') }}" class="px-5 py-2.5 rounded-xl bg-[#17191C] hover:bg-black/70 border border-white/20 text-white text-xs font-bold transition-colors">
                     Log In to Existing Citizen Account
@@ -53,7 +53,7 @@
     </div>
 
     <div class="space-y-2">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-[#A39E98]">Emergency Direct Call Hotlines</h3>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-[#A39E98]">Test environment contact controls</h3>
         <x-dual-hotlines :hotlines="$hotlines" />
     </div>
 </div>

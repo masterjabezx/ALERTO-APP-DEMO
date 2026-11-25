@@ -143,7 +143,7 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                {{-- Left: Record Call Outcome & Call Attempt Log --}}
+        {{-- Left: Record Demo Verification Outcome --}}
                 <div class="lg:col-span-4 space-y-4">
                     <form method="POST" action="{{ route('admin.incidents.call-outcome', $incident->reference_number) }}"
                           class="p-4 rounded-xl bg-[var(--surface-panel)] border border-[var(--border-subtle)] space-y-3 text-xs">
@@ -161,15 +161,15 @@
                         <div class="flex flex-col gap-1.5 text-[11px] text-[var(--text-secondary)]">
                             <label class="inline-flex items-center gap-2 cursor-pointer"><input type="checkbox" name="location_confirmed" value="1" class="rounded accent-[#E87524]"> Caller confirmed location pin</label>
                             <label class="inline-flex items-center gap-2 cursor-pointer"><input type="checkbox" name="category_confirmed" value="1" class="rounded accent-[#E87524]"> Caller described emergency</label>
-                            <label class="inline-flex items-center gap-2 cursor-pointer"><input type="checkbox" name="mark_number_verified" value="1" class="rounded accent-[#E87524]"> Verify caller phone via call</label>
+                            <label class="inline-flex items-center gap-2 cursor-pointer"><input type="checkbox" name="mark_number_verified" value="1" class="rounded accent-[#E87524]"> Record test contact verification</label>
                         </div>
                         <button type="submit" class="w-full py-2.5 rounded-xl bg-[#17191C] hover:bg-[#292D32] text-white font-bold cursor-pointer transition-colors">
-                            Save Call Attempt Result
+                            Save Test Verification Result
                         </button>
                     </form>
 
                     <div class="space-y-1.5 text-xs">
-                        <span class="text-[10px] font-bold uppercase text-[var(--text-muted)]">Call Attempt Log ({{ $incident->callAttempts->count() }})</span>
+                        <span class="text-[10px] font-bold uppercase text-[var(--text-muted)]">Demo Contact Records ({{ $incident->callAttempts->count() }})</span>
                         @forelse($incident->callAttempts->take(5) as $attempt)
                             <div class="p-2.5 rounded-lg bg-[var(--surface-panel)] border border-[var(--border-subtle)] flex items-center justify-between gap-2 text-[11px]">
                                 <div>
@@ -324,7 +324,7 @@
                     <div class="flex flex-wrap items-center gap-4 text-[11px] font-semibold text-slate-700">
                         <label class="inline-flex items-center gap-1.5"><input type="checkbox" name="location_confirmed" value="1" checked class="rounded"> Location Confirmed</label>
                         <label class="inline-flex items-center gap-1.5"><input type="checkbox" name="category_confirmed" value="1" checked class="rounded"> Classification Verified</label>
-                        <label class="inline-flex items-center gap-1.5"><input type="checkbox" name="mark_number_verified" value="1" class="rounded"> Mark Caller Phone Verified</label>
+                    <label class="inline-flex items-center gap-1.5"><input type="checkbox" name="mark_number_verified" value="1" class="rounded"> Mark Test Contact Verified</label>
                     </div>
 
                     <button type="submit"
@@ -638,11 +638,8 @@
                             <span class="font-bold">{{ $incident->caller_name }}</span>
                         </div>
                         <div class="flex items-center justify-between">
-                            <span class="text-[#77736E]">Contact Number:</span>
-                            <a href="tel:{{ $incident->caller_phone }}" class="font-mono font-bold text-[#27845B] hover:underline flex items-center gap-1">
-                                <i data-lucide="phone" class="w-3 h-3"></i>
-                                {{ $incident->caller_phone }}
-                            </a>
+                            <span class="text-[#77736E]">Contact:</span>
+                            <span class="font-semibold text-amber-700 dark:text-amber-200">Calls disabled in testing</span>
                         </div>
                         @if($incident->reporter)
                             <div class="flex items-center justify-between pt-1 border-t border-[#E6E3DE] dark:border-white/10 text-[11px]">
@@ -791,10 +788,10 @@
                                         class="alerto-btn-press w-full py-4 px-6 rounded-xl bg-[#E87524] hover:bg-[#B94F12] disabled:opacity-40 disabled:cursor-not-allowed text-white font-extrabold text-sm shadow-xl shadow-[#E87524]/25 transition-all flex items-center justify-center gap-2"
                                     >
                                         <i data-lucide="send" class="w-5 h-5"></i>
-                                        <span x-text="$store.pwa.isOnline ? 'AUTHORIZE OFFICIAL DISPATCH' : 'DISPATCH DISABLED OFFLINE'">AUTHORIZE OFFICIAL DISPATCH</span>
+                        <span x-text="$store.pwa.isOnline ? 'RECORD DEMO DISPATCH' : 'DISPATCH DISABLED OFFLINE'">RECORD DEMO DISPATCH</span>
                                     </button>
                                     <p class="text-[11px] text-[#77736E] text-center mt-2 leading-relaxed">
-                                        Mobilizes assigned responders and generates live task alerts.
+                        Records a simulated assignment inside this testing environment only.
                                     </p>
                                 @else
                                     <button 
@@ -1005,7 +1002,7 @@
                 <div class="flex items-center justify-between pb-3 border-b border-[#E6E3DE] dark:border-white/10">
                     <h3 class="text-base font-black text-[#E87524] flex items-center gap-2">
                         <i data-lucide="send" class="w-5 h-5 text-[#E87524]"></i>
-                        AUTHORIZE OFFICIAL DISPATCH
+                    CONFIRM DEMO DISPATCH
                     </h3>
                     <button type="button" x-on:click="showDispatchModal = false" class="text-[#77736E] hover:text-[#17191C] dark:hover:text-white">
                         <i data-lucide="x" class="w-5 h-5"></i>
@@ -1013,7 +1010,7 @@
                 </div>
 
                 <div class="p-3.5 rounded-xl bg-[#C83F43]/10 border border-[#C83F43]/30 text-[#C83F43] text-xs leading-relaxed">
-                    <strong>CRITICAL ACTION:</strong> This will formally mobilize assigned units for incident <strong>{{ $incident->reference_number }}</strong>. Dispatch alerts will be transmitted exclusively to confirmed assigned personnel and the citizen reporter.
+                    <strong>DEMO ACTION:</strong> This records a simulated dispatch for test report <strong>{{ $incident->reference_number }}</strong>. It does not contact or mobilize real responders.
                 </div>
 
                 <form method="POST" action="{{ route('admin.incidents.dispatch', $incident->reference_number) }}" class="space-y-4">
@@ -1029,7 +1026,7 @@
                             Cancel
                         </button>
                         <button type="submit" class="alerto-btn-press px-6 py-2.5 rounded-xl bg-[#E87524] hover:bg-[#B94F12] text-white text-xs font-black shadow-lg shadow-[#E87524]/30">
-                            AUTHORIZE DISPATCH NOW
+                    RECORD DEMO DISPATCH
                         </button>
                     </div>
                 </form>

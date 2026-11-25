@@ -27,6 +27,7 @@
 <div class="relative min-h-screen flex flex-col justify-between">
     {{-- Top Public Header (Strictly Citizen-Only Gateway) --}}
     <header class="w-full border-b border-white/10 bg-[#17191C]/90 backdrop-blur-md sticky top-0 z-20">
+        <x-demo-environment-banner />
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
             <div class="flex items-center gap-3">
                 <img src="/images/branding/alerto-logo-web-128.png" alt="ALERTO APP" class="w-11 h-11 rounded-2xl object-contain shrink-0 drop-shadow-md">
@@ -39,13 +40,8 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#292D32] border border-white/10 text-xs font-semibold text-[#D4D0C9]">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#27845B] opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-[#27845B]"></span>
-                </span>
-                <span class="hidden sm:inline">DIAL DAPH 24/7 Response Active</span>
-                <span class="sm:hidden">24/7 Active</span>
+            <div class="hidden items-center rounded-full border border-amber-300/50 bg-amber-300/10 px-3 py-1.5 text-xs font-bold text-amber-200 sm:flex">
+                Demo only — no real response is dispatched
             </div>
         </div>
     </header>

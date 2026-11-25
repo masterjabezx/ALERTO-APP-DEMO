@@ -22,6 +22,7 @@
 
     {{-- Office Header (Carbon Accent + Warm Ivory / Dark Responsive Surface) --}}
     <header class="sticky top-0 z-30 bg-[var(--surface-card)]/95 backdrop-blur-md border-b border-[var(--border-subtle)] shadow-xs">
+        <x-demo-environment-banner />
         <div class="h-1 bg-gradient-to-r from-[#17191C] via-[#E87524] to-[#17191C]"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">

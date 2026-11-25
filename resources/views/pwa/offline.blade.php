@@ -14,6 +14,7 @@
     @vite(['resources/css/app.css'])
 </head>
 <body class="h-full flex flex-col justify-between bg-[#17191C] text-[#F5F3EF] p-6 selection:bg-[#E87524] selection:text-white">
+    <x-demo-environment-banner fixed />
 
     <div class="max-w-md w-full mx-auto my-auto text-center flex flex-col items-center">
         <!-- Official ALERTO Brand Beacon Badge -->
@@ -47,14 +48,14 @@
                     </svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <h2 class="text-xs font-bold uppercase tracking-wider text-[#F27D80]">Life-Threatening Emergency?</h2>
-                    <p class="text-xs text-[#D1CEC9] mt-0.5">Call Hinoba-an LDRRMO Dispatch directly via phone.</p>
-                    <a href="tel:{{ preg_replace('/[^0-9]/', '', $hotline) }}" 
-                       class="mt-3 inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-[#C83F43] hover:bg-[#A83135] text-white shadow-md transition-all active:scale-[0.98]">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-amber-200">Testing Environment</h2>
+                    <p class="text-xs text-[#D1CEC9] mt-0.5">This demo does not contact emergency services. Do not submit real incidents or use real contact details here.</p>
+                    <a href="#" aria-disabled="true" tabindex="-1" onclick="return false;"
+                       class="pointer-events-none mt-3 inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-white/5 text-amber-200 border border-amber-300/30">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
-                        <span>{{ $hotlineTitle }}: {{ $hotline }}</span>
+                        <span>Real hotline calls are disabled</span>
                     </a>
                 </div>
             </div>

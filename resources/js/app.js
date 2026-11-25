@@ -1,3 +1,4 @@
+import './demo-safety';
 import './bootstrap';
 import Alpine from 'alpinejs';
 import { AlertoAnim } from './animations';

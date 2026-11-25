@@ -14,34 +14,11 @@
         <div class="alerto-card p-6 sm:p-8 space-y-5">
             <div>
                 <h1 class="text-xl font-extrabold text-[var(--text-primary)]">Hinoba-an Emergency Hotlines Directory</h1>
-                <p class="text-xs text-[var(--text-secondary)] mt-0.5">Contact numbers configured and managed directly by the Local Disaster Risk Reduction Office.</p>
+                <p class="text-xs text-[var(--text-secondary)] mt-0.5">Emergency contact details are hidden in this testing environment.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                @forelse($additionalHotlines as $hl)
-                    <div class="p-4 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-panel)] flex items-center justify-between gap-3 hover:border-[#E87524]/45 transition-colors">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-11 h-11 rounded-2xl bg-[#17191C] text-[#E87524] flex items-center justify-center shrink-0 shadow-sm border border-white/10">
-                                <i data-lucide="phone" class="w-5 h-5"></i>
-                            </div>
-                            <div class="min-w-0">
-                                <h3 class="text-xs font-bold text-[var(--text-primary)] truncate">{{ $hl->service_name }}</h3>
-                                <span class="text-sm font-mono font-extrabold text-[#B94F12] dark:text-[#F29A56] block mt-0.5">{{ $hl->phone_number }}</span>
-                                @if($hl->is_toll_free)
-                                    <span class="text-[10px] text-[#27845B] dark:text-[#5BD19A] font-bold uppercase">Toll Free</span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <a href="tel:{{ preg_replace('/[^0-9]/', '', $hl->phone_number) }}" 
-                           class="p-3 rounded-xl bg-[var(--surface-card)] border border-[var(--border-subtle)] text-[var(--text-primary)] hover:text-[#E87524] hover:border-[#E87524]/50 shadow-xs shrink-0 touch-target flex items-center justify-center transition-colors"
-                           title="Call Hotline">
-                            <i data-lucide="phone-outgoing" class="w-4 h-4"></i>
-                        </a>
-                    </div>
-                @empty
-                    <p class="text-xs text-[var(--text-muted)] col-span-2">Hotline directory is loading.</p>
-                @endforelse
+            <div class="rounded-2xl border border-amber-300/30 bg-amber-300/10 p-4 text-xs text-amber-900 dark:text-amber-100">
+                Real hotline numbers and call actions are unavailable in the demo. Do not use this page for an emergency.
             </div>
 
             {{-- Official Facebook Page --}}

@@ -189,14 +189,7 @@
                     <div class="text-xs">
                         <div class="font-bold text-sm">{{ $incident->caller_name ?? 'Protected Citizen' }}</div>
                         <div class="font-mono mt-1">
-                            @if($incident->caller_phone)
-                                <a href="tel:{{ $incident->caller_phone }}" class="text-[#27845B] font-bold hover:underline flex items-center gap-1">
-                                    <i data-lucide="phone" class="w-3.5 h-3.5"></i>
-                                    <span>{{ $incident->caller_phone }}</span>
-                                </a>
-                            @else
-                                <span class="text-[#77736E] italic">No phone recorded</span>
-                            @endif
+                            <span class="text-amber-700 dark:text-amber-200">Contact calls are disabled in this demo.</span>
                         </div>
                     </div>
                 </div>
