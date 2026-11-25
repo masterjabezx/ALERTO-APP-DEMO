@@ -6,20 +6,20 @@
     'emptyIcon' => 'inbox',
 ])
 
-<div class="w-full bg-white rounded-[20px] border border-slate-200/80 overflow-hidden shadow-[0_4px_20px_-2px_rgba(23,57,87,0.05)]">
+<div {{ $attributes->merge(['class' => 'alerto-card w-full bg-white rounded-[20px] border border-[#E6E3DE] overflow-hidden']) }}>
     @if(isset($toolbar))
-        <div class="p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div class="p-4 sm:px-6 border-b border-[#E6E3DE] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             {{ $toolbar }}
         </div>
     @endif
 
     <div class="overflow-x-auto alerto-scrollbar">
-        <table class="w-full text-left text-sm text-slate-700">
+        <table class="w-full text-left text-xs sm:text-sm text-[#292D32]">
             @if(!empty($headers))
-                <thead class="bg-slate-50 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200/80">
+                <thead class="bg-[#EFECE6] text-[11px] font-bold uppercase tracking-wider text-[#77736E] border-b border-[#E6E3DE]">
                     <tr>
                         @foreach($headers as $header)
-                            <th scope="col" class="px-6 py-3.5 whitespace-nowrap">
+                            <th scope="col" class="px-5 py-3.5 whitespace-nowrap">
                                 {{ $header }}
                             </th>
                         @endforeach
@@ -27,14 +27,14 @@
                 </thead>
             @endif
 
-            <tbody class="divide-y divide-slate-100">
+            <tbody class="divide-y divide-[#E6E3DE]/70">
                 @if($empty)
                     <tr>
                         <td colspan="{{ count($headers) ?: 1 }}" class="p-10 text-center">
-                            <x-empty-state 
-                                :title="$emptyTitle" 
-                                :description="$emptyDescription" 
-                                :icon="$emptyIcon" 
+                            <x-empty-state
+                                :title="$emptyTitle"
+                                :description="$emptyDescription"
+                                :icon="$emptyIcon"
                             />
                         </td>
                     </tr>
@@ -46,9 +46,8 @@
     </div>
 
     @if(isset($pagination))
-        <div class="p-4 border-t border-slate-100 bg-slate-50/50">
+        <div class="p-4 border-t border-[#E6E3DE] bg-[#FAF8F5]">
             {{ $pagination }}
         </div>
     @endif
 </div>
-

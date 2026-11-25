@@ -1,40 +1,42 @@
 @props([
-    'variant' => 'neutral', // success, emergency, warning, info, neutral
+    'variant' => 'neutral', // brand, success, emergency, warning, info, carbon, neutral
     'size' => 'md', // sm, md
     'dot' => false,
     'pulse' => false,
 ])
 
 @php
-    $baseClasses = 'inline-flex items-center font-semibold rounded-full tracking-wide';
+    $baseClasses = 'inline-flex items-center font-bold rounded-full tracking-wide whitespace-nowrap';
 
     $sizeClasses = match($size) {
-        'sm' => 'px-2 py-0.5 text-[10px] gap-1',
-        default => 'px-2.5 py-1 text-xs gap-1.5',
+        'sm' => 'px-2.5 py-0.5 text-[10px] gap-1.5',
+        default => 'px-3 py-1 text-xs gap-1.5',
     };
 
     $variantClasses = match($variant) {
-        'success' => 'bg-[#19865B]/10 text-[#19865B] border border-[#19865B]/20',
-        'emergency', 'danger' => 'bg-[#DB4545]/10 text-[#DB4545] border border-[#DB4545]/20',
-        'warning' => 'bg-[#F0A82E]/15 text-[#b3740e] border border-[#F0A82E]/30',
-        'info', 'blue' => 'bg-[#3187D8]/10 text-[#3187D8] border border-[#3187D8]/20',
-        'navy' => 'bg-[#173957]/10 text-[#173957] border border-[#173957]/20',
-        default => 'bg-slate-100 text-slate-700 border border-slate-200',
+        'brand', 'orange' => 'bg-[#FFF0E4] text-[#B94F12] border border-[#E87524]/30',
+        'success' => 'bg-[#27845B]/12 text-[#27845B] border border-[#27845B]/25',
+        'emergency', 'danger', 'critical' => 'bg-[#C83F43]/12 text-[#C83F43] border border-[#C83F43]/25',
+        'warning' => 'bg-[#D99024]/15 text-[#9a630d] border border-[#D99024]/30',
+        'info', 'blue' => 'bg-[#397BA8]/12 text-[#397BA8] border border-[#397BA8]/25',
+        'carbon', 'navy' => 'bg-[#17191C] text-[#F5F3EF] border border-[#292D32] badge-fixed',
+        default => 'bg-[#EFECE6] text-[#454A50] border border-[#E6E3DE]',
     };
 
     $dotColor = match($variant) {
-        'success' => 'bg-[#19865B]',
-        'emergency', 'danger' => 'bg-[#DB4545]',
-        'warning' => 'bg-[#F0A82E]',
-        'info', 'blue' => 'bg-[#3187D8]',
-        'navy' => 'bg-[#173957]',
-        default => 'bg-slate-500',
+        'brand', 'orange' => 'bg-[#E87524]',
+        'success' => 'bg-[#27845B]',
+        'emergency', 'danger', 'critical' => 'bg-[#C83F43]',
+        'warning' => 'bg-[#D99024]',
+        'info', 'blue' => 'bg-[#397BA8]',
+        'carbon', 'navy' => 'bg-[#E87524]',
+        default => 'bg-[#77736E]',
     };
 @endphp
 
 <span {{ $attributes->merge(['class' => "{$baseClasses} {$sizeClasses} {$variantClasses}"]) }}>
     @if($dot)
-        <span class="relative flex h-2 w-2">
+        <span class="relative flex h-2 w-2 shrink-0">
             @if($pulse)
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full {{ $dotColor }} opacity-75"></span>
             @endif
@@ -43,4 +45,3 @@
     @endif
     <span>{{ $slot }}</span>
 </span>
-

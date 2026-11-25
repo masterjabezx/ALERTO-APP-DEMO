@@ -1,8 +1,8 @@
-<x-layouts.admin>
+<x-layouts.admin :title="'Live Operations Map — ALERTO EOC'">
     <div 
         x-data="adminLiveMap({{ Js::from($initialData) }})"
         x-init="initMap()"
-        class="relative h-[calc(100vh-5rem)] -m-4 sm:-m-6 lg:-m-8 overflow-hidden bg-slate-900"
+        class="relative h-[calc(100vh-5rem)] -m-4 sm:-m-6 lg:-m-8 overflow-hidden bg-[#17191C]"
     >
         {{-- Leaflet CSS & JS --}}
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -11,18 +11,18 @@
         {{-- Top Floating Telemetry & Metric Bar --}}
         <div class="eoc-map-hud absolute top-4 left-4 right-4 z-[1000] pointer-events-none flex flex-wrap items-center justify-between gap-3">
             {{-- Quick Stats Pills --}}
-            <div class="pointer-events-auto flex items-center gap-2 bg-[#0B1726]/90 backdrop-blur-md p-1.5 rounded-2xl border border-[#34B9D4]/25 shadow-xl text-xs text-[#EDF4FC]">
+            <div class="pointer-events-auto flex items-center gap-2 bg-[#17191C]/92 backdrop-blur-md p-1.5 rounded-2xl border border-white/15 shadow-xl text-xs text-[#F5F3EF]">
                 <div class="px-3 py-1 rounded-xl bg-white/10 flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#27845B] animate-pulse"></span>
                     <span class="font-bold tracking-wide">LIVE OPERATIONS MAP</span>
                 </div>
 
                 <div class="hidden sm:flex items-center gap-4 px-3 py-1 font-mono text-[11px] border-l border-white/10">
-                    <div>Total: <span class="font-bold text-slate-200" x-text="stats.total_incidents">0</span></div>
-                    <div>Pending: <span class="font-bold text-amber-400" x-text="stats.pending_review">0</span></div>
-                    <div>Active: <span class="font-bold text-blue-400" x-text="stats.active_incidents">0</span></div>
-                    <div>Resolved: <span class="font-bold text-emerald-400" x-text="stats.resolved_incidents">0</span></div>
-                    <div>Online Responders: <span class="font-bold text-emerald-300" x-text="stats.online_personnel">0</span></div>
+                    <div>Total: <span class="font-bold text-[#F5F3EF]" x-text="stats.total_incidents">0</span></div>
+                    <div>Pending: <span class="font-bold text-[#F6BA53]" x-text="stats.pending_review">0</span></div>
+                    <div>Active: <span class="font-bold text-[#F29A56]" x-text="stats.active_incidents">0</span></div>
+                    <div>Resolved: <span class="font-bold text-[#5BD19A]" x-text="stats.resolved_incidents">0</span></div>
+                    <div>Online Responders: <span class="font-bold text-[#5BD19A]" x-text="stats.online_personnel">0</span></div>
                 </div>
             </div>
 
@@ -31,37 +31,37 @@
                 <button
                     type="button"
                     x-on:click="respondersDrawerOpen = !respondersDrawerOpen"
-                    class="px-3 py-2 rounded-xl bg-[#0B1726]/90 hover:bg-[#173957] text-white text-xs font-bold border border-white/15 shadow-lg backdrop-blur-md flex items-center gap-2 transition-all"
+                    class="px-3 py-2 rounded-xl bg-[#17191C]/92 hover:bg-[#292D32] text-[#F5F3EF] text-xs font-bold border border-white/15 shadow-lg backdrop-blur-md flex items-center gap-2 transition-all cursor-pointer"
                 >
-                    <i data-lucide="radio" class="w-4 h-4 text-[#19865B]"></i>
+                    <i data-lucide="radio" class="w-4 h-4 text-[#5BD19A]"></i>
                     <span class="hidden md:inline">Units Telemetry</span>
                 </button>
                 <a 
                     href="{{ route('admin.map.boundaries') }}" 
-                    class="px-3 py-2 rounded-xl bg-[#173957]/90 hover:bg-[#173957] text-white text-xs font-bold border border-white/10 shadow-lg backdrop-blur-md flex items-center gap-2 transition-all hover:scale-105"
+                    class="px-3 py-2 rounded-xl bg-[#17191C]/92 hover:bg-[#292D32] text-[#F5F3EF] text-xs font-bold border border-white/15 shadow-lg backdrop-blur-md flex items-center gap-2 transition-all hover:scale-105"
                     title="Import Official GeoJSON Boundaries"
                 >
-                    <i data-lucide="layers" class="w-4 h-4 text-[#3187D8]"></i>
+                    <i data-lucide="layers" class="w-4 h-4 text-[#E87524]"></i>
                     <span class="hidden md:inline">Boundaries</span>
                 </a>
 
                 <button 
                     type="button"
                     x-on:click="filtersOpen = !filtersOpen"
-                    class="px-3 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg border border-slate-200 hover:bg-slate-100 flex items-center gap-2 transition-all"
+                    class="px-3 py-2 rounded-xl bg-[var(--surface-card)] text-[var(--text-primary)] text-xs font-bold shadow-lg border border-[var(--border-subtle)] hover:bg-[var(--surface-panel)] flex items-center gap-2 transition-all cursor-pointer"
                 >
-                    <i data-lucide="filter" class="w-4 h-4 text-[#3187D8]"></i>
+                    <i data-lucide="filter" class="w-4 h-4 text-[#E87524]"></i>
                     <span>Filters</span>
-                    <span x-show="activeFilterCount() > 0" class="px-1.5 py-0.2 rounded-full bg-[#3187D8] text-white text-[10px]" x-text="activeFilterCount()"></span>
+                    <span x-show="activeFilterCount() > 0" class="px-1.5 py-0.2 rounded-full bg-[#E87524] text-white text-[10px]" x-text="activeFilterCount()"></span>
                 </button>
 
                 <button 
                     type="button"
                     x-on:click="refreshData()"
-                    class="p-2 rounded-xl bg-white text-slate-900 shadow-lg border border-slate-200 hover:bg-slate-100 transition-all"
+                    class="p-2 rounded-xl bg-[var(--surface-card)] text-[var(--text-primary)] shadow-lg border border-[var(--border-subtle)] hover:bg-[var(--surface-panel)] transition-all cursor-pointer"
                     title="Refresh Map Data"
                 >
-                    <i data-lucide="refresh-cw" class="w-4 h-4 text-slate-700" :class="isRefreshing ? 'animate-spin' : ''"></i>
+                    <i data-lucide="refresh-cw" class="w-4 h-4 text-[var(--text-secondary)]" :class="isRefreshing ? 'animate-spin' : ''"></i>
                 </button>
             </div>
         </div>
@@ -70,15 +70,15 @@
         <div
             x-show="respondersDrawerOpen"
             x-transition.opacity
-            class="absolute top-16 left-4 z-[1001] w-80 bg-[#0B1726]/95 text-[#EDF4FC] backdrop-blur-md rounded-2xl shadow-2xl border border-[#34B9D4]/25 p-4 max-h-[calc(100vh-10rem)] flex flex-col"
+            class="absolute top-16 left-4 z-[1001] w-80 bg-[#17191C]/95 text-[#F5F3EF] backdrop-blur-md rounded-2xl shadow-2xl border border-[#E87524]/30 p-4 max-h-[calc(100vh-10rem)] flex flex-col"
             x-cloak
         >
             <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-white/10">
                 <h3 class="text-xs font-black uppercase tracking-wider flex items-center gap-2">
-                    <i data-lucide="navigation" class="w-4 h-4 text-[#34B9D4]"></i>
+                    <i data-lucide="navigation" class="w-4 h-4 text-[#E87524]"></i>
                     <span>Field Responder GPS Telemetry</span>
                 </h3>
-                <button type="button" x-on:click="respondersDrawerOpen = false" class="text-[#93A4B8] hover:text-white">
+                <button type="button" x-on:click="respondersDrawerOpen = false" class="text-[#A39E98] hover:text-white cursor-pointer">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -89,15 +89,15 @@
                             class="w-full text-left p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-between gap-2 transition-colors">
                         <div class="min-w-0">
                             <div class="font-bold truncate" x-text="resp.name + ' (' + resp.badge + ')'"></div>
-                            <div class="text-[10px] text-[#93A4B8] truncate" x-text="resp.office + ' · ' + resp.last_update"></div>
+                            <div class="text-[10px] text-[#9E9993] truncate" x-text="resp.office + ' · ' + resp.last_update"></div>
                         </div>
                         <span class="px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase shrink-0"
-                              :class="resp.freshness === 'live' ? 'bg-[#19865B]/25 text-[#6AE0B0]' : 'bg-[#F0A82E]/20 text-[#F7C768]'"
+                              :class="resp.freshness === 'live' ? 'bg-[#27845B]/25 text-[#5BD19A]' : 'bg-[#D99024]/20 text-[#F29A56]'"
                               x-text="resp.freshness === 'live' ? 'LIVE' : 'STALE'"></span>
                     </button>
                 </template>
                 <template x-if="!mapData.responders || mapData.responders.length === 0">
-                    <div class="py-6 text-center text-[#93A4B8] text-[11px]">No responder GPS locations reported yet.</div>
+                    <div class="py-6 text-center text-[#9E9993] text-[11px]">No responder GPS locations reported yet.</div>
                 </template>
             </div>
         </div>
@@ -106,15 +106,15 @@
         <div 
             x-show="filtersOpen" 
             x-transition.opacity.duration.200ms
-            class="absolute top-16 right-4 z-[1001] w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 p-5 overflow-y-auto max-h-[calc(100vh-6rem)]"
+            class="absolute top-16 right-4 z-[1001] w-80 sm:w-96 alerto-card shadow-2xl p-5 overflow-y-auto max-h-[calc(100vh-6rem)]"
             x-cloak
         >
-            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-                <h3 class="font-black text-slate-900 text-sm flex items-center gap-2">
-                    <i data-lucide="sliders" class="w-4 h-4 text-[#3187D8]"></i>
+            <div class="flex items-center justify-between pb-3 border-b border-[#E6E3DE] dark:border-white/10">
+                <h3 class="font-black text-sm flex items-center gap-2">
+                    <i data-lucide="sliders" class="w-4 h-4 text-[#E87524]"></i>
                     Operations Map Filters
                 </h3>
-                <button type="button" x-on:click="filtersOpen = false" class="text-slate-400 hover:text-slate-600">
+                <button type="button" x-on:click="filtersOpen = false" class="text-[#77736E] hover:text-[#17191C] dark:hover:text-white">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -122,20 +122,20 @@
             <div class="space-y-4 py-4 text-xs">
                 {{-- Search Filter --}}
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Search Reference / Keyword</label>
+                    <label class="block font-bold mb-1">Search Reference / Keyword</label>
                     <input 
                         type="text" 
                         x-model="filters.search" 
                         x-on:input.debounce.400ms="applyFilters()"
                         placeholder="e.g. INC-2026, Culipapa..." 
-                        class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-[#3187D8] focus:border-[#3187D8]"
+                        class="w-full px-3 py-2 rounded-xl border border-[#E6E3DE] dark:border-white/15 bg-white dark:bg-[#17191C] text-xs focus:outline-hidden focus:ring-2 focus:ring-[#E87524]"
                     />
                 </div>
 
                 {{-- Category Filter --}}
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Incident Category</label>
-                    <select x-model="filters.category_id" x-on:change="applyFilters()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs">
+                    <label class="block font-bold mb-1">Incident Category</label>
+                    <select x-model="filters.category_id" x-on:change="applyFilters()" class="w-full px-3 py-2 rounded-xl border border-[#E6E3DE] dark:border-white/15 bg-white dark:bg-[#17191C] text-xs">
                         <option value="">All Categories</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -145,8 +145,8 @@
 
                 {{-- Barangay Filter --}}
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Barangay Jurisdiction</label>
-                    <select x-model="filters.barangay_id" x-on:change="applyFilters()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs">
+                    <label class="block font-bold mb-1">Barangay Jurisdiction</label>
+                    <select x-model="filters.barangay_id" x-on:change="applyFilters()" class="w-full px-3 py-2 rounded-xl border border-[#E6E3DE] dark:border-white/15 bg-white dark:bg-[#17191C] text-xs">
                         <option value="">All 13 Hinoba-an Barangays</option>
                         @foreach($barangays as $barangay)
                             <option value="{{ $barangay->id }}">{{ $barangay->name }}</option>
@@ -156,17 +156,17 @@
 
                 {{-- Status Filter --}}
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Incident Status</label>
-                    <select x-model="filters.status" x-on:change="applyFilters()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs">
+                    <label class="block font-bold mb-1">Incident Status</label>
+                    <select x-model="filters.status" x-on:change="applyFilters()" class="w-full px-3 py-2 rounded-xl border border-[#E6E3DE] dark:border-white/15 bg-white dark:bg-[#17191C] text-xs">
                         <option value="">All Operational Statuses</option>
                         <option value="pending_review">Pending Review (Orange)</option>
-                        <option value="accepted">Accepted (Blue)</option>
+                        <option value="accepted">Accepted (Info)</option>
                         <option value="dispatched">Dispatched (Green)</option>
                         <option value="acknowledged">Acknowledged</option>
                         <option value="on_the_way">On The Way</option>
                         <option value="on_scene">On Scene</option>
                         <option value="in_progress">In Progress</option>
-                        <option value="resolved">Resolved (Gray)</option>
+                        <option value="resolved">Resolved (Neutral)</option>
                         <option value="closed">Closed</option>
                         <option value="rejected">Rejected (Red)</option>
                     </select>
@@ -174,8 +174,8 @@
 
                 {{-- Office Filter --}}
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Assigned Agency Office</label>
-                    <select x-model="filters.office_id" x-on:change="applyFilters()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs">
+                    <label class="block font-bold mb-1">Assigned Agency Office</label>
+                    <select x-model="filters.office_id" x-on:change="applyFilters()" class="w-full px-3 py-2 rounded-xl border border-[#E6E3DE] dark:border-white/15 bg-white dark:bg-[#17191C] text-xs">
                         <option value="">All Partner Agencies</option>
                         @foreach($offices as $office)
                             <option value="{{ $office->id }}">{{ $office->name }} ({{ $office->code }})</option>
@@ -184,42 +184,42 @@
                 </div>
 
                 {{-- Layer Visibility Toggles --}}
-                <div class="pt-2 border-t border-slate-100">
-                    <span class="block font-bold text-slate-700 mb-2">Display Layers</span>
+                <div class="pt-2 border-t border-[#E6E3DE] dark:border-white/10">
+                    <span class="block font-bold mb-2">Display Layers</span>
                     <div class="grid grid-cols-2 gap-2 text-[11px]">
                         <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" x-model="layers.incidents" x-on:change="updateLayerVisibility()" class="rounded text-[#3187D8]">
+                            <input type="checkbox" x-model="layers.incidents" x-on:change="updateLayerVisibility()" class="rounded text-[#E87524] focus:ring-[#E87524]">
                             <span>Incidents</span>
                         </label>
                         <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" x-model="layers.responders" x-on:change="updateLayerVisibility()" class="rounded text-[#3187D8]">
+                            <input type="checkbox" x-model="layers.responders" x-on:change="updateLayerVisibility()" class="rounded text-[#E87524] focus:ring-[#E87524]">
                             <span>Responders</span>
                         </label>
                         <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" x-model="layers.bases" x-on:change="updateLayerVisibility()" class="rounded text-[#3187D8]">
+                            <input type="checkbox" x-model="layers.bases" x-on:change="updateLayerVisibility()" class="rounded text-[#E87524] focus:ring-[#E87524]">
                             <span>Bases &amp; HQ</span>
                         </label>
                         <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" x-model="layers.evidence" x-on:change="updateLayerVisibility()" class="rounded text-[#3187D8]">
+                            <input type="checkbox" x-model="layers.evidence" x-on:change="updateLayerVisibility()" class="rounded text-[#E87524] focus:ring-[#E87524]">
                             <span>Evidence Media</span>
                         </label>
                         <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" x-model="layers.boundaries" x-on:change="updateLayerVisibility()" class="rounded text-[#3187D8]">
+                            <input type="checkbox" x-model="layers.boundaries" x-on:change="updateLayerVisibility()" class="rounded text-[#E87524] focus:ring-[#E87524]">
                             <span>Barangay Borders</span>
                         </label>
                         <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" x-model="layers.routes" x-on:change="updateLayerVisibility()" class="rounded text-[#3187D8]">
+                            <input type="checkbox" x-model="layers.routes" x-on:change="updateLayerVisibility()" class="rounded text-[#E87524] focus:ring-[#E87524]">
                             <span>Response Routes</span>
                         </label>
                     </div>
                 </div>
             </div>
 
-            <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-                <button type="button" x-on:click="resetFilters()" class="text-xs text-rose-600 font-bold hover:underline">
+            <div class="pt-3 border-t border-[#E6E3DE] dark:border-white/10 flex items-center justify-between">
+                <button type="button" x-on:click="resetFilters()" class="text-xs text-[#C83F43] font-bold hover:underline">
                     Reset All Filters
                 </button>
-                <button type="button" x-on:click="filtersOpen = false" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800">
+                <button type="button" x-on:click="filtersOpen = false" class="px-3 py-1.5 rounded-xl bg-[#E87524] hover:bg-[#B94F12] text-white text-xs font-bold">
                     Done
                 </button>
             </div>
@@ -229,17 +229,17 @@
         <div id="alerto-admin-map" class="w-full h-full z-[1]"></div>
 
         {{-- Map Legend Bar --}}
-        <div class="absolute bottom-4 left-4 z-[1000] pointer-events-auto bg-[#173957]/90 backdrop-blur-md px-3 py-2 rounded-xl border border-white/10 shadow-xl hidden md:flex items-center gap-3 text-[10px] text-white">
-            <span class="font-bold text-slate-300">INCIDENTS:</span>
-            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span><span>Pending</span></div>
-            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span><span>Accepted</span></div>
-            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span><span>Dispatched</span></div>
-            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span><span>Resolved</span></div>
-            <span class="font-bold text-slate-300 ml-1 border-l border-white/10 pl-2.5">EVIDENCE:</span>
-            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-violet-500"></span><span>Photo</span></div>
-            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-cyan-500"></span><span>Video</span></div>
-            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-emerald-500 border border-white"></span><span>Personnel</span></div>
-            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-amber-400 border border-white"></span><span>Office</span></div>
+        <div class="absolute bottom-4 left-4 z-[1000] pointer-events-auto bg-[#17191C]/92 backdrop-blur-md px-3 py-2 rounded-xl border border-white/10 shadow-xl hidden md:flex items-center gap-3 text-[10px] text-[#F5F3EF]">
+            <span class="font-bold text-[#9E9993]">INCIDENTS:</span>
+            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#E87524]"></span><span>Pending</span></div>
+            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#397BA8]"></span><span>Accepted</span></div>
+            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#27845B]"></span><span>Dispatched</span></div>
+            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#77736E]"></span><span>Resolved</span></div>
+            <span class="font-bold text-[#9E9993] ml-1 border-l border-white/10 pl-2.5">EVIDENCE:</span>
+            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-[#E87524]"></span><span>Photo</span></div>
+            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-[#397BA8]"></span><span>Video</span></div>
+            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-[#27845B] border border-white"></span><span>Personnel</span></div>
+            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-[#D99024] border border-white"></span><span>Office</span></div>
         </div>
 
         {{-- Selected Evidence Media Side Panel --}}
@@ -248,25 +248,25 @@
             x-transition:enter="transition ease-out duration-300 transform"
             x-transition:enter-start="translate-x-full"
             x-transition:enter-end="translate-x-0"
-            class="absolute top-0 right-0 bottom-0 z-[1003] w-full sm:w-[430px] bg-white shadow-2xl border-l border-slate-200 flex flex-col"
+            class="absolute top-0 right-0 bottom-0 z-[1003] w-full sm:w-[430px] alerto-card shadow-2xl border-l border-[#E6E3DE] dark:border-white/10 flex flex-col rounded-none"
             x-cloak
         >
             <template x-if="selectedEvidence">
                 <div class="flex flex-col h-full">
-                    <div class="p-4 border-b border-slate-200 bg-[#173957] text-white flex items-center justify-between">
+                    <div class="p-4 border-b border-white/10 bg-[#101214] text-[#F5F3EF] flex items-center justify-between">
                         <div>
-                            <span class="px-2 py-0.5 rounded bg-[#3187D8] text-white text-[10px] font-bold uppercase tracking-wider"
+                            <span class="px-2 py-0.5 rounded bg-[#E87524] text-white text-[10px] font-bold uppercase tracking-wider"
                                   x-text="(selectedEvidence.media_type || 'media') + ' EVIDENCE'"></span>
                             <h3 class="text-sm font-black truncate max-w-[300px] mt-1" x-text="selectedEvidence.file_name"></h3>
                         </div>
-                        <button type="button" x-on:click="selectedEvidence = null" class="text-slate-300 hover:text-white p-1">
+                        <button type="button" x-on:click="selectedEvidence = null" class="text-[#9E9993] hover:text-white p-1">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
 
                     <div class="flex-1 overflow-y-auto alerto-scrollbar p-5 space-y-4 text-xs">
                         {{-- Media Preview --}}
-                        <div class="rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 aspect-video flex items-center justify-center">
+                        <div class="rounded-2xl overflow-hidden bg-[#101214] border border-[#E6E3DE] dark:border-white/10 aspect-video flex items-center justify-center">
                             <template x-if="selectedEvidence.media_type === 'photo'">
                                 <img :src="selectedEvidence.stream_url" class="w-full h-full object-cover" alt="Evidence Preview">
                             </template>
@@ -275,61 +275,61 @@
                             </template>
                         </div>
 
-                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100 space-y-2 text-[11px]">
+                        <div class="p-3.5 rounded-xl bg-[#F5F3EF] dark:bg-white/5 border border-[#E6E3DE] dark:border-white/10 space-y-2 text-[11px]">
                             <div class="flex justify-between">
-                                <span class="text-slate-400">Related Incident:</span>
-                                <span class="font-mono font-bold text-[#173957]" x-text="selectedEvidence.incident_reference || 'Standalone Media'"></span>
+                                <span class="text-[#77736E]">Related Incident:</span>
+                                <span class="font-mono font-bold text-[#B94F12] dark:text-[#F29A56]" x-text="selectedEvidence.incident_reference || 'Standalone Media'"></span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-slate-400">Media Source:</span>
-                                <span class="font-mono font-semibold text-slate-700" x-text="selectedEvidence.source_channel"></span>
+                                <span class="text-[#77736E]">Media Source:</span>
+                                <span class="font-mono font-semibold" x-text="selectedEvidence.source_channel"></span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-slate-400">Uploader:</span>
-                                <span class="font-bold text-slate-800" x-text="selectedEvidence.uploader + ' (' + selectedEvidence.uploader_account_type + ')'"></span>
+                                <span class="text-[#77736E]">Uploader:</span>
+                                <span class="font-bold" x-text="selectedEvidence.uploader + ' (' + selectedEvidence.uploader_account_type + ')'"></span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-slate-400">Capture Timestamp:</span>
-                                <span class="font-mono text-slate-700" x-text="selectedEvidence.captured_at ? new Date(selectedEvidence.captured_at).toLocaleString() : 'N/A'"></span>
+                                <span class="text-[#77736E]">Capture Timestamp:</span>
+                                <span class="font-mono" x-text="selectedEvidence.captured_at ? new Date(selectedEvidence.captured_at).toLocaleString() : 'N/A'"></span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-slate-400">Upload Timestamp:</span>
-                                <span class="font-mono text-slate-700" x-text="selectedEvidence.uploaded_at ? new Date(selectedEvidence.uploaded_at).toLocaleString() : 'N/A'"></span>
+                                <span class="text-[#77736E]">Upload Timestamp:</span>
+                                <span class="font-mono" x-text="selectedEvidence.uploaded_at ? new Date(selectedEvidence.uploaded_at).toLocaleString() : 'N/A'"></span>
                             </div>
                         </div>
 
-                        <div class="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200/70 space-y-1.5 font-mono text-[11px]">
+                        <div class="p-3.5 rounded-xl bg-[#27845B]/10 border border-[#27845B]/25 space-y-1.5 font-mono text-[11px]">
                             <div class="flex justify-between">
-                                <span class="text-emerald-700 font-bold">Location Source:</span>
-                                <span class="font-bold text-emerald-900" x-text="selectedEvidence.location_source"></span>
+                                <span class="text-[#27845B] font-bold">Location Source:</span>
+                                <span class="font-bold" x-text="selectedEvidence.location_source"></span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-emerald-700">Coordinates:</span>
-                                <span class="font-bold text-emerald-950" x-text="selectedEvidence.latitude.toFixed(6) + ', ' + selectedEvidence.longitude.toFixed(6)"></span>
+                                <span class="text-[#27845B]">Coordinates:</span>
+                                <span class="font-bold" x-text="selectedEvidence.latitude.toFixed(6) + ', ' + selectedEvidence.longitude.toFixed(6)"></span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-emerald-700">GPS Accuracy:</span>
-                                <span class="text-emerald-900" x-text="selectedEvidence.accuracy ? '±' + selectedEvidence.accuracy + ' m' : 'Unavailable'"></span>
+                                <span class="text-[#27845B]">GPS Accuracy:</span>
+                                <span x-text="selectedEvidence.accuracy ? '±' + selectedEvidence.accuracy + ' m' : 'Unavailable'"></span>
                             </div>
                             <template x-if="selectedEvidence.barangay">
                                 <div class="flex justify-between">
-                                    <span class="text-emerald-700">Barangay:</span>
-                                    <span class="font-sans font-bold text-emerald-900" x-text="selectedEvidence.barangay"></span>
+                                    <span class="text-[#27845B]">Barangay:</span>
+                                    <span class="font-sans font-bold" x-text="selectedEvidence.barangay"></span>
                                 </div>
                             </template>
                         </div>
                     </div>
 
-                    <div class="p-4 border-t border-slate-200 bg-slate-50 space-y-2">
+                    <div class="p-4 border-t border-[#E6E3DE] dark:border-white/10 bg-[#F5F3EF] dark:bg-[#101214] space-y-2">
                         <template x-if="selectedEvidence.incident_reference">
                             <a :href="'/admin/incidents/' + selectedEvidence.incident_reference"
-                               class="w-full py-2.5 px-4 rounded-xl bg-[#173957] hover:bg-[#0f2438] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm">
-                                <i data-lucide="file-warning" class="w-4 h-4 text-[#3187D8]"></i>
+                               class="alerto-btn-press w-full py-2.5 px-4 rounded-xl bg-[#17191C] hover:bg-[#292D32] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm border border-white/10">
+                                <i data-lucide="file-warning" class="w-4 h-4 text-[#E87524]"></i>
                                 <span>OPEN RELATED INCIDENT</span>
                             </a>
                         </template>
                         <a :href="selectedEvidence.stream_url" target="_blank"
-                           class="w-full py-2.5 px-4 rounded-xl bg-[#3187D8] hover:bg-[#256fb4] text-white font-bold text-xs flex items-center justify-center gap-2">
+                           class="alerto-btn-press w-full py-2.5 px-4 rounded-xl bg-[#E87524] hover:bg-[#B94F12] text-white font-bold text-xs flex items-center justify-center gap-2">
                             <i data-lucide="external-link" class="w-4 h-4"></i>
                             <span>VIEW ORIGINAL MEDIA</span>
                         </a>
@@ -347,16 +347,16 @@
             x-transition:leave="transition ease-in duration-200 transform"
             x-transition:leave-start="translate-x-0"
             x-transition:leave-end="translate-x-full"
-            class="absolute top-0 right-0 bottom-0 z-[1002] w-full sm:w-[450px] bg-white shadow-2xl border-l border-slate-200 flex flex-col"
+            class="absolute top-0 right-0 bottom-0 z-[1002] w-full sm:w-[450px] alerto-card shadow-2xl border-l border-[#E6E3DE] dark:border-white/10 flex flex-col rounded-none"
             x-cloak
         >
             <template x-if="selectedIncident">
                 <div class="flex flex-col h-full">
                     {{-- Header --}}
-                    <div class="p-5 border-b border-slate-200 bg-[#173957] text-white flex items-center justify-between">
+                    <div class="p-5 border-b border-white/10 bg-[#101214] text-[#F5F3EF] flex items-center justify-between">
                         <div>
                             <div class="flex items-center gap-2">
-                                <span class="font-mono text-xs font-bold text-[#3187D8]" x-text="selectedIncident.reference_number"></span>
+                                <span class="font-mono text-xs font-bold text-[#E87524]" x-text="selectedIncident.reference_number"></span>
                                 <span 
                                     class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider"
                                     :style="'background-color:' + selectedIncident.marker.color + '25; color:' + selectedIncident.marker.color"
@@ -365,7 +365,7 @@
                             </div>
                             <h2 class="text-base font-black tracking-tight mt-1" x-text="selectedIncident.category"></h2>
                         </div>
-                        <button type="button" x-on:click="selectedIncident = null" class="text-slate-300 hover:text-white p-1">
+                        <button type="button" x-on:click="selectedIncident = null" class="text-[#9E9993] hover:text-white p-1">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -373,78 +373,78 @@
                     {{-- Body --}}
                     <div class="flex-1 overflow-y-auto alerto-scrollbar p-5 space-y-5 text-xs">
                         {{-- Priority & Timestamp --}}
-                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-[#F5F3EF] dark:bg-white/5 border border-[#E6E3DE] dark:border-white/10">
                             <div>
-                                <span class="text-[10px] text-slate-400 font-bold uppercase block">Priority Level</span>
-                                <span class="font-bold text-slate-900 uppercase" x-text="selectedIncident.priority"></span>
+                                <span class="text-[10px] text-[#77736E] font-bold uppercase block">Priority Level</span>
+                                <span class="font-bold uppercase" x-text="selectedIncident.priority"></span>
                             </div>
                             <div class="text-right">
-                                <span class="text-[10px] text-slate-400 font-bold uppercase block">Submitted</span>
-                                <span class="font-medium text-slate-700" x-text="selectedIncident.formatted_time"></span>
+                                <span class="text-[10px] text-[#77736E] font-bold uppercase block">Submitted</span>
+                                <span class="font-medium" x-text="selectedIncident.formatted_time"></span>
                             </div>
                         </div>
 
                         {{-- Caller Verification Box --}}
                         <template x-if="selectedIncident.caller">
-                            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                            <div class="p-4 rounded-xl border border-[#E6E3DE] dark:border-white/10 bg-[#F5F3EF]/60 dark:bg-white/5 space-y-2">
                                 <div class="flex items-center justify-between">
-                                    <span class="font-bold text-slate-800" x-text="selectedIncident.caller.name"></span>
+                                    <span class="font-bold" x-text="selectedIncident.caller.name"></span>
                                     <span 
                                         class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase"
-                                        :class="selectedIncident.caller.verification_status === 'verified' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'"
+                                        :class="selectedIncident.caller.verification_status === 'verified' ? 'bg-[#27845B]/15 text-[#27845B]' : 'bg-[#D99024]/15 text-[#B94F12] dark:text-[#F29A56]'"
                                         x-text="selectedIncident.caller.verification_status"
                                     ></span>
                                 </div>
-                                <div class="flex items-center gap-2 text-slate-600">
-                                    <i data-lucide="phone" class="w-3.5 h-3.5 text-[#3187D8]"></i>
-                                    <a :href="'tel:' + selectedIncident.caller.phone" class="font-mono font-bold text-[#3187D8] hover:underline" x-text="selectedIncident.caller.phone"></a>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="phone" class="w-3.5 h-3.5 text-[#27845B]"></i>
+                                    <a :href="'tel:' + selectedIncident.caller.phone" class="font-mono font-bold text-[#27845B] hover:underline" x-text="selectedIncident.caller.phone"></a>
                                 </div>
                             </div>
                         </template>
 
                         {{-- Description --}}
                         <div>
-                            <span class="font-bold text-slate-800 block mb-1">Incident Description</span>
-                            <p class="text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100" x-text="selectedIncident.description"></p>
+                            <span class="font-bold block mb-1">Incident Description</span>
+                            <p class="text-[#454A50] dark:text-[#CFCBC4] leading-relaxed bg-[#F5F3EF] dark:bg-white/5 p-3 rounded-xl border border-[#E6E3DE] dark:border-white/10" x-text="selectedIncident.description"></p>
                         </div>
 
                         {{-- Geographic Position --}}
                         <div class="space-y-2">
-                            <span class="font-bold text-slate-800 block">Location &amp; Coordinates</span>
-                            <div class="p-3 rounded-xl border border-slate-200 bg-white space-y-1 font-mono text-[11px]">
+                            <span class="font-bold block">Location &amp; Coordinates</span>
+                            <div class="p-3 rounded-xl border border-[#E6E3DE] dark:border-white/10 bg-[#F5F3EF]/40 dark:bg-white/5 space-y-1 font-mono text-[11px]">
                                 <div class="flex justify-between">
-                                    <span class="text-slate-400">Barangay:</span>
-                                    <span class="font-bold text-slate-800" x-text="selectedIncident.barangay"></span>
+                                    <span class="text-[#77736E]">Barangay:</span>
+                                    <span class="font-bold" x-text="selectedIncident.barangay"></span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-slate-400">Latitude / Longitude:</span>
-                                    <span class="font-bold text-slate-800" x-text="selectedIncident.latitude.toFixed(6) + ', ' + selectedIncident.longitude.toFixed(6)"></span>
+                                    <span class="text-[#77736E]">Latitude / Longitude:</span>
+                                    <span class="font-bold" x-text="selectedIncident.latitude.toFixed(6) + ', ' + selectedIncident.longitude.toFixed(6)"></span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-slate-400">GPS Accuracy:</span>
-                                    <span class="text-slate-600" x-text="selectedIncident.accuracy ? selectedIncident.accuracy + 'm' : 'Standard'"></span>
+                                    <span class="text-[#77736E]">GPS Accuracy:</span>
+                                    <span x-text="selectedIncident.accuracy ? selectedIncident.accuracy + 'm' : 'Standard'"></span>
                                 </div>
                             </div>
                         </div>
 
                         {{-- Active Agency Assignments --}}
                         <div class="space-y-2">
-                            <span class="font-bold text-slate-800 block">Confirmed Assignments</span>
+                            <span class="font-bold block">Confirmed Assignments</span>
                             <template x-if="selectedIncident.assignments && selectedIncident.assignments.length > 0">
                                 <div class="space-y-1.5">
                                     <template x-for="asg in selectedIncident.assignments" :key="asg.id">
-                                        <div class="p-2.5 rounded-lg border border-slate-100 bg-slate-50 flex items-center justify-between text-xs">
+                                        <div class="p-2.5 rounded-lg border border-[#E6E3DE] dark:border-white/10 bg-[#F5F3EF] dark:bg-white/5 flex items-center justify-between text-xs">
                                             <div>
-                                                <span class="font-bold text-slate-900" x-text="asg.office || 'Emergency Agency'"></span>
-                                                <span class="text-slate-500 block text-[10px]" x-text="(asg.team ? asg.team + ' · ' : '') + (asg.personnel || 'Dispatch Standby')"></span>
+                                                <span class="font-bold" x-text="asg.office || 'Emergency Agency'"></span>
+                                                <span class="text-[#77736E] block text-[10px]" x-text="(asg.team ? asg.team + ' · ' : '') + (asg.personnel || 'Dispatch Standby')"></span>
                                             </div>
-                                            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-100 text-blue-800" x-text="asg.status"></span>
+                                            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#E87524]/15 text-[#B94F12] dark:text-[#F29A56]" x-text="asg.status"></span>
                                         </div>
                                     </template>
                                 </div>
                             </template>
                             <template x-if="!selectedIncident.assignments || selectedIncident.assignments.length === 0">
-                                <div class="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs">
+                                <div class="p-3 rounded-lg bg-[#D99024]/10 border border-[#D99024]/25 text-[#B94F12] dark:text-[#F29A56] text-xs">
                                     No response units assigned yet.
                                 </div>
                             </template>
@@ -453,12 +453,12 @@
                         {{-- Evidence Attachments --}}
                         <template x-if="selectedIncident.evidence && selectedIncident.evidence.length > 0">
                             <div class="space-y-2">
-                                <span class="font-bold text-slate-800 block">Geo-Tagged Evidence</span>
+                                <span class="font-bold block">Geo-Tagged Evidence</span>
                                 <div class="grid grid-cols-2 gap-2">
                                     <template x-for="ev in selectedIncident.evidence" :key="ev.id">
-                                        <div class="p-2 rounded-lg border border-slate-200 bg-slate-50 text-[10px]">
-                                            <div class="font-bold truncate text-slate-800" x-text="ev.file_name || 'Attachment'"></div>
-                                            <div class="text-slate-500 font-mono" x-text="ev.gps_source"></div>
+                                        <div class="p-2 rounded-lg border border-[#E6E3DE] dark:border-white/10 bg-[#F5F3EF] dark:bg-white/5 text-[10px]">
+                                            <div class="font-bold truncate" x-text="ev.file_name || 'Attachment'"></div>
+                                            <div class="text-[#77736E] font-mono" x-text="ev.gps_source"></div>
                                         </div>
                                     </template>
                                 </div>
@@ -467,10 +467,10 @@
                     </div>
 
                     {{-- Actions Footer --}}
-                    <div class="p-4 border-t border-slate-200 bg-slate-50 space-y-2">
+                    <div class="p-4 border-t border-[#E6E3DE] dark:border-white/10 bg-[#F5F3EF] dark:bg-[#101214] space-y-2">
                         <a 
                             :href="'/admin/incidents/' + selectedIncident.reference_number"
-                            class="w-full py-2.5 px-4 rounded-xl bg-[#3187D8] text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-[#286eb3] transition-all shadow-md"
+                            class="alerto-btn-press w-full py-2.5 px-4 rounded-xl bg-[#E87524] text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-[#B94F12] transition-all shadow-md"
                         >
                             <span>Open Full Incident Record &amp; Dispatch Console</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -479,9 +479,9 @@
                         <a 
                             :href="'https://www.google.com/maps/dir/?api=1&destination=' + selectedIncident.latitude + ',' + selectedIncident.longitude"
                             target="_blank"
-                            class="w-full py-2 px-4 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center gap-2 hover:bg-slate-100 transition-all"
+                            class="w-full py-2 px-4 rounded-xl bg-white dark:bg-[#292D32] border border-[#E6E3DE] dark:border-white/15 font-bold text-xs flex items-center justify-center gap-2 hover:bg-[#F5F3EF] dark:hover:bg-white/10 transition-all"
                         >
-                            <i data-lucide="navigation" class="w-3.5 h-3.5 text-[#3187D8]"></i>
+                            <i data-lucide="navigation" class="w-3.5 h-3.5 text-[#E87524]"></i>
                             <span>External Google Maps Navigation</span>
                         </a>
                     </div>
@@ -701,7 +701,7 @@
 
                     this.mapData.response_bases.forEach(base => {
                         const iconHtml = `
-                            <div class="w-6 h-6 rounded bg-[#173957] border border-white flex items-center justify-center text-white text-[9px] font-black shadow" style="transform: translate(-50%, -50%);">
+                            <div class="w-6 h-6 rounded bg-[#17191C] border border-[#E87524] flex items-center justify-center text-[#F5F3EF] text-[9px] font-black shadow" style="transform: translate(-50%, -50%);">
                                 H
                             </div>
                         `;
@@ -732,11 +732,11 @@
                             if (b.geojson) {
                                 L.geoJSON(b.geojson, {
                                     style: {
-                                        color: '#3187D8',
+                                        color: '#E87524',
                                         weight: 1.5,
-                                        opacity: 0.6,
-                                        fillColor: '#3187D8',
-                                        fillOpacity: 0.05,
+                                        opacity: 0.7,
+                                        fillColor: '#E87524',
+                                        fillOpacity: 0.06,
                                     }
                                 }).bindTooltip(b.name, { sticky: true, className: 'barangay-tooltip' }).addTo(this.markerLayers.boundaries);
                             }
@@ -750,11 +750,11 @@
 
                     this.mapData.evidence.forEach(ev => {
                         const styleConfig = {
-                            'photo_evidence': { bg: '#8B5CF6', badge: 'P', label: 'Photo' },
-                            'video_evidence': { bg: '#06B6D4', badge: 'V', label: 'Video' },
-                            'personnel_evidence': { bg: '#10B981', badge: 'R', label: 'Responder' },
-                            'office_evidence': { bg: '#F59E0B', badge: 'O', label: 'Office' },
-                        }[ev.marker_style || 'photo_evidence'] || { bg: '#8B5CF6', badge: 'E', label: 'Evidence' };
+                            'photo_evidence': { bg: '#E87524', badge: 'P', label: 'Photo' },
+                            'video_evidence': { bg: '#397BA8', badge: 'V', label: 'Video' },
+                            'personnel_evidence': { bg: '#27845B', badge: 'R', label: 'Responder' },
+                            'office_evidence': { bg: '#D99024', badge: 'O', label: 'Office' },
+                        }[ev.marker_style || 'photo_evidence'] || { bg: '#E87524', badge: 'E', label: 'Evidence' };
 
                         const iconHtml = `
                             <div class="relative cursor-pointer group" style="transform: translate(-50%, -50%);">
@@ -865,11 +865,11 @@
             border: none;
         }
         .barangay-tooltip {
-            background: rgba(23, 57, 87, 0.85);
-            color: #ffffff;
+            background: rgba(23, 25, 28, 0.92);
+            color: #F5F3EF;
             font-size: 10px;
             font-weight: bold;
-            border: none;
+            border: 1px solid rgba(232, 117, 36, 0.45);
             border-radius: 6px;
             padding: 2px 6px;
         }

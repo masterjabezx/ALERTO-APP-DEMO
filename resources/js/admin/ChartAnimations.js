@@ -31,10 +31,10 @@ class ChartAnimationsManager {
 
         this.renderMonthlyTrends('chart-monthly-trends', datasets.monthly_trends);
         this.renderCategoryDoughnut('chart-by-category', datasets.by_category);
-        this.renderHorizontalBar('chart-by-barangay', datasets.by_barangay, '#34B9D4', 'Incidents');
-        this.renderBarChart('chart-by-status', datasets.by_status, ['#F0A82E', '#3187D8', '#34B9D4', '#19865B', '#64748B', '#DB4545'], 'Status');
-        this.renderBarChart('chart-office-activity', datasets.office_activity, '#3187D8', 'Assigned Incidents');
-        this.renderBarChart('chart-personnel-activity', datasets.personnel_activity, '#19865B', 'Dispatched Tasks');
+        this.renderHorizontalBar('chart-by-barangay', datasets.by_barangay, '#E87524', 'Incidents');
+        this.renderBarChart('chart-by-status', datasets.by_status, ['#D99024', '#397BA8', '#E87524', '#27845B', '#77736E', '#C83F43'], 'Status');
+        this.renderBarChart('chart-office-activity', datasets.office_activity, '#E87524', 'Assigned Incidents');
+        this.renderBarChart('chart-personnel-activity', datasets.personnel_activity, '#27845B', 'Dispatched Tasks');
     }
 
     updateAllCharts(datasets = {}) {
@@ -57,7 +57,7 @@ class ChartAnimationsManager {
             if (!datasets.by_category) return;
             chart.data.labels = datasets.by_category.labels || [];
             chart.data.datasets[0].data = datasets.by_category.data || [];
-            chart.data.datasets[0].backgroundColor = datasets.by_category.colors || ['#3187D8'];
+            chart.data.datasets[0].backgroundColor = datasets.by_category.colors || ['#E87524'];
             chart.update({ duration });
         });
 
@@ -158,24 +158,24 @@ class ChartAnimationsManager {
                     {
                         label: 'Submitted',
                         data: data.submitted || [],
-                        borderColor: '#3187D8',
-                        backgroundColor: 'rgba(49, 135, 216, 0.16)',
+                        borderColor: '#E87524',
+                        backgroundColor: 'rgba(232, 117, 36, 0.16)',
                         fill: true,
                         tension: 0.35,
                         borderWidth: 2.5,
                         pointRadius: 3.5,
-                        pointBackgroundColor: '#34B9D4',
+                        pointBackgroundColor: '#F29A56',
                     },
                     {
                         label: 'Resolved',
                         data: data.resolved || [],
-                        borderColor: '#19865B',
-                        backgroundColor: 'rgba(25, 134, 91, 0.14)',
+                        borderColor: '#27845B',
+                        backgroundColor: 'rgba(39, 132, 91, 0.14)',
                         fill: true,
                         tension: 0.35,
                         borderWidth: 2.5,
                         pointRadius: 3.5,
-                        pointBackgroundColor: '#19865B',
+                        pointBackgroundColor: '#27845B',
                     },
                 ],
             },
@@ -198,7 +198,7 @@ class ChartAnimationsManager {
         const tokens = ThemeManager.getChartTokens();
         const palette = (data.colors && data.colors.length)
             ? data.colors
-            : ['#DB4545', '#3187D8', '#F0A82E', '#19865B', '#34B9D4', '#8B5CF6'];
+            : ['#E87524', '#C83F43', '#D99024', '#27845B', '#397BA8', '#454A50'];
 
         const chart = new this.ChartLib(canvas, {
             type: 'doughnut',
@@ -209,7 +209,7 @@ class ChartAnimationsManager {
                         data: data.data || [],
                         backgroundColor: palette,
                         borderWidth: 2,
-                        borderColor: ThemeManager.isDark() ? '#101E2E' : '#FFFFFF',
+                        borderColor: ThemeManager.isDark() ? '#17191C' : '#FFFFFF',
                         hoverOffset: 6,
                     },
                 ],
@@ -229,7 +229,7 @@ class ChartAnimationsManager {
         this.instances.set(canvasId, chart);
     }
 
-    renderHorizontalBar(canvasId, data, color = '#34B9D4', label = 'Total') {
+    renderHorizontalBar(canvasId, data, color = '#E87524', label = 'Total') {
         const canvas = document.getElementById(canvasId);
         if (!canvas || !data) return;
         this.destroyChart(canvasId);
@@ -262,7 +262,7 @@ class ChartAnimationsManager {
         this.instances.set(canvasId, chart);
     }
 
-    renderBarChart(canvasId, data, colors = '#3187D8', label = 'Count') {
+    renderBarChart(canvasId, data, colors = '#E87524', label = 'Count') {
         const canvas = document.getElementById(canvasId);
         if (!canvas || !data) return;
         this.destroyChart(canvasId);

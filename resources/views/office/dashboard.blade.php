@@ -2,31 +2,32 @@
     <div class="space-y-6">
 
         {{-- Agency Header Card --}}
-        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="alerto-card p-6 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-44 h-44 bg-[#E87524]/8 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 rounded-2xl bg-[#173957] text-[#F0A82E] flex items-center justify-center font-bold text-xl shadow-md">
+                    <div class="w-14 h-14 rounded-2xl bg-[#17191C] text-[#E87524] border border-white/10 flex items-center justify-center font-bold text-xl shadow-md shrink-0">
                         <i data-lucide="building-2" class="w-7 h-7"></i>
                     </div>
                     <div>
-                        <div class="flex items-center gap-2">
-                            <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">{{ $office->name }}</h1>
-                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase {{ $officeUser?->office_level === 'office_admin' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800' }}">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h1 class="text-xl sm:text-2xl font-black text-[var(--text-primary)] tracking-tight">{{ $office->name }}</h1>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase {{ $officeUser?->office_level === 'office_admin' ? 'bg-[#E87524]/15 text-[#B94F12] dark:text-[#F29A56] border border-[#E87524]/30' : 'bg-[#397BA8]/15 text-[#25597E] dark:text-[#7BB5DB] border border-[#397BA8]/30' }}">
                                 {{ $officeUser?->office_level === 'office_admin' ? 'Office Admin' : 'Office Staff' }}
                             </span>
                         </div>
-                        <p class="text-xs text-slate-500 font-medium mt-1">
-                            Agency Code: <span class="font-mono font-bold text-slate-700">{{ $office->code }}</span> · 
-                            Station: <span class="font-bold text-slate-700">{{ $office->location?->barangay?->name ?? 'Poblacion' }}</span> · 
-                            Hotline: <span class="font-mono text-slate-700">{{ $office->contact_phone }}</span>
+                        <p class="text-xs text-[var(--text-secondary)] font-medium mt-1">
+                            Agency Code: <span class="font-mono font-bold text-[var(--text-primary)]">{{ $office->code }}</span> · 
+                            Station: <span class="font-bold text-[var(--text-primary)]">{{ $office->location?->barangay?->name ?? 'Poblacion' }}</span> · 
+                            Hotline: <span class="font-mono text-[var(--text-primary)]">{{ $office->contact_phone }}</span>
                         </p>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2">
                     <a href="{{ route('office.incidents') }}" 
-                       class="px-4 py-2.5 rounded-xl bg-[#173957] hover:bg-[#1f4b72] text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5">
-                        <i data-lucide="radio" class="w-4 h-4 text-[#3187D8]"></i>
+                       class="px-4 py-2.5 rounded-xl bg-[#E87524] hover:bg-[#D16419] text-white font-bold text-xs shadow-md shadow-[#E87524]/25 transition-all flex items-center gap-1.5">
+                        <i data-lucide="radio" class="w-4 h-4"></i>
                         <span>Monitor Incidents</span>
                     </a>
                 </div>
@@ -35,52 +36,52 @@
 
         {{-- KPI Quick Metrics Bar (Real Scoped DB Data) --}}
         <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-            <div class="p-3.5 rounded-2xl bg-white border border-slate-200/80 shadow-xs">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">Authorized</span>
-                <p class="text-xl font-black text-slate-900 mt-1">{{ number_format($stats['total_authorized_incidents']) }}</p>
-                <span class="text-[9px] text-slate-400">Total in scope</span>
+            <div class="alerto-card p-3.5">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] block">Authorized</span>
+                <p class="text-xl font-black text-[var(--text-primary)] font-mono mt-1">{{ number_format($stats['total_authorized_incidents']) }}</p>
+                <span class="text-[9px] text-[var(--text-muted)]">Total in scope</span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200/80 shadow-xs">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700 block">Pending Review</span>
-                <p class="text-xl font-black text-amber-900 mt-1">{{ number_format($stats['pending_review']) }}</p>
-                <span class="text-[9px] text-amber-700/80">Requires intake</span>
+            <div class="p-3.5 rounded-2xl bg-[#D99024]/10 border border-[#D99024]/30 shadow-xs">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#9A5D07] dark:text-[#F6BA53] block">Pending Review</span>
+                <p class="text-xl font-black text-[var(--text-primary)] font-mono mt-1">{{ number_format($stats['pending_review']) }}</p>
+                <span class="text-[9px] text-[#9A5D07]/90 dark:text-[#F6BA53]/80">Requires intake</span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-blue-50 border border-blue-200/80 shadow-xs">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700 block">Accepted</span>
-                <p class="text-xl font-black text-blue-900 mt-1">{{ number_format($stats['accepted']) }}</p>
-                <span class="text-[9px] text-blue-700/80">Queued for unit</span>
+            <div class="p-3.5 rounded-2xl bg-[#397BA8]/10 border border-[#397BA8]/30 shadow-xs">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#25597E] dark:text-[#7BB5DB] block">Accepted</span>
+                <p class="text-xl font-black text-[var(--text-primary)] font-mono mt-1">{{ number_format($stats['accepted']) }}</p>
+                <span class="text-[9px] text-[#25597E]/90 dark:text-[#7BB5DB]/80">Queued for unit</span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-indigo-50 border border-indigo-200/80 shadow-xs">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-700 block">Assigned</span>
-                <p class="text-xl font-black text-indigo-900 mt-1">{{ number_format($stats['assigned']) }}</p>
-                <span class="text-[9px] text-indigo-700/80">Unit linked</span>
+            <div class="p-3.5 rounded-2xl bg-[#E87524]/10 border border-[#E87524]/30 shadow-xs">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#B94F12] dark:text-[#F29A56] block">Assigned</span>
+                <p class="text-xl font-black text-[var(--text-primary)] font-mono mt-1">{{ number_format($stats['assigned']) }}</p>
+                <span class="text-[9px] text-[#B94F12]/90 dark:text-[#F29A56]/80">Unit linked</span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-purple-50 border border-purple-200/80 shadow-xs">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-purple-700 block">Dispatched</span>
-                <p class="text-xl font-black text-purple-900 mt-1">{{ number_format($stats['dispatched']) }}</p>
-                <span class="text-[9px] text-purple-700/80">Mobilized</span>
+            <div class="p-3.5 rounded-2xl bg-[#E87524]/15 border border-[#E87524]/40 shadow-xs">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#9A400D] dark:text-[#F5B076] block">Dispatched</span>
+                <p class="text-xl font-black text-[var(--text-primary)] font-mono mt-1">{{ number_format($stats['dispatched']) }}</p>
+                <span class="text-[9px] text-[#9A400D]/90 dark:text-[#F5B076]/80">Mobilized</span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-200/80 shadow-xs">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-rose-700 block">Active Scene</span>
-                <p class="text-xl font-black text-rose-900 mt-1">{{ number_format($stats['active_responses']) }}</p>
-                <span class="text-[9px] text-rose-700/80">Units operating</span>
+            <div class="p-3.5 rounded-2xl bg-[#C83F43]/10 border border-[#C83F43]/30 shadow-xs">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#9F292D] dark:text-[#F27D80] block">Active Scene</span>
+                <p class="text-xl font-black text-[var(--text-primary)] font-mono mt-1">{{ number_format($stats['active_responses']) }}</p>
+                <span class="text-[9px] text-[#9F292D]/90 dark:text-[#F27D80]/80">Units operating</span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200/80 shadow-xs">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 block">Resolved</span>
-                <p class="text-xl font-black text-emerald-900 mt-1">{{ number_format($stats['resolved']) }}</p>
-                <span class="text-[9px] text-emerald-700/80">Completed runs</span>
+            <div class="p-3.5 rounded-2xl bg-[#27845B]/10 border border-[#27845B]/30 shadow-xs">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#1B6644] dark:text-[#5BD19A] block">Resolved</span>
+                <p class="text-xl font-black text-[var(--text-primary)] font-mono mt-1">{{ number_format($stats['resolved']) }}</p>
+                <span class="text-[9px] text-[#1B6644]/90 dark:text-[#5BD19A]/80">Completed runs</span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600 block">Online Staff</span>
-                <p class="text-xl font-black text-slate-800 mt-1">{{ number_format($stats['online_personnel']) }}</p>
-                <span class="text-[9px] text-slate-500">of {{ $stats['total_personnel'] }} operatives</span>
+            <div class="alerto-card p-3.5 bg-[var(--surface-panel)]">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] block">Online Staff</span>
+                <p class="text-xl font-black text-[var(--text-primary)] font-mono mt-1">{{ number_format($stats['online_personnel']) }}</p>
+                <span class="text-[9px] text-[var(--text-muted)]">of {{ $stats['total_personnel'] }} operatives</span>
             </div>
         </div>
 
@@ -88,55 +89,55 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
             {{-- Recent Incidents Feed (2 Columns) --}}
-            <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs">
-                <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+            <div class="lg:col-span-2 alto alerto-card p-6">
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-[var(--border-subtle)]">
                     <div class="flex items-center gap-2">
-                        <i data-lucide="radio" class="w-4 h-4 text-[#3187D8]"></i>
-                        <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Recent Agency Incidents</h2>
+                        <i data-lucide="radio" class="w-4 h-4 text-[#E87524]"></i>
+                        <h2 class="text-sm font-bold text-[var(--text-primary)] uppercase tracking-wider">Recent Agency Incidents</h2>
                     </div>
-                    <a href="{{ route('office.incidents') }}" class="text-xs font-bold text-[#3187D8] hover:underline">
+                    <a href="{{ route('office.incidents') }}" class="text-xs font-bold text-[#B94F12] dark:text-[#F29A56] hover:underline">
                         View All Monitoring &rarr;
                     </a>
                 </div>
 
                 <div class="space-y-3">
                     @forelse($recentIncidents as $incident)
-                        <div class="p-4 rounded-xl border border-slate-200 hover:border-[#3187D8]/60 transition-all bg-slate-50/50">
-                            <div class="flex items-center justify-between mb-1.5">
-                                <div class="flex items-center gap-2">
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#173957] text-white">
+                        <div class="p-4 rounded-xl border border-[var(--border-subtle)] hover:border-[#E87524]/50 transition-all bg-[var(--surface-panel)]/70">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#17191C] text-[#F29A56]">
                                         {{ $incident->reference_number }}
                                     </span>
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-rose-100 text-rose-800">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#C83F43]/12 text-[#9F292D] dark:text-[#F27D80]">
                                         {{ $incident->category?->name }}
                                     </span>
-                                    <span class="px-1.5 py-0.2 rounded text-[10px] font-bold uppercase {{ $incident->priority === 'critical' ? 'bg-red-500 text-white' : 'bg-amber-100 text-amber-800' }}">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase {{ $incident->priority === 'critical' ? 'bg-[#C83F43] text-white' : 'bg-[#D99024]/15 text-[#9A5D07] dark:text-[#F6BA53]' }}">
                                         {{ ucfirst($incident->priority) }}
                                     </span>
                                 </div>
-                                <span class="text-[11px] text-slate-400 font-mono">
+                                <span class="text-[11px] text-[var(--text-muted)] font-mono">
                                     {{ $incident->submitted_at ? $incident->submitted_at->diffForHumans() : '' }}
                                 </span>
                             </div>
 
-                            <p class="text-xs text-slate-700 line-clamp-2 mt-1 mb-2">
+                            <p class="text-xs text-[var(--text-secondary)] line-clamp-2 mt-1 mb-2">
                                 {{ $incident->description }}
                             </p>
 
-                            <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs">
-                                <div class="text-slate-500">
-                                    Barangay: <span class="font-bold text-slate-800">{{ $incident->barangay?->name }}</span>
+                            <div class="flex items-center justify-between pt-2 border-t border-[var(--border-subtle)] text-xs">
+                                <div class="text-[var(--text-muted)]">
+                                    Barangay: <span class="font-bold text-[var(--text-primary)]">{{ $incident->barangay?->name }}</span>
                                 </div>
                                 <a href="{{ route('office.incidents.show', $incident->reference_number) }}" 
-                                   class="font-bold text-[#3187D8] hover:underline">
+                                   class="font-bold text-[#B94F12] dark:text-[#F29A56] hover:underline">
                                     Inspect Incident &rarr;
                                 </a>
                             </div>
                         </div>
                     @empty
-                        <div class="py-12 text-center text-slate-400">
-                            <i data-lucide="check-circle" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
-                            <p class="font-bold text-slate-600">No recent incidents in your agency scope.</p>
+                        <div class="py-12 text-center text-[var(--text-muted)]">
+                            <i data-lucide="check-circle" class="w-8 h-8 mx-auto mb-2 opacity-50 text-[#27845B]"></i>
+                            <p class="font-bold text-[var(--text-secondary)]">No recent incidents in your agency scope.</p>
                         </div>
                     @endforelse
                 </div>
@@ -146,57 +147,57 @@
             <div class="space-y-6">
 
                 {{-- Response Teams Widget --}}
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs">
-                    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+                <div class="alerto-card p-6">
+                    <div class="flex items-center justify-between pb-3 mb-3 border-b border-[var(--border-subtle)]">
                         <div class="flex items-center gap-2">
-                            <i data-lucide="shield" class="w-4 h-4 text-[#3187D8]"></i>
-                            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Assigned Teams</h3>
+                            <i data-lucide="shield" class="w-4 h-4 text-[#E87524]"></i>
+                            <h3 class="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">Assigned Teams</h3>
                         </div>
-                        <span class="text-xs font-bold text-slate-500">{{ $teams->count() }} Team(s)</span>
+                        <span class="text-xs font-bold text-[var(--text-muted)]">{{ $teams->count() }} Team(s)</span>
                     </div>
 
                     <div class="space-y-2">
                         @forelse($teams as $team)
-                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
+                            <div class="p-3 rounded-xl bg-[var(--surface-panel)] border border-[var(--border-subtle)] flex items-center justify-between gap-2">
                                 <div>
-                                    <div class="font-bold text-xs text-slate-900">{{ $team->team_name }}</div>
-                                    <div class="text-[10px] text-slate-500 font-mono">Call Sign: {{ $team->call_sign }}</div>
+                                    <div class="font-bold text-xs text-[var(--text-primary)]">{{ $team->team_name }}</div>
+                                    <div class="text-[10px] text-[var(--text-muted)] font-mono">Call Sign: {{ $team->call_sign }}</div>
                                 </div>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#E87524]/15 text-[#B94F12] dark:text-[#F29A56]">
                                     {{ $team->members->count() }} Operatives
                                 </span>
                             </div>
                         @empty
-                            <p class="text-xs text-slate-400 italic">No response teams assigned to this office.</p>
+                            <p class="text-xs text-[var(--text-muted)] italic">No response teams assigned to this office.</p>
                         @endforelse
                     </div>
                 </div>
 
                 {{-- Online Field Responders --}}
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs">
-                    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+                <div class="alerto-card p-6">
+                    <div class="flex items-center justify-between pb-3 mb-3 border-b border-[var(--border-subtle)]">
                         <div class="flex items-center gap-2">
-                            <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i>
-                            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Online Operatives</h3>
+                            <i data-lucide="activity" class="w-4 h-4 text-[#27845B] dark:text-[#5BD19A]"></i>
+                            <h3 class="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">Online Operatives</h3>
                         </div>
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#27845B]/15 text-[#1B6644] dark:text-[#5BD19A]">
                             {{ $onlinePersonnel->count() }} Active
                         </span>
                     </div>
 
-                    <div class="space-y-2 max-h-56 overflow-y-auto">
+                    <div class="space-y-2 max-h-56 overflow-y-auto alerto-scrollbar">
                         @forelse($onlinePersonnel as $p)
-                            <div class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50">
+                            <div class="flex items-center justify-between p-2 rounded-lg hover:bg-[var(--surface-hover)]/60 transition-colors">
                                 <div>
-                                    <div class="text-xs font-bold text-slate-800">{{ $p->user?->name }}</div>
-                                    <div class="text-[10px] font-mono text-slate-400">#{{ $p->badge_number }} · {{ $p->rank_designation }}</div>
+                                    <div class="text-xs font-bold text-[var(--text-primary)]">{{ $p->user?->name }}</div>
+                                    <div class="text-[10px] font-mono text-[var(--text-muted)]">#{{ $p->badge_number }} · {{ $p->rank_designation }}</div>
                                 </div>
-                                <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Online
+                                <span class="inline-flex items-center gap-1 text-[10px] font-bold text-[#27845B] dark:text-[#5BD19A]">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#27845B] dark:bg-[#5BD19A] animate-pulse"></span> Online
                                 </span>
                             </div>
                         @empty
-                            <p class="text-xs text-slate-400 italic">No operatives currently logged in.</p>
+                            <p class="text-xs text-[var(--text-muted)] italic">No operatives currently logged in.</p>
                         @endforelse
                     </div>
                 </div>

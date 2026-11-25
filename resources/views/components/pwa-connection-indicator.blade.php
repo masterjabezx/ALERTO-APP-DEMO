@@ -64,28 +64,25 @@
          x-cloak
          class="w-full text-xs font-semibold transition-all duration-300 shadow-sm"
          :class="{
-             'bg-rose-900/95 text-rose-100 border-b border-rose-700': $store.pwa.status === 'offline',
-             'bg-amber-900/95 text-amber-100 border-b border-amber-700': $store.pwa.status === 'reconnecting',
-             'bg-blue-900/95 text-blue-100 border-b border-blue-700': $store.pwa.status === 'syncing',
-             'bg-red-950 text-red-200 border-b border-red-800': $store.pwa.status === 'sync_failed',
-             'bg-slate-800/95 text-slate-200 border-b border-slate-700': $store.pwa.isOnline && $store.pwa.pendingCount > 0
+             'bg-[#C83F43] text-white border-b border-[#C83F43]': $store.pwa.status === 'offline' || $store.pwa.status === 'sync_failed',
+             'bg-[#D99024] text-[#101214] border-b border-[#B94F12]': $store.pwa.status === 'reconnecting',
+             'bg-[#E87524] text-white border-b border-[#B94F12]': $store.pwa.status === 'syncing',
+             'bg-[#17191C] text-[#F5F3EF] border-b border-[#292D32]': $store.pwa.isOnline && $store.pwa.pendingCount > 0 && $store.pwa.status !== 'syncing'
          }">
-        
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2.5">
                 {{-- Status Pulse Dot --}}
-                <span class="relative flex h-2.5 w-2.5 flex-shrink-0">
+                <span class="relative flex h-2.5 w-2.5 shrink-0">
                     <template x-if="$store.pwa.status === 'syncing' || $store.pwa.status === 'reconnecting'">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-                              :class="$store.pwa.status === 'syncing' ? 'bg-blue-400' : 'bg-amber-400'"></span>
+                              :class="$store.pwa.status === 'syncing' ? 'bg-white' : 'bg-[#101214]'"></span>
                     </template>
                     <span class="relative inline-flex rounded-full h-2.5 w-2.5"
                           :class="{
-                              'bg-rose-500': $store.pwa.status === 'offline',
-                              'bg-amber-400': $store.pwa.status === 'reconnecting',
-                              'bg-blue-400': $store.pwa.status === 'syncing',
-                              'bg-red-400': $store.pwa.status === 'sync_failed',
-                              'bg-emerald-400': $store.pwa.isOnline
+                              'bg-white': $store.pwa.status === 'offline' || $store.pwa.status === 'sync_failed' || $store.pwa.status === 'syncing',
+                              'bg-[#101214]': $store.pwa.status === 'reconnecting',
+                              'bg-[#27845B]': $store.pwa.isOnline && $store.pwa.status !== 'syncing'
                           }"></span>
                 </span>
 
@@ -151,27 +148,27 @@
              class="fixed inset-0 bg-slate-950/70 backdrop-blur-xs"></div>
 
         {{-- Panel --}}
-        <div x-show="drawerOpen" 
+        <div x-show="drawerOpen"
              x-transition:enter="transition ease-out duration-300 transform"
              x-transition:enter-start="translate-x-full"
              x-transition:enter-end="translate-x-0"
              x-transition:leave="transition ease-in duration-200 transform"
              x-transition:leave-start="translate-x-0"
              x-transition:leave-end="translate-x-full"
-             class="relative w-full max-w-md bg-slate-900 border-l border-slate-800 text-slate-100 flex flex-col h-full shadow-2xl z-10">
+             class="relative w-full max-w-md bg-[#17191C] border-l border-white/10 text-[#F5F3EF] flex flex-col h-full shadow-2xl z-10">
 
             {{-- Drawer Header --}}
-            <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+            <div class="p-5 border-b border-white/10 flex items-center justify-between bg-[#101214]">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-xl bg-[#173957] flex items-center justify-center text-[#34B9D4]">
+                    <div class="w-8 h-8 rounded-xl bg-[#E87524]/15 border border-[#E87524]/30 flex items-center justify-center text-[#F29A56]">
                         <i data-lucide="refresh-cw" class="w-4 h-4" :class="$store.pwa.status === 'syncing' ? 'animate-spin' : ''"></i>
                     </div>
                     <div>
                         <h3 class="font-extrabold text-sm text-white">Offline Synchronization</h3>
-                        <p class="text-[11px] text-slate-400">Hinoba-an Emergency Queue</p>
+                        <p class="text-[11px] text-[#9D9993]">Hinoba-an Emergency Queue</p>
                     </div>
                 </div>
-                <button type="button" @click="drawerOpen = false" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">
+                <button type="button" @click="drawerOpen = false" aria-label="Close queue drawer" class="p-1.5 rounded-lg text-[#9D9993] hover:text-white hover:bg-white/10 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -215,7 +212,7 @@
                             <button type="button" 
                                     @click="triggerSync()"
                                     :disabled="$store.pwa.status === 'syncing'"
-                                    class="text-xs text-[#3187D8] hover:text-blue-400 font-bold">
+                                    class="text-xs text-[#F29A56] hover:text-[#E87524] font-bold cursor-pointer">
                                 Sync Now
                             </button>
                         </template>
@@ -258,12 +255,12 @@
             </div>
 
             {{-- Drawer Footer --}}
-            <div class="p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between">
-                <span class="text-[10px] text-slate-500">Hinoba-an LDRRMO PWA</span>
-                <button type="button" 
+            <div class="p-4 border-t border-white/10 bg-[#101214] flex items-center justify-between">
+                <span class="text-[10px] text-[#9D9993]">Hinoba-an LDRRMO PWA</span>
+                <button type="button"
                         @click="triggerSync()"
                         :disabled="!$store.pwa.isOnline || $store.pwa.status === 'syncing'"
-                        class="px-4 py-2 rounded-xl text-xs font-bold bg-[#3187D8] hover:bg-blue-600 disabled:opacity-50 text-white shadow-xs transition-all">
+                        class="px-4 py-2 rounded-xl text-xs font-bold bg-[#E87524] hover:bg-[#B94F12] disabled:opacity-50 text-white shadow-xs transition-all cursor-pointer">
                     <span x-text="$store.pwa.status === 'syncing' ? 'Syncing...' : 'Sync All'"></span>
                 </button>
             </div>

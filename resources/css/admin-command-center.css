@@ -1,268 +1,361 @@
 /* ==========================================================================
-   ALERTO ULTIMATE EMERGENCY OPERATIONS CENTER — DESIGN TOKENS & THEME ENGINE
-   Official Palette: Hinoba-an LDRRMO Command Center
+   ALERTO APP — HINOBA-AN ORANGE DESIGN SYSTEM & DUAL THEME ENGINE
+   Shared across: LDRRMO Super Admin, DIAL DAPH Admin, Office, Personnel
    ========================================================================== */
 
 :root {
-    --eoc-navy: #173957;
-    --eoc-deep-navy: #0B1726;
-    --eoc-dark-surface: #101E2E;
-    --eoc-blue: #3187D8;
-    --eoc-cyan: #34B9D4;
-    --eoc-red: #DB4545;
-    --eoc-green: #19865B;
-    --eoc-amber: #F0A82E;
-    --eoc-light-text: #EDF4FC;
-    --eoc-muted-text: #93A4B8;
+    --eoc-orange: #E87524;
+    --eoc-orange-dark: #B94F12;
+    --eoc-orange-light: #F29A56;
+    --eoc-orange-soft: #FFF0E4;
+
+    --eoc-black: #101214;
+    --eoc-carbon: #17191C;
+    --eoc-graphite: #292D32;
+    --eoc-slate: #454A50;
+    --eoc-stone: #77736E;
+
+    --eoc-red: #C83F43;
+    --eoc-green: #27845B;
+    --eoc-amber: #D99024;
+    --eoc-info: #397BA8;
 }
 
-/* Default Dark Command Mode Tokens */
+/* --------------------------------------------------------------------------
+   DARK MODE: Deep Black (#101214) -> Carbon Black (#17191C) -> Graphite (#292D32)
+   -------------------------------------------------------------------------- */
+.alerto-shell.theme-dark,
 .eoc-shell.theme-dark {
-    --eoc-bg: #0B1726;
-    --eoc-surface: #101E2E;
-    --eoc-surface-elevated: #15263B;
-    --eoc-surface-subtle: #0D1A2B;
-    --eoc-glass: rgba(16, 30, 46, 0.84);
-    --eoc-border: rgba(147, 164, 184, 0.16);
-    --eoc-border-strong: rgba(52, 185, 212, 0.28);
-    --eoc-text: #EDF4FC;
-    --eoc-text-secondary: #C6D4E5;
-    --eoc-text-muted: #93A4B8;
-    --eoc-grid-color: rgba(49, 135, 216, 0.08);
-    --eoc-input-bg: #0B1726;
-    --eoc-shadow: 0 12px 32px -8px rgba(4, 10, 18, 0.55);
+    --surface-canvas: #101214;
+    --surface-shell: #17191C;
+    --surface-card: #1F2226;
+    --surface-elevated: #292D32;
+    --surface-subtle: #141619;
+    --surface-glass: rgba(23, 25, 28, 0.90);
+    --surface-input: #141619;
+    --border-subtle: rgba(255, 255, 255, 0.09);
+    --border-strong: rgba(232, 117, 36, 0.42);
+    --text-primary: #F5F3EF;
+    --text-secondary: #D4D0C9;
+    --text-muted: #9D9993;
+    --accent-brand-text: #F29A56;
+    --grid-line: rgba(232, 117, 36, 0.055);
+    --shadow-panel: 0 14px 34px -10px rgba(0, 0, 0, 0.55);
+
+    /* Legacy EOC token bridge */
+    --eoc-bg: var(--surface-canvas);
+    --eoc-surface: var(--surface-card);
+    --eoc-surface-elevated: var(--surface-elevated);
+    --eoc-surface-subtle: var(--surface-subtle);
+    --eoc-glass: var(--surface-glass);
+    --eoc-border: var(--border-subtle);
+    --eoc-border-strong: var(--border-strong);
+    --eoc-text: var(--text-primary);
+    --eoc-text-secondary: var(--text-secondary);
+    --eoc-text-muted: var(--text-muted);
+    --eoc-grid-color: var(--grid-line);
+    --eoc-input-bg: var(--surface-input);
+    --eoc-shadow: var(--shadow-panel);
 }
 
-/* Executive Light Mode Tokens */
+/* --------------------------------------------------------------------------
+   LIGHT MODE: Warm Ivory (#F5F3EF) -> Pure White (#FFFFFF) -> Carbon (#17191C)
+   -------------------------------------------------------------------------- */
+.alerto-shell.theme-light,
 .eoc-shell.theme-light {
-    --eoc-bg: #F5F7FA;
-    --eoc-surface: #FFFFFF;
-    --eoc-surface-elevated: #FFFFFF;
-    --eoc-surface-subtle: #F8FAFC;
-    --eoc-glass: rgba(255, 255, 255, 0.92);
-    --eoc-border: rgba(203, 213, 225, 0.85);
-    --eoc-border-strong: rgba(23, 57, 87, 0.25);
-    --eoc-text: #0F172A;
-    --eoc-text-secondary: #334155;
-    --eoc-text-muted: #475569;
-    --eoc-grid-color: rgba(23, 57, 87, 0.04);
-    --eoc-input-bg: #FFFFFF;
-    --eoc-shadow: 0 8px 24px -4px rgba(23, 57, 87, 0.08);
+    --surface-canvas: #F5F3EF;
+    --surface-shell: #FFFFFF;
+    --surface-card: #FFFFFF;
+    --surface-elevated: #FAF8F5;
+    --surface-subtle: #EFECE6;
+    --surface-glass: rgba(255, 255, 255, 0.94);
+    --surface-input: #FFFFFF;
+    --border-subtle: #E6E3DE;
+    --border-strong: rgba(232, 117, 36, 0.45);
+    --text-primary: #17191C;
+    --text-secondary: #292D32;
+    --text-muted: #77736E;
+    --accent-brand-text: #B94F12;
+    --grid-line: rgba(23, 25, 28, 0.04);
+    --shadow-panel: 0 6px 24px -6px rgba(16, 18, 20, 0.07);
+
+    /* Legacy EOC token bridge */
+    --eoc-bg: var(--surface-canvas);
+    --eoc-surface: var(--surface-card);
+    --eoc-surface-elevated: var(--surface-elevated);
+    --eoc-surface-subtle: var(--surface-subtle);
+    --eoc-glass: var(--surface-glass);
+    --eoc-border: var(--border-subtle);
+    --eoc-border-strong: var(--border-strong);
+    --eoc-text: var(--text-primary);
+    --eoc-text-secondary: var(--text-secondary);
+    --eoc-text-muted: var(--text-muted);
+    --eoc-grid-color: var(--grid-line);
+    --eoc-input-bg: var(--surface-input);
+    --eoc-shadow: var(--shadow-panel);
+}
+
+.alerto-shell,
+.eoc-shell {
+    background-color: var(--surface-canvas);
+    color: var(--text-primary);
+    transition: background-color 0.24s ease, color 0.24s ease;
+}
+
+/* Subtle Architectural Grid */
+.eoc-tactical-grid,
+.alerto-grid-canvas {
+    background-image:
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+/* Primary Layered Card */
+.alerto-card,
+.eoc-card {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-panel);
+    border-radius: 20px;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background-color 0.24s ease;
+}
+
+.alerto-card:hover,
+.eoc-card:hover {
+    border-color: var(--border-strong);
 }
 
 .eoc-chart-well {
-    background-color: rgba(4, 10, 18, 0.28);
-    border: 1px solid var(--eoc-border);
+    background-color: var(--surface-subtle);
+    border: 1px solid var(--border-subtle);
     border-radius: 1rem;
 }
 
-.eoc-shell.theme-light .eoc-chart-well {
-    background-color: #F8FAFC;
-    border-color: rgba(203, 213, 225, 0.85);
-}
-
-.eoc-shell.theme-light .eoc-card .text-slate-400,
-.eoc-shell.theme-light .text-slate-400.eoc-muted-adaptive {
-    color: #475569 !important;
-}
-
-.eoc-shell {
-    background-color: var(--eoc-bg);
-    color: var(--eoc-text);
-    transition: background-color 0.28s ease, color 0.28s ease;
-}
-
-/* Tactical Fine Grid Background Pattern */
-.eoc-tactical-grid {
-    background-image:
-        linear-gradient(to right, var(--eoc-grid-color) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--eoc-grid-color) 1px, transparent 1px);
-    background-size: 36px 36px;
-}
-
-/* Layered Surfaces */
-.eoc-card {
-    background-color: var(--eoc-surface);
-    border: 1px solid var(--eoc-border);
-    box-shadow: var(--eoc-shadow);
-    border-radius: 20px;
-    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background-color 0.28s ease;
-}
-
-.eoc-card:hover {
-    border-color: var(--eoc-border-strong);
-}
-
 .eoc-panel-glass {
-    background: var(--eoc-glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--eoc-border);
+    background: var(--surface-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-subtle);
 }
 
+.alerto-topbar,
 .eoc-topbar {
-    background: var(--eoc-glass);
+    background: var(--surface-glass);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--eoc-border);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
-/* Restrained Meaningful Glow Effects */
+/* Controlled Meaningful Emphasis */
 .eoc-glow-critical {
-    box-shadow: 0 0 0 1px rgba(219, 69, 69, 0.35), 0 0 22px -6px rgba(219, 69, 69, 0.45);
+    box-shadow: 0 0 0 1px rgba(200, 63, 67, 0.45), 0 8px 20px -6px rgba(200, 63, 67, 0.32);
 }
 
 .eoc-glow-active {
-    box-shadow: 0 0 0 1px rgba(25, 134, 91, 0.35), 0 0 18px -6px rgba(25, 134, 91, 0.35);
+    box-shadow: 0 0 0 1px rgba(39, 132, 91, 0.40), 0 8px 18px -6px rgba(39, 132, 91, 0.26);
 }
 
+.eoc-glow-brand,
 .eoc-glow-info {
-    box-shadow: 0 0 0 1px rgba(49, 135, 216, 0.3), 0 0 18px -6px rgba(52, 185, 212, 0.28);
+    box-shadow: 0 0 0 1px rgba(232, 117, 36, 0.35), 0 10px 24px -8px rgba(232, 117, 36, 0.22);
 }
 
-/* Radar Scanline Decoration */
+/* Restrained Hero Scanline */
 @keyframes eoc-scanline {
     0% { transform: translateY(-100%); opacity: 0; }
-    20% { opacity: 0.35; }
-    80% { opacity: 0.35; }
+    25% { opacity: 0.22; }
+    75% { opacity: 0.22; }
     100% { transform: translateY(350%); opacity: 0; }
 }
 
 .eoc-scanline {
-    animation: eoc-scanline 6s linear infinite;
+    animation: eoc-scanline 8s linear infinite;
 }
 
-/* Unified Dark Mode Adaptations for Sub-Views (Preserves existing Admin functional pages cleanly) */
-.eoc-shell.theme-dark .bg-white:not(.no-eoc-dark) {
-    background-color: var(--eoc-surface) !important;
-    color: var(--eoc-text);
+/* --------------------------------------------------------------------------
+   DARK MODE AUTOMATIC SURFACE ADAPTATION
+   Ensures all sub-views switch gracefully between Dark & Light mode
+   -------------------------------------------------------------------------- */
+.alerto-shell.theme-dark .bg-white:not(.no-theme-adapt):not(.no-eoc-dark),
+.eoc-shell.theme-dark .bg-white:not(.no-theme-adapt):not(.no-eoc-dark) {
+    background-color: var(--surface-card) !important;
+    color: var(--text-primary);
 }
 
+.alerto-shell.theme-dark .bg-\[\#F5F3EF\]:not(.no-theme-adapt),
+.alerto-shell.theme-dark .bg-\[\#FAF8F5\]:not(.no-theme-adapt),
+.alerto-shell.theme-dark .bg-slate-50:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .bg-slate-50\/50:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .bg-slate-50\/70:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .bg-slate-50\/75:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .bg-slate-50\/80:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .bg-slate-100:not(.no-theme-adapt):not(.no-eoc-dark),
 .eoc-shell.theme-dark .bg-slate-50:not(.no-eoc-dark),
-.eoc-shell.theme-dark .bg-slate-50\/50:not(.no-eoc-dark),
-.eoc-shell.theme-dark .bg-slate-50\/70:not(.no-eoc-dark),
-.eoc-shell.theme-dark .bg-slate-50\/75:not(.no-eoc-dark),
-.eoc-shell.theme-dark .bg-slate-50\/80:not(.no-eoc-dark),
 .eoc-shell.theme-dark .bg-slate-100:not(.no-eoc-dark) {
-    background-color: var(--eoc-surface-subtle) !important;
+    background-color: var(--surface-subtle) !important;
 }
 
+.alerto-shell.theme-dark .text-\[\#17191C\]:not(.no-theme-adapt),
+.alerto-shell.theme-dark .text-\[\#292D32\]:not(.no-theme-adapt),
+.alerto-shell.theme-dark .text-slate-900:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .text-slate-800:not(.no-theme-adapt):not(.no-eoc-dark),
 .eoc-shell.theme-dark .text-slate-900:not(.no-eoc-dark),
 .eoc-shell.theme-dark .text-slate-800:not(.no-eoc-dark) {
-    color: var(--eoc-text) !important;
+    color: var(--text-primary) !important;
 }
 
+.alerto-shell.theme-dark .text-\[\#454A50\]:not(.no-theme-adapt),
+.alerto-shell.theme-dark .text-slate-700:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .text-slate-600:not(.no-theme-adapt):not(.no-eoc-dark),
 .eoc-shell.theme-dark .text-slate-700:not(.no-eoc-dark),
 .eoc-shell.theme-dark .text-slate-600:not(.no-eoc-dark) {
-    color: var(--eoc-text-secondary) !important;
+    color: var(--text-secondary) !important;
 }
 
+.alerto-shell.theme-dark .text-\[\#77736E\]:not(.no-theme-adapt),
+.alerto-shell.theme-dark .text-slate-500:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .text-slate-400:not(.no-theme-adapt):not(.no-eoc-dark),
 .eoc-shell.theme-dark .text-slate-500:not(.no-eoc-dark),
 .eoc-shell.theme-dark .text-slate-400:not(.no-eoc-dark) {
-    color: var(--eoc-text-muted) !important;
+    color: var(--text-muted) !important;
 }
 
+.alerto-shell.theme-dark .text-\[\#B94F12\]:not(.no-theme-adapt) {
+    color: #F29A56 !important;
+}
+
+.alerto-shell.theme-dark .border-\[\#E6E3DE\]:not(.no-theme-adapt),
+.alerto-shell.theme-dark .border-slate-200:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .border-slate-200\/80:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .border-slate-200\/90:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .border-slate-100:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .border-slate-300:not(.no-theme-adapt):not(.no-eoc-dark),
+.alerto-shell.theme-dark .divide-slate-100 > :not(:last-child),
+.alerto-shell.theme-dark .divide-slate-200 > :not(:last-child),
 .eoc-shell.theme-dark .border-slate-200,
-.eoc-shell.theme-dark .border-slate-200\/80,
-.eoc-shell.theme-dark .border-slate-200\/90,
 .eoc-shell.theme-dark .border-slate-100,
-.eoc-shell.theme-dark .border-slate-300,
-.eoc-shell.theme-dark .divide-slate-100 > :not(:last-child),
-.eoc-shell.theme-dark .divide-slate-200 > :not(:last-child) {
-    border-color: var(--eoc-border) !important;
+.eoc-shell.theme-dark .border-slate-300 {
+    border-color: var(--border-subtle) !important;
 }
 
+.alerto-shell.theme-dark input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(.no-theme-adapt),
+.alerto-shell.theme-dark select:not(.no-theme-adapt),
+.alerto-shell.theme-dark textarea:not(.no-theme-adapt),
 .eoc-shell.theme-dark input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
 .eoc-shell.theme-dark select,
 .eoc-shell.theme-dark textarea {
-    background-color: var(--eoc-input-bg) !important;
-    color: var(--eoc-text) !important;
-    border-color: rgba(147, 164, 184, 0.25) !important;
+    background-color: var(--surface-input) !important;
+    color: var(--text-primary) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
 }
 
-.eoc-shell.theme-dark input::placeholder,
-.eoc-shell.theme-dark textarea::placeholder {
-    color: #6E8299 !important;
+.alerto-shell.theme-dark input::placeholder,
+.alerto-shell.theme-dark textarea::placeholder {
+    color: #77736E !important;
 }
 
-.eoc-shell.theme-dark tr:hover {
-    background-color: rgba(49, 135, 216, 0.08) !important;
+.alerto-shell.theme-dark tr:hover {
+    background-color: rgba(232, 117, 36, 0.06) !important;
+}
+
+/* Light Mode Adaptive Helpers (when views built dark-first are switched to Light) */
+.alerto-shell.theme-light .theme-dark-panel {
+    background-color: #FFFFFF !important;
+    color: #17191C !important;
+    border-color: #E6E3DE !important;
+}
+
+.alerto-shell.theme-light .eoc-card .text-white:not(.badge-fixed):not(.btn-fixed) {
+    color: #17191C !important;
+}
+
+.alerto-shell.theme-light .eoc-card .text-slate-300,
+.alerto-shell.theme-light .eoc-card .text-slate-400 {
+    color: #454A50 !important;
+}
+
+.alerto-shell.theme-light .eoc-card .bg-white\/5,
+.alerto-shell.theme-light .eoc-card .bg-white\/10 {
+    background-color: #F5F3EF !important;
+}
+
+.alerto-shell.theme-light .eoc-card .border-white\/10,
+.alerto-shell.theme-light .eoc-card .border-white\/15 {
+    border-color: #E6E3DE !important;
 }
 
 /* Status Tinted Cards & Badges in Dark Mode */
-.eoc-shell.theme-dark .bg-amber-50\/70,
-.eoc-shell.theme-dark .bg-amber-50,
-.eoc-shell.theme-dark .bg-amber-100 { background-color: rgba(240, 168, 46, 0.14) !important; }
-.eoc-shell.theme-dark .border-amber-200,
-.eoc-shell.theme-dark .border-amber-200\/80 { border-color: rgba(240, 168, 46, 0.35) !important; }
-.eoc-shell.theme-dark .text-amber-900,
-.eoc-shell.theme-dark .text-amber-800,
-.eoc-shell.theme-dark .text-amber-700,
-.eoc-shell.theme-dark .text-amber-700\/80 { color: #F7C768 !important; }
+.alerto-shell.theme-dark .bg-\[\#FFF0E4\] {
+    background-color: rgba(232, 117, 36, 0.14) !important;
+}
+.alerto-shell.theme-dark .bg-amber-50\/70,
+.alerto-shell.theme-dark .bg-amber-50,
+.alerto-shell.theme-dark .bg-amber-100 { background-color: rgba(217, 144, 36, 0.15) !important; }
+.alerto-shell.theme-dark .border-amber-200,
+.alerto-shell.theme-dark .border-amber-200\/80 { border-color: rgba(217, 144, 36, 0.35) !important; }
+.alerto-shell.theme-dark .text-amber-900,
+.alerto-shell.theme-dark .text-amber-800,
+.alerto-shell.theme-dark .text-amber-700,
+.alerto-shell.theme-dark .text-amber-700\/80 { color: #F7C768 !important; }
 
-.eoc-shell.theme-dark .bg-blue-50\/70,
-.eoc-shell.theme-dark .bg-blue-50,
-.eoc-shell.theme-dark .bg-blue-100 { background-color: rgba(49, 135, 216, 0.16) !important; }
-.eoc-shell.theme-dark .border-blue-200,
-.eoc-shell.theme-dark .border-blue-200\/80 { border-color: rgba(49, 135, 216, 0.35) !important; }
-.eoc-shell.theme-dark .text-blue-900,
-.eoc-shell.theme-dark .text-blue-800,
-.eoc-shell.theme-dark .text-blue-700,
-.eoc-shell.theme-dark .text-blue-700\/80 { color: #82C3FF !important; }
+.alerto-shell.theme-dark .bg-blue-50\/70,
+.alerto-shell.theme-dark .bg-blue-50,
+.alerto-shell.theme-dark .bg-blue-100 { background-color: rgba(57, 123, 168, 0.16) !important; }
+.alerto-shell.theme-dark .border-blue-200,
+.alerto-shell.theme-dark .border-blue-200\/80 { border-color: rgba(57, 123, 168, 0.35) !important; }
+.alerto-shell.theme-dark .text-blue-900,
+.alerto-shell.theme-dark .text-blue-800,
+.alerto-shell.theme-dark .text-blue-700,
+.alerto-shell.theme-dark .text-blue-700\/80 { color: #93C5FD !important; }
 
-.eoc-shell.theme-dark .bg-emerald-50\/70,
-.eoc-shell.theme-dark .bg-emerald-50,
-.eoc-shell.theme-dark .bg-emerald-100 { background-color: rgba(25, 134, 91, 0.16) !important; }
-.eoc-shell.theme-dark .border-emerald-200,
-.eoc-shell.theme-dark .border-emerald-200\/80 { border-color: rgba(25, 134, 91, 0.38) !important; }
-.eoc-shell.theme-dark .text-emerald-900,
-.eoc-shell.theme-dark .text-emerald-800,
-.eoc-shell.theme-dark .text-emerald-700,
-.eoc-shell.theme-dark .text-emerald-700\/80 { color: #6AE0B0 !important; }
+.alerto-shell.theme-dark .bg-emerald-50\/70,
+.alerto-shell.theme-dark .bg-emerald-50,
+.alerto-shell.theme-dark .bg-emerald-100 { background-color: rgba(39, 132, 91, 0.16) !important; }
+.alerto-shell.theme-dark .border-emerald-200,
+.alerto-shell.theme-dark .border-emerald-200\/80 { border-color: rgba(39, 132, 91, 0.38) !important; }
+.alerto-shell.theme-dark .text-emerald-900,
+.alerto-shell.theme-dark .text-emerald-800,
+.alerto-shell.theme-dark .text-emerald-700,
+.alerto-shell.theme-dark .text-emerald-700\/80 { color: #6AE0B0 !important; }
 
-.eoc-shell.theme-dark .bg-purple-50\/70,
-.eoc-shell.theme-dark .bg-purple-50,
-.eoc-shell.theme-dark .bg-purple-100 { background-color: rgba(139, 92, 246, 0.16) !important; }
-.eoc-shell.theme-dark .border-purple-200,
-.eoc-shell.theme-dark .border-purple-200\/80 { border-color: rgba(139, 92, 246, 0.35) !important; }
-.eoc-shell.theme-dark .text-purple-900,
-.eoc-shell.theme-dark .text-purple-800,
-.eoc-shell.theme-dark .text-purple-700,
-.eoc-shell.theme-dark .text-purple-700\/80 { color: #C4B5FD !important; }
+.alerto-shell.theme-dark .bg-rose-50\/70,
+.alerto-shell.theme-dark .bg-rose-50,
+.alerto-shell.theme-dark .bg-rose-100,
+.alerto-shell.theme-dark .bg-red-50\/60,
+.alerto-shell.theme-dark .bg-red-100 { background-color: rgba(200, 63, 67, 0.18) !important; }
+.alerto-shell.theme-dark .border-rose-200,
+.alerto-shell.theme-dark .border-rose-200\/80,
+.alerto-shell.theme-dark .border-red-200 { border-color: rgba(200, 63, 67, 0.38) !important; }
+.alerto-shell.theme-dark .text-rose-900,
+.alerto-shell.theme-dark .text-rose-800,
+.alerto-shell.theme-dark .text-rose-700,
+.alerto-shell.theme-dark .text-red-800,
+.alerto-shell.theme-dark .text-red-700 { color: #FDA4AF !important; }
 
-.eoc-shell.theme-dark .bg-rose-50\/70,
-.eoc-shell.theme-dark .bg-rose-50,
-.eoc-shell.theme-dark .bg-rose-100,
-.eoc-shell.theme-dark .bg-red-50\/60,
-.eoc-shell.theme-dark .bg-red-100 { background-color: rgba(219, 69, 69, 0.16) !important; }
-.eoc-shell.theme-dark .border-rose-200,
-.eoc-shell.theme-dark .border-rose-200\/80,
-.eoc-shell.theme-dark .border-red-200 { border-color: rgba(219, 69, 69, 0.38) !important; }
-.eoc-shell.theme-dark .text-rose-900,
-.eoc-shell.theme-dark .text-rose-800,
-.eoc-shell.theme-dark .text-rose-700,
-.eoc-shell.theme-dark .text-red-800,
-.eoc-shell.theme-dark .text-red-700 { color: #FDA4AF !important; }
-
-/* Keyboard Focus Ring for Operational Accessibility */
+/* Accessible Hinoba-an Orange Keyboard Focus Ring */
+.alerto-shell a:focus-visible,
+.alerto-shell button:focus-visible,
+.alerto-shell input:focus-visible,
+.alerto-shell select:focus-visible,
+.alerto-shell textarea:focus-visible,
 .eoc-shell a:focus-visible,
 .eoc-shell button:focus-visible,
 .eoc-shell input:focus-visible,
 .eoc-shell select:focus-visible,
 .eoc-shell textarea:focus-visible {
-    outline: 2px solid var(--eoc-cyan);
+    outline: 2px solid var(--eoc-orange);
     outline-offset: 2px;
 }
 
-/* Reduced Motion Guarantee */
 @media (prefers-reduced-motion: reduce) {
     .eoc-scanline {
         animation: none !important;
         display: none;
     }
+    .alerto-shell *,
     .eoc-shell * {
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
     }
 }
-

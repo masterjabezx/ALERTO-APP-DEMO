@@ -8,8 +8,8 @@ export const IncidentAnimations = {
         if (!element || AdminMotionEngine.isReducedMotion()) return;
         const tween = gsap.fromTo(
             element,
-            { opacity: 0, x: -14, backgroundColor: 'rgba(49, 135, 216, 0.22)' },
-            { opacity: 1, x: 0, backgroundColor: 'transparent', duration: 0.65, ease: 'power2.out', clearProps: 'transform,opacity' }
+            { opacity: 0, x: -12, backgroundColor: 'rgba(232, 117, 36, 0.16)' },
+            { opacity: 1, x: 0, backgroundColor: 'transparent', duration: 0.55, ease: 'power2.out', clearProps: 'transform,opacity' }
         );
         return AdminMotionEngine.trackTween(tween);
     },

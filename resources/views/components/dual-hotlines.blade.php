@@ -11,10 +11,10 @@
             @if($compact)
                 <a href="{{ $h['tel_href'] }}"
                    aria-label="Call {{ $h['title'] }} at {{ $h['number'] }}"
-                   class="flex min-h-12 flex-col justify-center rounded-xl border px-2 py-1 transition-colors
+                   class="flex min-h-12 flex-col justify-center rounded-xl border px-2.5 py-1.5 transition-colors
                           {{ $isDialDaph
-                              ? 'bg-rose-950/70 border-rose-500/40 text-rose-100 hover:bg-rose-900/70'
-                              : 'bg-amber-950/60 border-amber-500/40 text-amber-100 hover:bg-amber-900/60' }}">
+                              ? 'bg-[#C83F43]/15 border-[#C83F43]/40 text-white hover:bg-[#C83F43]/25'
+                              : 'bg-[#E87524]/15 border-[#E87524]/40 text-white hover:bg-[#E87524]/25' }}">
                     <span class="text-[9px] font-bold uppercase tracking-wide opacity-80">{{ $h['title'] }}</span>
                     <span class="font-mono text-[11px] font-bold tracking-tight whitespace-nowrap">{{ $h['number'] }}</span>
                 </a>
@@ -22,8 +22,8 @@
                 <a href="{{ $h['tel_href'] }}"
                class="group relative flex flex-col items-center justify-center text-center aspect-[5/4] sm:aspect-square max-h-56 w-full rounded-2xl p-5 border-2 transition-all duration-200 shadow-lg hover:-translate-y-0.5
                       {{ $isDialDaph
-                          ? 'bg-gradient-to-br from-rose-600 to-red-700 border-rose-400/60 text-white shadow-rose-600/25 hover:from-rose-500 hover:to-red-600'
-                          : 'bg-gradient-to-br from-amber-500 to-orange-600 border-amber-300/60 text-white shadow-amber-500/25 hover:from-amber-400 hover:to-orange-500' }}">
+                          ? 'bg-gradient-to-br from-[#C83F43] to-[#982529] border-white/25 text-white shadow-[#C83F43]/25'
+                          : 'bg-gradient-to-br from-[#E87524] to-[#B94F12] border-white/25 text-white shadow-[#E87524]/25' }}">
                 <div class="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                     <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>

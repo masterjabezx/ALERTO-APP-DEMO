@@ -53,16 +53,16 @@
         x-on:dragleave.prevent="isDragging = false"
         x-on:drop.prevent="handleDrop($event)"
         class="border-2 border-dashed rounded-[20px] p-5 text-center transition-all duration-200"
-        :class="isDragging ? 'border-[#3187D8] bg-[#3187D8]/5' : 'border-slate-300 hover:border-slate-400 bg-white'"
+        :class="isDragging ? 'border-[#E87524] bg-[#FFF0E4]' : 'border-[#E6E3DE] hover:border-[#E87524]/60 bg-white'"
     >
-        <div class="w-11 h-11 rounded-2xl bg-slate-100 text-slate-500 mx-auto mb-3 flex items-center justify-center">
+        <div class="w-11 h-11 rounded-2xl bg-[#FFF0E4] text-[#B94F12] mx-auto mb-3 flex items-center justify-center">
             <i data-lucide="camera" class="w-5 h-5"></i>
         </div>
 
-        <p class="text-sm font-bold text-slate-800">
+        <p class="text-sm font-bold text-[#17191C]">
             Capture emergency evidence or choose from your gallery
         </p>
-        <p class="text-[11px] text-slate-400 mt-1">
+        <p class="text-[11px] text-[#77736E] mt-1">
             JPG, PNG, WEBP, MP4, WebM, MOV · Max {{ $maxSize }}
         </p>
 
@@ -70,27 +70,27 @@
             <button
                 type="button"
                 x-on:click.stop="$refs.photoCaptureInput.click()"
-                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#173957] hover:bg-[#122e46] text-white text-xs font-bold shadow-xs transition-colors"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E87524] hover:bg-[#B94F12] text-white text-xs font-bold shadow-xs transition-colors cursor-pointer"
             >
-                <i data-lucide="camera" class="w-3.5 h-3.5 text-[#3187D8]"></i>
+                <i data-lucide="camera" class="w-3.5 h-3.5"></i>
                 <span>Take Photo</span>
             </button>
 
             <button
                 type="button"
                 x-on:click.stop="$refs.videoCaptureInput.click()"
-                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#DB4545] hover:bg-[#c33838] text-white text-xs font-bold shadow-xs transition-colors"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#17191C] hover:bg-[#292D32] text-white text-xs font-bold shadow-xs transition-colors cursor-pointer"
             >
-                <i data-lucide="video" class="w-3.5 h-3.5"></i>
+                <i data-lucide="video" class="w-3.5 h-3.5 text-[#F29A56]"></i>
                 <span>Record Video</span>
             </button>
 
             <button
                 type="button"
                 x-on:click.stop="$refs.masterInput.click()"
-                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-200 transition-colors"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#EFECE6] hover:bg-[#E6E3DE] text-[#17191C] text-xs font-bold border border-[#E6E3DE] transition-colors cursor-pointer"
             >
-                <i data-lucide="image-plus" class="w-3.5 h-3.5 text-slate-600"></i>
+                <i data-lucide="image-plus" class="w-3.5 h-3.5 text-[#454A50]"></i>
                 <span>Select Gallery</span>
             </button>
         </div>

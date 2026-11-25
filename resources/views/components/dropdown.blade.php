@@ -11,7 +11,6 @@
     };
 
     $widthClasses = match($width) {
-        '48' => 'w-48',
         '56' => 'w-56',
         '64' => 'w-64',
         default => 'w-48',
@@ -31,11 +30,10 @@
         x-transition:leave="transition ease-in duration-100"
         x-transition:leave-start="transform opacity-100 scale-100"
         x-transition:leave-end="transform opacity-0 scale-95"
-        class="absolute z-50 mt-2 {{ $widthClasses }} rounded-2xl shadow-[0_10px_28px_-4px_rgba(23,57,87,0.15)] bg-white border border-slate-200/80 py-1.5 focus:outline-none {{ $alignmentClasses }}"
+        class="alerto-card absolute z-50 mt-2 {{ $widthClasses }} rounded-2xl shadow-[0_12px_28px_-4px_rgba(16,18,20,0.18)] bg-white border border-[#E6E3DE] py-1.5 focus:outline-none {{ $alignmentClasses }}"
         style="display: none;"
         x-on:click="open = false"
     >
         {{ $content }}
     </div>
 </div>
-

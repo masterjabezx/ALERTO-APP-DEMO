@@ -4,20 +4,20 @@
 
 <div x-data="citizenGeoMediaCapture({ maxFiles: {{ (int) $maxFiles }} })"
      x-init="init()"
-     class="rounded-2xl bg-slate-50 border border-slate-200 p-4 sm:p-5 space-y-4">
+     class="rounded-2xl bg-[var(--surface-panel)] border border-[var(--border-subtle)] p-4 sm:p-5 space-y-4">
 
     <div class="flex flex-wrap items-start justify-between gap-3">
         <div>
-            <span class="block text-xs font-extrabold uppercase tracking-wider text-[#173957]">
+            <span class="block text-xs font-extrabold uppercase tracking-wider text-[var(--text-primary)]">
                 Optional Geo-Tagged Photo or Video Evidence
             </span>
-            <p class="text-[11px] text-slate-600 mt-0.5">
+            <p class="text-[11px] text-[var(--text-secondary)] mt-0.5">
                 Take a photo or record video directly from your camera. Every capture automatically embeds GPS coordinates and accuracy metadata.
             </p>
         </div>
 
         <div class="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold border"
-             :class="gps.lat && gps.lng ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-amber-50 border-amber-200 text-amber-800'">
+             :class="gps.lat && gps.lng ? 'bg-[#27845B]/12 border-[#27845B]/30 text-[#1B6644] dark:text-[#5BD19A]' : 'bg-[#D99024]/12 border-[#D99024]/30 text-[#9A5D07] dark:text-[#F6BA53]'">
             <span x-text="gps.lat && gps.lng
                 ? ('GPS TAG READY: ' + Number(gps.lat).toFixed(5) + ', ' + Number(gps.lng).toFixed(5) + (gps.accuracy ? ' (±' + gps.accuracy + 'm)' : ''))
                 : 'Acquiring GPS for Geo-Tag...'"></span>
@@ -29,21 +29,21 @@
         <button type="button"
                 @click="openCamera('photo')"
                 :disabled="items.length >= maxFiles"
-                class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#173957] hover:bg-[#1f4b72] disabled:opacity-50 text-white text-xs font-extrabold shadow-xs transition-colors cursor-pointer">
+                class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#17191C] hover:bg-[#292D32] border border-white/10 disabled:opacity-50 text-white text-xs font-extrabold shadow-xs transition-colors cursor-pointer">
             <span>Take Photo Now</span>
         </button>
 
         <button type="button"
                 @click="openCamera('video')"
                 :disabled="items.length >= maxFiles"
-                class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 disabled:opacity-50 text-white text-xs font-extrabold shadow-xs transition-colors cursor-pointer">
+                class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#C83F43] hover:bg-[#A83135] disabled:opacity-50 text-white text-xs font-extrabold shadow-xs transition-colors cursor-pointer">
             <span>Record Video Now</span>
         </button>
 
         <button type="button"
                 @click="$refs.galleryInput.click()"
                 :disabled="items.length >= maxFiles"
-                class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 disabled:opacity-50 text-slate-800 text-xs font-bold transition-colors cursor-pointer">
+                class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--surface-card)] hover:bg-[var(--surface-hover)] border border-[var(--border-subtle)] disabled:opacity-50 text-[var(--text-primary)] text-xs font-bold transition-colors cursor-pointer">
             <span>Choose Existing File</span>
         </button>
     </div>
@@ -62,22 +62,22 @@
     <input type="hidden" name="media_is_live_capture" :value="items.some(i => i.is_live_capture) ? '1' : '0'">
 
     {{-- Camera Error Notice --}}
-    <div x-show="cameraError" style="display:none;" class="p-3 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-xs flex items-center justify-between gap-3">
+    <div x-show="cameraError" style="display:none;" class="p-3 rounded-xl bg-[#D99024]/15 border border-[#D99024]/40 text-[#8A5409] dark:text-[#F6BA53] text-xs flex items-center justify-between gap-3">
         <span x-text="cameraError"></span>
-        <button type="button" @click="triggerNativeFallback()" class="px-3 py-1.5 rounded-lg bg-[#173957] text-white font-bold shrink-0 cursor-pointer">
+        <button type="button" @click="triggerNativeFallback()" class="px-3 py-1.5 rounded-lg bg-[#17191C] hover:bg-[#E87524] text-white font-bold shrink-0 cursor-pointer transition-colors">
             Use Device Camera App
         </button>
     </div>
 
     {{-- Live In-Browser Camera Modal (Works on both Desktop Webcams & Mobile Browsers) --}}
     <div x-show="cameraOpen" style="display:none;" x-cloak
-         class="fixed inset-0 z-[1300] bg-slate-950/90 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="w-full max-w-lg rounded-3xl bg-slate-900 border border-slate-700 overflow-hidden shadow-2xl text-white">
-            <div class="px-5 py-3.5 border-b border-slate-800 flex items-center justify-between">
+         class="fixed inset-0 z-[1300] bg-black/85 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="w-full max-w-lg rounded-3xl bg-[#17191C] border border-white/15 overflow-hidden shadow-2xl text-[#F5F3EF]">
+            <div class="px-5 py-3.5 border-b border-white/10 flex items-center justify-between">
                 <div>
-                    <span class="text-xs font-black uppercase tracking-wider text-emerald-400"
+                    <span class="text-xs font-black uppercase tracking-wider text-[#5BD19A]"
                           x-text="cameraMode === 'photo' ? 'Live Geo-Tagged Photo Capture' : 'Live Geo-Tagged Video Capture'"></span>
-                    <p class="text-[11px] font-mono text-slate-300"
+                    <p class="text-[11px] font-mono text-[#D1CEC9]"
                        x-text="gps.lat && gps.lng ? ('GPS: ' + Number(gps.lat).toFixed(6) + ', ' + Number(gps.lng).toFixed(6) + (gps.accuracy ? ' (±' + gps.accuracy + 'm)' : '')) : 'Waiting for GPS lock...'"></p>
                 </div>
                 <button type="button" @click="closeCamera()" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold cursor-pointer">
@@ -87,32 +87,32 @@
 
             <div class="relative bg-black aspect-video flex items-center justify-center overflow-hidden">
                 <video x-ref="liveVideo" autoplay playsinline muted class="w-full h-full object-cover"></video>
-                <div x-show="isRecording" class="absolute top-3 left-3 px-3 py-1 rounded-full bg-rose-600 text-white text-xs font-mono font-bold flex items-center gap-2">
+                <div x-show="isRecording" class="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#C83F43] text-white text-xs font-mono font-bold flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
                     <span>REC <span x-text="formatDuration(recordingSeconds)"></span></span>
                 </div>
             </div>
 
-            <div class="p-4 flex flex-wrap items-center justify-between gap-3 bg-slate-950">
-                <button type="button" @click="triggerNativeFallback()" class="text-[11px] text-slate-400 hover:text-white underline cursor-pointer">
+            <div class="p-4 flex flex-wrap items-center justify-between gap-3 bg-[#101214]">
+                <button type="button" @click="triggerNativeFallback()" class="text-[11px] text-[#A39E98] hover:text-white underline cursor-pointer">
                     Open Native Camera Instead
                 </button>
 
                 <div class="flex items-center gap-2">
                     <template x-if="cameraMode === 'photo'">
                         <button type="button" @click="snapPhoto()"
-                                class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black cursor-pointer">
+                                class="px-5 py-2.5 rounded-xl bg-[#27845B] hover:bg-[#1E6A49] text-white text-xs font-black cursor-pointer transition-colors">
                             Capture Geo-Tagged Photo
                         </button>
                     </template>
                     <template x-if="cameraMode === 'video'">
                         <div>
                             <button type="button" x-show="!isRecording" @click="startRecording()"
-                                    class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-black cursor-pointer">
+                                    class="px-5 py-2.5 rounded-xl bg-[#C83F43] hover:bg-[#A83135] text-white text-xs font-black cursor-pointer transition-colors">
                                 Start Recording
                             </button>
                             <button type="button" x-show="isRecording" @click="stopRecording()"
-                                    class="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-black cursor-pointer">
+                                    class="px-5 py-2.5 rounded-xl bg-[#E87524] hover:bg-[#D16419] text-white text-xs font-black cursor-pointer transition-colors">
                                 Stop &amp; Attach Video
                             </button>
                         </div>
@@ -124,14 +124,14 @@
 
     {{-- Attached Geo-Tagged Media List --}}
     <div x-show="items.length > 0" style="display:none;" class="space-y-2.5">
-        <div class="text-[11px] font-bold text-slate-700">
+        <div class="text-[11px] font-bold text-[var(--text-secondary)]">
             Attached Evidence (<span x-text="items.length"></span>/{{ (int) $maxFiles }})
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <template x-for="(item, idx) in items" :key="item.uid">
-                <div class="p-3 rounded-xl bg-white border border-slate-200 flex items-center gap-3 shadow-2xs">
-                    <div class="w-16 h-16 rounded-lg bg-slate-900 overflow-hidden shrink-0 flex items-center justify-center">
+                <div class="p-3 rounded-xl bg-[var(--surface-card)] border border-[var(--border-subtle)] flex items-center gap-3 shadow-2xs">
+                    <div class="w-16 h-16 rounded-lg bg-[#17191C] overflow-hidden shrink-0 flex items-center justify-center">
                         <template x-if="item.kind === 'photo'">
                             <img :src="item.previewUrl" alt="Captured evidence preview" class="w-full h-full object-cover">
                         </template>
@@ -143,20 +143,20 @@
                     <div class="min-w-0 flex-1 space-y-1">
                         <div class="flex items-center gap-1.5">
                             <span class="px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase"
-                                  :class="item.is_live_capture ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-700'"
+                                  :class="item.is_live_capture ? 'bg-[#27845B]/15 text-[#1B6644] dark:text-[#5BD19A]' : 'bg-[var(--surface-panel)] text-[var(--text-secondary)]'"
                                   x-text="item.is_live_capture ? ('LIVE ' + item.kind) : ('FILE ' + item.kind)"></span>
-                            <span class="text-[10px] font-mono text-slate-500" x-text="item.sizeLabel"></span>
+                            <span class="text-[10px] font-mono text-[var(--text-muted)]" x-text="item.sizeLabel"></span>
                         </div>
-                        <p class="text-[11px] font-semibold text-slate-800 truncate" x-text="item.name"></p>
+                        <p class="text-[11px] font-semibold text-[var(--text-primary)] truncate" x-text="item.name"></p>
                         <p class="text-[10px] font-mono"
-                           :class="item.latitude ? 'text-emerald-700' : 'text-amber-700'"
+                           :class="item.latitude ? 'text-[#27845B] dark:text-[#5BD19A]' : 'text-[#9A5D07] dark:text-[#F6BA53]'"
                            x-text="item.latitude
                                 ? ('Geo-Tag: ' + Number(item.latitude).toFixed(5) + ', ' + Number(item.longitude).toFixed(5) + (item.accuracy ? ' (±' + item.accuracy + 'm)' : ''))
                                 : 'No live GPS lock at capture'"></p>
                     </div>
 
                     <button type="button" @click="removeItem(idx)"
-                            class="px-2 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold cursor-pointer"
+                            class="px-2 py-1 rounded-lg bg-[#C83F43]/12 hover:bg-[#C83F43]/25 text-[#C83F43] dark:text-[#F27D80] text-xs font-bold cursor-pointer"
                             title="Remove attachment">
                         &times;
                     </button>

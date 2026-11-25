@@ -7,71 +7,111 @@
 @source '../**/*.js';
 
 @theme {
-    /* Fonts */
+    /* Typography */
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-    /* Official ALERTO Brand Palette - Hinoba-an LDRRMO */
-    --color-alerto-navy: #173957;
-    --color-alerto-navy-dark: #0f2438;
-    --color-alerto-navy-light: #204e75;
-    --color-alerto-blue: #3187D8;
-    --color-alerto-blue-hover: #2672ba;
-    --color-alerto-blue-light: #eaf3fb;
-    --color-alerto-red: #DB4545;
-    --color-alerto-red-hover: #c43838;
-    --color-alerto-red-light: #fbeeed;
-    --color-alerto-green: #19865B;
-    --color-alerto-green-hover: #146e4b;
-    --color-alerto-green-light: #e8f5ef;
-    --color-alerto-amber: #F0A82E;
-    --color-alerto-amber-hover: #d89423;
-    --color-alerto-amber-light: #fef6e9;
-    --color-alerto-bg: #F5F7FA;
-    --color-alerto-surface: #FFFFFF;
-    --color-alerto-border: #E2E8F0;
+    /* Official Hinoba-an Orange & Charcoal Design System */
+    --color-brand: #E87524;
+    --color-brand-dark: #B94F12;
+    --color-brand-light: #F29A56;
+    --color-brand-soft: #FFF0E4;
 
-    /* Radius Design Tokens (18px - 24px for major cards) */
+    --color-black: #101214;
+    --color-carbon: #17191C;
+    --color-graphite: #292D32;
+    --color-slate: #454A50;
+
+    --color-stone: #77736E;
+    --color-border: #E6E3DE;
+    --color-background: #F5F3EF;
+    --color-surface: #FFFFFF;
+
+    /* Semantic Status Colors */
+    --color-critical: #C83F43;
+    --color-warning: #D99024;
+    --color-success: #27845B;
+    --color-info: #397BA8;
+
+    /* Legacy Token Bridges Mapped to New System */
+    --color-alerto-orange: #E87524;
+    --color-alerto-orange-dark: #B94F12;
+    --color-alerto-red: #C83F43;
+    --color-alerto-green: #27845B;
+    --color-alerto-amber: #D99024;
+    --color-alerto-blue: #397BA8;
+    --color-alerto-bg: #F5F3EF;
+    --color-alerto-surface: #FFFFFF;
+    --color-alerto-border: #E6E3DE;
+
+    /* Radius Design Tokens */
     --radius-card: 20px;
-    --radius-card-sm: 18px;
+    --radius-card-sm: 14px;
     --radius-card-lg: 24px;
+    --radius-input: 12px;
+    --radius-btn: 12px;
 }
 
 :root {
-    /* CSS Variables for Dynamic Components and Scripts */
-    --brand-navy: #173957;
-    --brand-navy-dark: #0f2438;
-    --brand-navy-light: #204e75;
-    --brand-blue: #3187D8;
-    --brand-red: #DB4545;
-    --brand-green: #19865B;
-    --brand-amber: #F0A82E;
-    --brand-bg: #F5F7FA;
-    --brand-surface: #FFFFFF;
-    --brand-border: #E2E8F0;
+    /* Official Hinoba-an Tokens */
+    --color-brand: #E87524;
+    --color-brand-dark: #B94F12;
+    --color-brand-light: #F29A56;
+    --color-brand-soft: #FFF0E4;
 
+    --color-black: #101214;
+    --color-carbon: #17191C;
+    --color-graphite: #292D32;
+    --color-slate: #454A50;
+
+    --color-stone: #77736E;
+    --color-border: #E6E3DE;
+    --color-background: #F5F3EF;
+    --color-surface: #FFFFFF;
+
+    --color-critical: #C83F43;
+    --color-warning: #D99024;
+    --color-success: #27845B;
+    --color-info: #397BA8;
+
+    /* Spacing, Typography, Radius & Motion Tokens */
     --radius-card: 20px;
-    --radius-card-sm: 18px;
+    --radius-card-sm: 14px;
     --radius-card-lg: 24px;
+    --radius-control: 12px;
+    --input-height: 44px;
+    --motion-fast: 160ms;
+    --motion-base: 240ms;
+    --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-    /* Soft Enterprise Shadows */
-    --shadow-soft-sm: 0 2px 8px -1px rgba(23, 57, 87, 0.05);
-    --shadow-soft: 0 4px 20px -2px rgba(23, 57, 87, 0.07);
-    --shadow-card: 0 6px 24px -4px rgba(23, 57, 87, 0.08), 0 2px 6px -1px rgba(23, 57, 87, 0.04);
-    --shadow-card-hover: 0 14px 32px -4px rgba(23, 57, 87, 0.12), 0 4px 12px -2px rgba(23, 57, 87, 0.06);
-    --shadow-elevated: 0 20px 40px -8px rgba(23, 57, 87, 0.18);
+    /* Controlled Neutral Shadows */
+    --shadow-soft-sm: 0 1px 4px rgba(16, 18, 20, 0.05);
+    --shadow-soft: 0 4px 18px -2px rgba(16, 18, 20, 0.06);
+    --shadow-card: 0 6px 24px -4px rgba(16, 18, 20, 0.07), 0 1px 4px rgba(16, 18, 20, 0.04);
+    --shadow-card-hover: 0 14px 32px -6px rgba(16, 18, 20, 0.12), 0 4px 12px -2px rgba(232, 117, 36, 0.08);
+    --shadow-elevated: 0 22px 44px -10px rgba(16, 18, 20, 0.22);
+
+    /* Legacy Aliases */
+    --brand-orange: var(--color-brand);
+    --brand-bg: var(--color-background);
+    --brand-surface: var(--color-surface);
+    --brand-border: var(--color-border);
 }
 
-/* Base Body Styles */
+/* Base Document Typography & Canvas */
 body {
-    background-color: var(--brand-bg);
-    color: #1e293b;
+    background-color: var(--color-background);
+    color: var(--color-graphite);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbar for Command Center Panels */
+.font-mono-tactical {
+    font-family: var(--font-mono);
+}
+
+/* Scrollbars */
 .alerto-scrollbar::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -80,45 +120,75 @@ body {
     background: transparent;
 }
 .alerto-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(23, 57, 87, 0.2);
+    background: rgba(119, 115, 110, 0.28);
     border-radius: 9999px;
 }
 .alerto-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(23, 57, 87, 0.4);
+    background: rgba(232, 117, 36, 0.55);
 }
 
-/* Glassmorphism Surface for Command Center */
+/* Subtle Architectural Surfaces */
 .glass-surface {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
 }
 
 .glass-surface-dark {
-    background: rgba(15, 36, 56, 0.88);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(23, 25, 28, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Pulse animation for live status */
+/* Tactile Press & Micro-interaction Helpers */
+.alerto-interactive-card {
+    transition: transform var(--motion-fast) var(--motion-ease),
+                box-shadow var(--motion-base) var(--motion-ease),
+                border-color var(--motion-fast) var(--motion-ease);
+}
+.alerto-interactive-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(232, 117, 36, 0.45);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.alerto-btn-press {
+    transition: transform 120ms ease, background-color var(--motion-fast) ease, box-shadow var(--motion-fast) ease, border-color var(--motion-fast) ease;
+}
+.alerto-btn-press:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+/* Status Pulse Indicator */
 @keyframes alerto-pulse {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.15); }
+    50% { opacity: 0.48; transform: scale(1.18); }
 }
 
 .animate-alerto-ping {
     animation: alerto-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-/* Touch friendly minimum target */
+/* Accessible Touch Targets */
 .touch-target {
     min-height: 44px;
     min-width: 44px;
 }
 
-/* Reduced motion preference */
+/* Print-friendly Reports */
+@media print {
+    header, nav, aside, .no-print {
+        display: none !important;
+    }
+    body, .alerto-shell {
+        background: #FFFFFF !important;
+        color: #17191C !important;
+    }
+}
+
+/* Reduced Motion Respect */
 @media (prefers-reduced-motion: reduce) {
     *, ::before, ::after {
         animation-duration: 0.01ms !important;

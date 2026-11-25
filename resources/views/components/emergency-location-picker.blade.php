@@ -187,27 +187,27 @@
     <div class="flex flex-wrap items-center justify-between gap-2">
         <div>
             <div class="flex items-center gap-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Exact Incident Location *</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-[#F5F3EF]">Exact Incident Location *</span>
                 @if($gpsOnly)
-                    <span class="px-2 py-0.5 rounded bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 text-[10px] font-bold uppercase tracking-wider">
+                    <span class="px-2 py-0.5 rounded bg-[#E87524]/20 border border-[#E87524]/40 text-[#F29A56] text-[10px] font-bold uppercase tracking-wider">
                         Display-Only GPS Map
                     </span>
                 @endif
             </div>
-            <p class="text-[11px] mt-0.5" :class="gpsError ? 'text-amber-300 font-semibold' : 'text-slate-400'" x-text="gpsStatusText"></p>
+            <p class="text-[11px] mt-0.5" :class="gpsError ? 'text-[#F6BA53] font-semibold' : 'text-[#A39E98]'" x-text="gpsStatusText"></p>
         </div>
         <button type="button" @click="detectGps()" :disabled="detecting"
-                class="px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 disabled:opacity-60 text-white text-xs font-bold transition-colors cursor-pointer">
+                class="px-3.5 py-2 rounded-lg bg-[#27845B] hover:bg-[#1E6A49] disabled:opacity-60 text-white text-xs font-bold transition-colors cursor-pointer">
             <span x-text="detecting ? 'Detecting GPS...' : (gpsLocked ? 'Re-Detect My GPS' : 'Detect My GPS')"></span>
         </button>
     </div>
 
-    <div class="relative rounded-2xl border border-slate-700 overflow-hidden bg-slate-900">
+    <div class="relative rounded-2xl border border-white/15 overflow-hidden bg-[#101214]">
         <div x-ref="mapContainer"
              class="w-full h-64 z-0 {{ $gpsOnly ? 'pointer-events-none select-none' : '' }}"></div>
         @if($gpsOnly)
             <div class="absolute inset-0 z-10 cursor-default" aria-hidden="true" title="Map is display-only. Use Re-Detect My GPS to update your GPS position."></div>
-            <div class="absolute bottom-2 left-2 z-20 px-2.5 py-1 rounded-lg bg-slate-950/85 border border-white/15 text-[10px] font-semibold text-slate-200 pointer-events-none">
+            <div class="absolute bottom-2 left-2 z-20 px-2.5 py-1 rounded-lg bg-[#101214]/90 border border-white/15 text-[10px] font-semibold text-[#F5F3EF] pointer-events-none">
                 Map view only — GPS auto-detected from your device
             </div>
         @endif
@@ -215,7 +215,7 @@
 
     @if($gpsOnly)
         <div x-show="gpsError" style="display:none;"
-             class="p-3 rounded-xl bg-amber-500/15 border border-amber-400/40 text-amber-200 text-xs font-semibold">
+             class="p-3 rounded-xl bg-[#D99024]/15 border border-[#D99024]/40 text-[#F6BA53] text-xs font-semibold">
             Live device GPS is required to verify your exact location. Enable Location/GPS in your browser settings and click <strong>Re-Detect My GPS</strong>.
         </div>
     @endif
@@ -225,21 +225,21 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div>
-            <label class="block text-[11px] font-medium text-slate-400 mb-1">Latitude *</label>
+            <label class="block text-[11px] font-medium text-[#A39E98] mb-1">Latitude *</label>
             <input type="number" step="0.00000001" name="{{ $latName }}" x-model="lat" required
                    @if($gpsOnly) readonly tabindex="-1" placeholder="Waiting for GPS..." @endif
-                   class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-mono-tactical {{ $gpsOnly ? 'opacity-80 cursor-not-allowed' : '' }}">
+                   class="w-full px-3 py-2 rounded-xl bg-[#101214] border border-white/15 text-white text-xs font-mono-tactical {{ $gpsOnly ? 'opacity-80 cursor-not-allowed' : '' }}">
         </div>
         <div>
-            <label class="block text-[11px] font-medium text-slate-400 mb-1">Longitude *</label>
+            <label class="block text-[11px] font-medium text-[#A39E98] mb-1">Longitude *</label>
             <input type="number" step="0.00000001" name="{{ $lngName }}" x-model="lng" required
                    @if($gpsOnly) readonly tabindex="-1" placeholder="Waiting for GPS..." @endif
-                   class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-mono-tactical {{ $gpsOnly ? 'opacity-80 cursor-not-allowed' : '' }}">
+                   class="w-full px-3 py-2 rounded-xl bg-[#101214] border border-white/15 text-white text-xs font-mono-tactical {{ $gpsOnly ? 'opacity-80 cursor-not-allowed' : '' }}">
         </div>
         <div>
-            <label class="block text-[11px] font-medium text-slate-400 mb-1">Location Source</label>
-            <div class="px-3 py-2 rounded-xl bg-slate-900/70 border border-slate-800 text-xs font-semibold"
-                 :class="gpsLocked ? 'text-emerald-300' : 'text-amber-300'"
+            <label class="block text-[11px] font-medium text-[#A39E98] mb-1">Location Source</label>
+            <div class="px-3 py-2 rounded-xl bg-[#101214] border border-white/10 text-xs font-semibold"
+                 :class="gpsLocked ? 'text-[#5BD19A]' : 'text-[#F6BA53]'"
                  x-text="gpsLocked ? ('Device GPS (±' + (accuracy || '?') + 'm)') : (gpsOnly ? 'Waiting for Device GPS...' : 'Interactive Map Pin')"></div>
         </div>
     </div>

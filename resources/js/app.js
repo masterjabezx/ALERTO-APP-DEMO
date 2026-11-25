@@ -46,11 +46,26 @@ window.AlertoEoc = {
     modal: ModalAnimations,
 };
 
-// Apply stored theme before Alpine mounts when on Admin EOC Shell
-const shell = document.getElementById('eoc-admin-shell');
-if (shell) {
-    ThemeManager.applyTheme(ThemeManager.getStoredTheme());
+// Apply stored theme cleanly before Alpine mounts on any .alerto-shell / #eoc-admin-shell
+const portalShell = document.querySelector('.alerto-shell') || document.getElementById('eoc-admin-shell');
+if (portalShell) {
+    ThemeManager.applyTheme(ThemeManager.getStoredTheme(), false);
 }
+
+// Register global Alpine theme helper across all portals
+Alpine.store('theme', {
+    current: ThemeManager.getStoredTheme(),
+    isDark: ThemeManager.getStoredTheme() === 'dark',
+    init() {
+        window.addEventListener('alerto:theme-changed', (e) => {
+            this.current = e.detail?.theme || 'dark';
+            this.isDark = !!e.detail?.isDark;
+        });
+    },
+    toggle() {
+        ThemeManager.toggle();
+    },
+});
 
 // Custom Alpine Directives
 Alpine.directive('animate-entrance', (el) => {
@@ -121,8 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
         NavigationAnimations.animateSidebarMount(sidebar);
     }
 
-    const eocShell = document.getElementById('eoc-admin-shell');
-    if (eocShell && !document.getElementById('eoc-globe-canvas')) {
+    const portalShell = document.querySelector('.alerto-shell') || document.getElementById('eoc-admin-shell');
+    if (portalShell && !document.getElementById('eoc-globe-canvas')) {
         DashboardAnimations.init(document);
         StatisticsAnimations.animateAllCounters(document);
     }

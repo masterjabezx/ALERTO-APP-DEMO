@@ -1,4 +1,4 @@
-@extends('layouts.auth', ['bodyClass' => 'bg-slate-900 text-slate-100 flex items-center justify-center min-h-screen py-10 px-4'])
+@extends('layouts.auth', ['bodyClass' => 'bg-[#101214] text-[#F5F3EF] flex items-center justify-center min-h-screen py-10 px-4'])
 
 @section('content')
 <div class="w-full max-w-2xl" x-data="{
@@ -33,13 +33,13 @@
             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             Back to Citizen Login
         </a>
-        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#E87524]/15 text-[#F29A56] border border-[#E87524]/35">
             Citizen Registration
         </span>
     </div>
 
     <!-- Registration Card -->
-    <div class="bg-slate-950/80 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
+    <div class="bg-[#17191C] border border-white/10 rounded-[24px] p-6 sm:p-10 shadow-2xl">
         <div class="text-center mb-8">
             <img src="/images/branding/alerto-logo-web-256.png" alt="ALERTO APP" class="w-16 h-16 rounded-2xl object-contain mx-auto mb-3 drop-shadow-lg">
             <h2 class="text-2xl font-bold text-white tracking-tight">Create Citizen Profile</h2>
@@ -191,7 +191,7 @@
 
             <!-- Submit Button -->
             <button type="submit" :disabled="loading"
-                class="w-full py-3.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all flex items-center justify-center space-x-2 disabled:opacity-50">
+                class="w-full py-3.5 px-4 bg-[#E87524] hover:bg-[#B94F12] text-white font-bold rounded-xl shadow-lg shadow-[#E87524]/25 transition-all flex items-center justify-center space-x-2 disabled:opacity-50 cursor-pointer">
                 <span x-show="!loading">Complete Citizen Registration</span>
                 <span x-show="loading" style="display: none;" class="flex items-center space-x-2">
                     <svg class="animate-spin h-5 w-5 text-slate-950" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>

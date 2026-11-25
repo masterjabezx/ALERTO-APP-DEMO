@@ -125,28 +125,28 @@
             }
         }
      }"
-     class="rounded-2xl border-2 border-red-500/40 bg-gradient-to-br from-red-950/90 via-rose-950/80 to-slate-950 p-5 text-white shadow-xl">
+     class="rounded-[24px] border-2 border-[#C83F43]/55 bg-gradient-to-br from-[#2B1214] via-[#17191C] to-[#101214] p-5 sm:p-6 text-[#F5F3EF] shadow-xl">
 
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-red-500/20 border border-red-400/40 text-red-200 text-[11px] font-bold uppercase tracking-wider mb-2">
-                <span class="w-2 h-2 rounded-full bg-red-400 animate-ping"></span>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C83F43]/20 border border-[#C83F43]/50 text-[#FDA4AF] text-[11px] font-bold uppercase tracking-wider mb-2">
+                <span class="w-2 h-2 rounded-full bg-[#C83F43] animate-ping"></span>
                 Immediate Life-Threatening Emergency
             </div>
-            <h3 class="text-lg sm:text-xl font-extrabold text-white">
+            <h3 class="text-lg sm:text-xl font-black text-white">
                 {{ $senderType === 'personnel' ? 'RESPONDER DISTRESS SOS' : 'ONE-TAP EMERGENCY SOS' }}
             </h3>
-            <p class="text-xs text-rose-200/80 mt-1">
-                Sends instant distress alert with GPS telemetry directly to DIAL DAPH Command Center & LDRRMO Super Admin.
+            <p class="text-xs text-[#D4D0C9] mt-1">
+                Sends instant distress alert with GPS telemetry directly to DIAL DAPH Command Center &amp; LDRRMO Super Admin.
             </p>
-            <div class="mt-2 flex flex-wrap items-center gap-2 text-[11px]">
-                <span x-show="locationStatus === 'live'" class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold">
+            <div class="mt-2.5 flex flex-wrap items-center gap-2 text-[11px]">
+                <span x-show="locationStatus === 'live'" class="px-2.5 py-0.5 rounded-full bg-[#27845B]/20 border border-[#27845B]/40 text-[#6AE0B0] font-semibold">
                     Live GPS Ready (<span x-text="lat"></span>, <span x-text="lng"></span>)
                 </span>
-                <span x-show="locationStatus === 'last_known_stale'" class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-200 font-semibold">
+                <span x-show="locationStatus === 'last_known_stale'" class="px-2.5 py-0.5 rounded-full bg-[#D99024]/20 border border-[#D99024]/40 text-[#F7C768] font-semibold">
                     Using Stale Last-Known Coordinates
                 </span>
-                <span x-show="locationStatus === 'unavailable'" class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-200 font-semibold">
+                <span x-show="locationStatus === 'unavailable'" class="px-2.5 py-0.5 rounded-full bg-[#C83F43]/20 border border-[#C83F43]/40 text-[#FDA4AF] font-semibold">
                     GPS Acquiring / Location Unavailable (SOS Still Sends)
                 </span>
             </div>
@@ -157,7 +157,7 @@
                 <button type="button"
                         @click="startCountdown()"
                         :disabled="sending"
-                        class="px-7 py-4 rounded-2xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-black text-base tracking-wide shadow-lg shadow-red-600/40 border-2 border-red-300/60 transition-all cursor-pointer disabled:opacity-50">
+                        class="px-7 py-4 rounded-2xl bg-[#C83F43] hover:bg-[#b23236] active:scale-95 text-white font-black text-base tracking-wide shadow-lg shadow-[#C83F43]/35 border-2 border-white/25 transition-all cursor-pointer disabled:opacity-50">
                     <span x-show="!sending">TRIGGER SOS NOW</span>
                     <span x-show="sending" style="display:none;">SENDING SOS...</span>
                 </button>
@@ -165,12 +165,12 @@
 
             <template x-if="countdown !== null">
                 <div class="flex items-center gap-2">
-                    <div class="px-4 py-3 rounded-xl bg-red-600 font-black text-sm animate-pulse">
+                    <div class="px-4 py-3 rounded-xl bg-[#C83F43] font-black text-sm animate-pulse text-white">
                         Sending in <span x-text="countdown"></span>s...
                     </div>
                     <button type="button"
                             @click="cancelCountdown()"
-                            class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs font-bold text-white cursor-pointer">
+                            class="px-4 py-3 rounded-xl bg-[#292D32] hover:bg-[#454A50] border border-white/15 text-xs font-bold text-white cursor-pointer">
                         CANCEL
                     </button>
                 </div>

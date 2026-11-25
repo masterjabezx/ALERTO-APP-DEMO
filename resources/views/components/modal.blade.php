@@ -1,5 +1,5 @@
 @props([
-    'name', // Unique identifier used with $dispatch('open-modal', 'name')
+    'name',
     'title' => null,
     'maxWidth' => 'md', // sm, md, lg, xl, 2xl
 ])
@@ -28,36 +28,37 @@
     {{-- Backdrop --}}
     <div
         x-show="show"
-        x-transition:enter="ease-out duration-300"
+        x-transition:enter="ease-out duration-250"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
-        x-transition:leave="ease-in duration-200"
+        x-transition:leave="ease-in duration-150"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        class="fixed inset-0 bg-[#0f2438]/60 backdrop-blur-sm transition-opacity"
+        class="fixed inset-0 bg-[#101214]/70 backdrop-blur-xs transition-opacity"
         x-on:click="show = false"
     ></div>
 
     {{-- Modal Box --}}
     <div
         x-show="show"
-        x-transition:enter="ease-out duration-300"
-        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        x-transition:enter="ease-out duration-250"
+        x-transition:enter-start="opacity-0 translate-y-3 sm:translate-y-0 sm:scale-95"
         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-        x-transition:leave="ease-in duration-200"
+        x-transition:leave="ease-in duration-150"
         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-        class="relative w-full bg-white rounded-[24px] shadow-[0_20px_40px_-8px_rgba(23,57,87,0.25)] border border-slate-200/80 overflow-hidden {{ $maxWidthClasses }} transform transition-all"
+        x-transition:leave-end="opacity-0 translate-y-3 sm:translate-y-0 sm:scale-95"
+        class="alerto-card relative w-full bg-white rounded-[24px] shadow-[0_24px_48px_-12px_rgba(16,18,20,0.35)] border border-[#E6E3DE] overflow-hidden {{ $maxWidthClasses }} transform transition-all"
     >
         @if($title)
-            <div class="px-6 py-4.5 border-b border-slate-100 flex items-center justify-between">
-                <h3 class="text-base font-bold text-slate-900">{{ $title }}</h3>
+            <div class="px-6 py-4 border-b border-[#E6E3DE] flex items-center justify-between gap-3">
+                <h3 class="text-base font-extrabold text-[#17191C]">{{ $title }}</h3>
                 <button
                     type="button"
                     x-on:click="show = false"
-                    class="text-slate-400 hover:text-slate-600 rounded-lg p-1 transition-colors"
+                    aria-label="Close modal"
+                    class="text-[#77736E] hover:text-[#17191C] rounded-xl p-1.5 hover:bg-[#EFECE6] transition-colors cursor-pointer"
                 >
-                    <i data-lucide="x" class="w-5 h-5"></i>
+                    <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
         @endif
@@ -67,10 +68,9 @@
         </div>
 
         @if(isset($footer))
-            <div class="px-6 py-3.5 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3">
+            <div class="px-6 py-3.5 bg-[#FAF8F5] border-t border-[#E6E3DE] flex items-center justify-end gap-3">
                 {{ $footer }}
             </div>
         @endif
     </div>
 </div>
-

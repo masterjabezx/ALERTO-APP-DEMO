@@ -4,7 +4,7 @@
 ])
 
 <div class="relative w-full" x-data="{ query: '' }">
-    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#77736E]">
         <i data-lucide="search" class="w-4 h-4"></i>
     </div>
 
@@ -13,7 +13,7 @@
         x-model="query"
         placeholder="{{ $placeholder }}"
         {{ $attributes->merge([
-            'class' => 'w-full py-2.5 pl-10 pr-9 text-sm rounded-xl border border-slate-200/90 bg-white placeholder-slate-400 text-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-[#3187D8]/20 focus:border-[#3187D8] shadow-xs'
+            'class' => 'w-full min-h-[42px] py-2 pl-10 pr-9 text-sm rounded-xl border border-[#E6E3DE] bg-white placeholder-[#77736E]/70 text-[#17191C] transition-colors focus:outline-none focus:ring-2 focus:ring-[#E87524]/20 focus:border-[#E87524]'
         ]) }}
     />
 
@@ -21,10 +21,10 @@
         type="button"
         x-show="query.length > 0"
         x-on:click="query = ''; $dispatch('search-cleared')"
-        class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
+        aria-label="Clear search"
+        class="absolute inset-y-0 right-0 pr-3 flex items-center text-[#77736E] hover:text-[#17191C] transition-colors cursor-pointer"
         x-cloak
     >
         <i data-lucide="x" class="w-4 h-4"></i>
     </button>
 </div>
-
