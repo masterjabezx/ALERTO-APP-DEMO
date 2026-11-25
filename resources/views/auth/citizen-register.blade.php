@@ -41,9 +41,7 @@
     <!-- Registration Card -->
     <div class="bg-slate-950/80 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
         <div class="text-center mb-8">
-            <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mx-auto flex items-center justify-center mb-3">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
-            </div>
+            <img src="/images/branding/alerto-logo-web-256.png" alt="ALERTO APP" class="w-16 h-16 rounded-2xl object-contain mx-auto mb-3 drop-shadow-lg">
             <h2 class="text-2xl font-bold text-white tracking-tight">Create Citizen Profile</h2>
             <p class="text-xs text-slate-400 mt-1">Register for rapid emergency verification and localized safety alerts</p>
         </div>

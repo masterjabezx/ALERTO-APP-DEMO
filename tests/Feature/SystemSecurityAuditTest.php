@@ -180,6 +180,65 @@ class SystemSecurityAuditTest extends TestCase
         ]);
     }
 
+    public function test_personnel_cannot_link_sos_to_another_responders_assignment(): void
+    {
+        $office = $this->createOffice('SOS');
+        $citizen = $this->createUser('citizen');
+        $admin = $this->createUser('admin');
+        $reporter = $this->createUser('personnel');
+        $assignedResponder = $this->createUser('personnel');
+
+        $reporterProfile = PersonnelProfile::create([
+            'user_id' => $reporter->id,
+            'office_id' => $office->id,
+            'badge_number' => 'SOS-A-'.Str::random(6),
+            'rank_designation' => 'Responder',
+        ]);
+        $assignedProfile = PersonnelProfile::create([
+            'user_id' => $assignedResponder->id,
+            'office_id' => $office->id,
+            'badge_number' => 'SOS-B-'.Str::random(6),
+            'rank_designation' => 'Responder',
+        ]);
+
+        $incident = Incident::create([
+            'reference_number' => 'INC-SOS-'.Str::random(8),
+            'reporter_id' => $citizen->id,
+            'source_channel' => 'citizen_portal',
+            'category_id' => IncidentCategory::firstOrFail()->id,
+            'priority' => 'high',
+            'status' => 'dispatched',
+            'description' => 'Assignment ownership check for Personnel SOS.',
+            'caller_name' => $citizen->name,
+            'caller_phone' => $citizen->phone_number,
+            'barangay_id' => Barangay::firstOrFail()->id,
+            'submitted_at' => now(),
+            'version_lock' => 1,
+        ]);
+
+        $assignment = IncidentAssignment::create([
+            'incident_id' => $incident->id,
+            'office_id' => $office->id,
+            'personnel_id' => $assignedProfile->id,
+            'assigned_by' => $admin->id,
+            'status' => 'active',
+            'assigned_at' => now(),
+        ]);
+
+        $this->assertNotSame($reporterProfile->id, $assignment->personnel_id);
+
+        $this->actingAs($reporter)
+            ->postJson(route('personnel.sos.trigger'), [
+                'current_assignment_id' => $assignment->id,
+            ])
+            ->assertForbidden();
+
+        $this->assertDatabaseMissing('sos_alerts', [
+            'user_id' => $reporter->id,
+            'current_assignment_id' => $assignment->id,
+        ]);
+    }
+
     public function test_internal_messenger_blocks_cross_office_and_rejected_incident_conversations(): void
     {
         $officeA = $this->createOffice('MSG-A');

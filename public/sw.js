@@ -5,14 +5,21 @@
  * Explicitly NEVER caches credentials, authentication tokens, private messages, or confidential records.
  */
 
-const CACHE_NAME = 'alerto-pwa-v1';
+const CACHE_NAME = 'alerto-pwa-v2';
 const STATIC_ASSETS = [
     '/offline',
     '/manifest.json',
-    '/icons/icon-192.png',
-    '/icons/icon-512.png',
-    '/icons/icon-maskable.png',
-    '/icons/icon.svg',
+    '/images/branding/alerto-app-icon-192.png',
+    '/images/branding/alerto-app-icon-512.png',
+    '/images/branding/alerto-app-icon-maskable-192.png',
+    '/images/branding/alerto-app-icon-maskable-512.png',
+    '/images/branding/alerto-logo-web-128.png',
+    '/images/branding/alerto-logo-web-256.png',
+    '/images/branding/alerto-apple-touch-icon.png',
+    '/images/branding/alerto-favicon-16.png',
+    '/images/branding/alerto-favicon-32.png',
+    '/images/branding/alerto-favicon-48.png',
+    '/images/branding/alerto-favicon.svg',
     '/favicon.ico'
 ];
 
@@ -88,9 +95,10 @@ self.addEventListener('fetch', (event) => {
         return; // Always fetch from network directly
     }
 
-    // Case 1: Static assets (Vite build, icons, fonts) -> Cache-First with Network fallback
+    // Case 1: Static assets (Vite build, icons, branding, fonts) -> Cache-First with Network fallback
     const isStaticAsset = url.pathname.startsWith('/build/') ||
         url.pathname.startsWith('/icons/') ||
+        url.pathname.startsWith('/images/branding/') ||
         url.hostname.includes('fonts.googleapis.com') ||
         url.hostname.includes('fonts.gstatic.com') ||
         url.pathname === '/favicon.ico' ||

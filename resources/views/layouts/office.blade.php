@@ -24,9 +24,7 @@
     <header class="sticky top-0 z-30 bg-white border-b border-slate-200/90 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3.5">
-                <div class="w-10 h-10 rounded-2xl bg-[#173957] text-[#F0A82E] flex items-center justify-center shadow-md shadow-[#173957]/15">
-                    <i data-lucide="building-2" class="w-5 h-5"></i>
-                </div>
+                <img src="/images/branding/alerto-logo-web-128.png" alt="ALERTO APP" class="w-10 h-10 rounded-xl object-contain flex-shrink-0">
                 <div>
                     <div class="flex items-center gap-2">
                         <span class="font-extrabold text-[#173957] tracking-tight text-base">ALERTO</span>

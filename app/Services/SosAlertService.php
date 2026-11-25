@@ -10,6 +10,7 @@ use App\Events\SOSAcknowledged;
 use App\Events\SOSResponseAssigned;
 use App\Models\AuditLog;
 use App\Models\Incident;
+use App\Models\IncidentAssignment;
 use App\Models\IncidentLocation;
 use App\Models\IncidentStatusHistory;
 use App\Models\Notification;
@@ -146,6 +147,21 @@ class SosAlertService
         $sos = DB::transaction(function () use ($personnelUser, $data): SosAlert {
             $profile = $personnelUser->personnelProfile;
             $officeId = $profile?->office_id;
+            $currentAssignmentId = isset($data['current_assignment_id'])
+                ? (int) $data['current_assignment_id']
+                : null;
+
+            if ($currentAssignmentId !== null) {
+                $ownsActiveAssignment = $profile !== null && IncidentAssignment::query()
+                    ->whereKey($currentAssignmentId)
+                    ->where('personnel_id', $profile->id)
+                    ->where('status', 'active')
+                    ->exists();
+
+                if (! $ownsActiveAssignment) {
+                    throw new AccessDeniedHttpException('The selected assignment is not active for this responder.');
+                }
+            }
 
             $lat = isset($data['latitude']) && is_numeric($data['latitude']) ? (float) $data['latitude'] : null;
             $lng = isset($data['longitude']) && is_numeric($data['longitude']) ? (float) $data['longitude'] : null;
@@ -172,7 +188,7 @@ class SosAlertService
                 'user_id' => $personnelUser->id,
                 'personnel_id' => $profile?->id,
                 'office_id' => $officeId,
-                'current_assignment_id' => isset($data['current_assignment_id']) ? (int) $data['current_assignment_id'] : null,
+                'current_assignment_id' => $currentAssignmentId,
                 'position_role' => $profile?->rank_designation ?? 'Field Responder',
                 'duty_status' => $profile?->availability?->operational_status ?? 'active',
                 'sender_name' => $personnelUser->name,

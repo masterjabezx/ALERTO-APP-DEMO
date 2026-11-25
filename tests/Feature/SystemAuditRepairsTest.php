@@ -173,13 +173,39 @@ class SystemAuditRepairsTest extends TestCase
             'created_at' => now()->subMinutes(5),
         ]);
 
+        $citizen = $this->createAccount('citizen');
+        $incident = Incident::create([
+            'reference_number' => 'INC-SOS-'.Str::random(8),
+            'reporter_id' => $citizen->id,
+            'source_channel' => 'citizen_portal',
+            'category_id' => IncidentCategory::firstOrFail()->id,
+            'priority' => 'high',
+            'status' => 'dispatched',
+            'description' => 'Personnel SOS assignment context.',
+            'caller_name' => $citizen->name,
+            'caller_phone' => $citizen->phone_number,
+            'barangay_id' => Barangay::firstOrFail()->id,
+            'submitted_at' => now(),
+            'version_lock' => 1,
+        ]);
+        $assignment = IncidentAssignment::create([
+            'incident_id' => $incident->id,
+            'office_id' => $office->id,
+            'personnel_id' => $profile->id,
+            'assigned_by' => $officeAdmin->id,
+            'status' => 'active',
+            'assigned_at' => now(),
+        ]);
+
         /** @var SosAlertService $sosService */
         $sosService = app(SosAlertService::class);
         $sos = $sosService->createPersonnelSos($personnelUser, [
             'idempotency_key' => 'sos-test-'.Str::uuid(),
+            'current_assignment_id' => $assignment->id,
         ]);
 
         $this->assertSame('last_known_stale', $sos->location_status);
+        $this->assertSame($assignment->id, $sos->current_assignment_id);
         $this->assertSame('Senior Fire Officer', $sos->position_role);
         $this->assertEquals(9.5931, round((float) $sos->latitude, 4));
         $this->assertDatabaseHas('notifications', [

@@ -9,9 +9,6 @@ use App\Http\Requests\Personnel\UpdateLocationRequest;
 use App\Http\Requests\TriggerSosRequest;
 use App\Models\Incident;
 use App\Models\IncidentAssignment;
-use App\Models\Office;
-use App\Models\PersonnelAvailability;
-use App\Models\PersonnelProfile;
 use App\Models\ResponseLog;
 use App\Services\IncidentRoutingService;
 use App\Services\LiveOperationsMapService;
@@ -35,33 +32,18 @@ class PersonnelPortalController extends Controller
     /**
      * 1. Tasks Management: Current active assignments & operational milestone actions.
      */
-    public function dashboard(): View
+    public function dashboard(): View|RedirectResponse
     {
         $user = Auth::user();
         $personnel = $user->personnelProfile;
 
         if (! $personnel) {
-            $office = Office::first();
-            $personnel = PersonnelProfile::create([
-                'user_id' => $user->id,
-                'office_id' => $office?->id ?? 1,
-                'badge_number' => 'B-'.$user->id.'-'.time(),
-                'rank_designation' => 'Field Operative',
-            ]);
-            $user->load('personnelProfile');
+            return redirect()->route('personnel.availability');
         }
 
         $availability = $personnel->availability;
         if (! $availability) {
-            $availability = PersonnelAvailability::firstOrCreate(
-                ['personnel_id' => $personnel->id],
-                [
-                    'operational_status' => 'available',
-                    'status_reason' => 'Dashboard Initialized',
-                    'status_updated_at' => now(),
-                ]
-            );
-            $personnel->load('availability');
+            return redirect()->route('personnel.availability');
         }
 
         // Current active assignments assigned to this responder or their team

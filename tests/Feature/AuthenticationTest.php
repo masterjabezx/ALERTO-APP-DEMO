@@ -18,8 +18,8 @@ use Tests\TestCase;
 /**
  * Authentication system integration tests.
  *
- * Uses DatabaseTransactions so tests run against the live alerto_app MariaDB
- * and all changes are rolled back after each test.
+ * Uses DatabaseTransactions against the isolated alerto_app_testing database
+ * so changes are rolled back after each test.
  */
 class AuthenticationTest extends TestCase
 {

@@ -5,9 +5,12 @@
 @section('content')
 <div class="min-h-screen flex items-center justify-center bg-slate-950 px-4 py-10">
     <div class="w-full max-w-md bg-slate-900 border border-rose-800/40 rounded-2xl p-8 shadow-2xl">
-        <span class="inline-block px-3 py-1 rounded-full bg-rose-500/15 text-rose-300 text-xs font-bold mb-3">
-            DIAL DAPH Command Center Account Setup
-        </span>
+        <div class="text-center mb-4">
+            <img src="/images/branding/alerto-logo-web-256.png" alt="ALERTO APP" class="w-16 h-16 rounded-2xl object-contain mx-auto mb-3 drop-shadow-lg">
+            <span class="inline-block px-3 py-1 rounded-full bg-rose-500/15 text-rose-300 text-xs font-bold">
+                DIAL DAPH Command Center Account Setup
+            </span>
+        </div>
 
         @if(!$isValid)
             <h1 class="text-xl font-bold text-white mb-2">Invitation Link Invalid or Expired</h1>

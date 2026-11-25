@@ -30,9 +30,7 @@
     {{-- Super Admin Navigation Sidebar (17 Required Items) --}}
     <aside class="w-72 shrink-0 bg-[#0B1726] border-r border-purple-500/20 hidden lg:flex flex-col">
         <div class="h-16 px-4 flex items-center gap-3 border-b border-white/10">
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-700 text-white flex items-center justify-center font-black shadow-lg">
-                SA
-            </div>
+            <img src="/images/branding/alerto-logo-web-128.png" alt="ALERTO APP" class="w-10 h-10 rounded-xl object-contain shrink-0">
             <div class="truncate">
                 <span class="font-extrabold text-sm text-white block tracking-wide">LDRRMO SUPER ADMIN</span>
                 <span class="text-[10px] font-mono text-purple-300 uppercase">Highest System Authority</span>
@@ -109,6 +107,7 @@
         <header class="h-16 px-4 sm:px-8 border-b border-white/10 bg-[#0B1726]/90 backdrop-blur-md flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <button type="button" @click="mobileOpen = !mobileOpen" class="lg:hidden px-3 py-1.5 rounded-lg bg-white/10 text-xs font-bold">Menu</button>
+                <img src="/images/branding/alerto-logo-web-128.png" alt="ALERTO APP" class="w-8 h-8 rounded-lg object-contain lg:hidden shrink-0">
                 <span class="px-3 py-1 rounded-full bg-purple-500/20 border border-purple-400/40 text-purple-200 text-xs font-bold">
                     LDRRMO SUPER ADMIN AUTHORITY
                 </span>

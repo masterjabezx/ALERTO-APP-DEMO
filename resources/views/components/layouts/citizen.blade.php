@@ -25,9 +25,7 @@
     <header class="sticky top-0 z-30 bg-white/95 border-b border-slate-200/80 backdrop-blur-md">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
             <a href="{{ route('citizen.dashboard') }}" class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-2xl bg-[#173957] text-white flex items-center justify-center shadow-md shadow-[#173957]/20 flex-shrink-0">
-                    <i data-lucide="shield-alert" class="w-5 h-5 text-emerald-400"></i>
-                </div>
+                <img src="/images/branding/alerto-logo-web-128.png" alt="ALERTO APP" class="w-10 h-10 rounded-xl object-contain flex-shrink-0">
                 <div>
                     <div class="flex items-center gap-1.5">
                         <span class="font-extrabold text-[#173957] tracking-tight text-base">ALERTO</span>

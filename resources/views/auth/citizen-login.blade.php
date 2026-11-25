@@ -18,11 +18,7 @@
     {{-- Citizen Login Card --}}
     <div class="bg-slate-900/90 border border-slate-800 rounded-[24px] p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
         <div class="text-center mb-6">
-            <div class="w-14 h-14 rounded-2xl bg-[#173957] border border-[#3187D8]/30 text-[#3187D8] mx-auto flex items-center justify-center mb-4 shadow-lg shadow-[#173957]/40">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                </svg>
-            </div>
+            <img src="/images/branding/alerto-logo-web-256.png" alt="ALERTO APP" class="w-16 h-16 rounded-2xl object-contain mx-auto mb-4 drop-shadow-lg">
             <h1 class="text-2xl font-black text-white tracking-tight">Citizen Sign In</h1>
             <p class="text-xs text-slate-400 mt-1">Municipality of Hinoba-an Emergency System</p>
         </div>

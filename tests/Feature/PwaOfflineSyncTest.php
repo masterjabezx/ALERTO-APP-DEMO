@@ -139,8 +139,19 @@ class PwaOfflineSyncTest extends TestCase
         $this->assertIsArray($json);
         $this->assertSame('ALERTO', $json['short_name']);
         $this->assertSame('standalone', $json['display']);
-        $this->assertSame('#173957', $json['theme_color']);
+        $this->assertSame('#0B1726', $json['theme_color']);
+        $this->assertSame('#0B1726', $json['background_color']);
         $this->assertNotEmpty($json['icons']);
+
+        foreach ($json['icons'] as $icon) {
+            $this->assertFileExists(public_path(ltrim($icon['src'], '/')));
+        }
+
+        foreach ($json['shortcuts'] ?? [] as $shortcut) {
+            foreach ($shortcut['icons'] ?? [] as $shortcutIcon) {
+                $this->assertFileExists(public_path(ltrim($shortcutIcon['src'], '/')));
+            }
+        }
     }
 
     /**
@@ -153,10 +164,22 @@ class PwaOfflineSyncTest extends TestCase
 
         $content = file_get_contents($swPath);
         $this->assertStringContainsString('alerto-pwa-', $content);
+        $this->assertStringContainsString('/images/branding/alerto-app-icon-192.png', $content);
         // Sensitive routes must never be cached in Service Worker
         $this->assertStringContainsString('/login', $content);
         $this->assertStringContainsString('/logout', $content);
         $this->assertStringContainsString('/offline', $content);
+
+        // Verify all static branding assets cached by sw.js exist on disk
+        if (preg_match('/const\s+STATIC_ASSETS\s*=\s*\[(.*?)\];/s', $content, $matches)) {
+            preg_match_all("/'([^']+)'/", $matches[1], $paths);
+            foreach ($paths[1] as $assetPath) {
+                if ($assetPath === '/offline') {
+                    continue;
+                }
+                $this->assertFileExists(public_path(ltrim($assetPath, '/')));
+            }
+        }
     }
 
     /**

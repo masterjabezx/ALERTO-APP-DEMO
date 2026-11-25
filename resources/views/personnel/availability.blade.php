@@ -24,60 +24,54 @@
                     this.submitting = true;
                     this.errorMessage = '';
 
-                    // 8-second safety timeout so user is NEVER trapped on an endless loading spinner
+                    const controller = new AbortController();
+                    let timedOut = false;
+
+                    // Keep the timeout active until the full response body has been read.
                     clearTimeout(this.timeoutHandle);
                     this.timeoutHandle = setTimeout(() => {
-                        if (this.submitting) {
-                            this.submitting = false;
-                            this.errorMessage = 'Connection timeout. Please retry or click enter to continue.';
-                        }
+                        timedOut = true;
+                        controller.abort();
                     }, 8000);
 
                     const form = this.$refs.availabilityForm;
                     const url = form.action;
                     const token = form.querySelector('input[name="_token"]')?.value || '';
 
-                    fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': token,
-                        },
-                        body: JSON.stringify({
-                            status: this.selected,
-                            _token: token,
-                        }),
-                    })
-                    .then(async (response) => {
-                        clearTimeout(this.timeoutHandle);
-                        if (response.ok) {
-                            const data = await response.json();
-                            const target = data.redirect_url || '{{ route('personnel.dashboard') }}';
-                            window.location.assign(target);
-                            return;
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': token,
+                            },
+                            body: JSON.stringify({
+                                status: this.selected,
+                                _token: token,
+                            }),
+                            signal: controller.signal,
+                        });
+                        const data = await response.json().catch(() => null);
+
+                        if (!response.ok) {
+                            throw new Error(data?.message || `Unable to save availability (HTTP ${response.status}).`);
                         }
 
-                        // If response is a redirect or error
-                        if (response.status === 422) {
-                            const data = await response.json();
-                            this.errorMessage = data.message || 'Validation error saving status.';
-                            this.submitting = false;
-                        } else {
-                            // Fallback to native submission to ensure standard redirect flow works
-                            form.submit();
+                        if (!data?.success || !data.redirect_url) {
+                            throw new Error(data?.message || 'The server returned an incomplete availability response.');
                         }
-                    })
-                    .catch(() => {
+
+                        window.location.assign(data.redirect_url);
+                    } catch (error) {
+                        this.submitting = false;
+                        this.errorMessage = timedOut
+                            ? 'The request timed out. Check your connection and try again.'
+                            : (error?.message || 'Unable to save availability. Check your connection and try again.');
+                    } finally {
                         clearTimeout(this.timeoutHandle);
-                        // Network error or offline: fallback to native form submission
-                        try {
-                            form.submit();
-                        } catch (e) {
-                            this.submitting = false;
-                            this.errorMessage = 'Network connection issue. Please retry.';
-                        }
-                    });
+                        this.timeoutHandle = null;
+                    }
                 }
             };
         };
@@ -132,6 +126,12 @@
             </div>
         @endif
 
+        @if (!$personnel)
+            <div role="alert" class="space-y-2 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-5 text-sm text-amber-100">
+                <h2 class="font-bold">Personnel profile required</h2>
+                <p class="text-amber-100/80">Your responder profile has not been configured. Contact your Office administrator before setting a duty status.</p>
+            </div>
+        @else
         {{-- Availability Selection Form --}}
         <form x-ref="availabilityForm" method="POST" action="{{ route('personnel.availability.update') }}" @submit.prevent="executeSubmit()">
             @csrf
@@ -229,6 +229,7 @@
                 </p>
             </div>
         </form>
+        @endif
     </div>
 </div>
 @endsection

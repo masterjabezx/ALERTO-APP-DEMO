@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Offline Mode — ALERTO Hinoba-an</title>
-    <link rel="manifest" href="/manifest.json">
+    <x-pwa-meta />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,12 +16,10 @@
 <body class="h-full flex flex-col justify-between text-slate-100 p-6 selection:bg-[#3187D8] selection:text-white">
 
     <div class="max-w-md w-full mx-auto my-auto text-center flex flex-col items-center">
-        <!-- Beacon Badge -->
+        <!-- Official ALERTO Brand Beacon Badge -->
         <div class="relative mb-6">
-            <div class="w-24 h-24 rounded-3xl bg-[#173957] border border-blue-500/30 flex items-center justify-center shadow-2xl shadow-blue-950/80">
-                <svg class="w-12 h-12 text-[#DB4545]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.166a1 1 0 11-1.414 1.414 1 1 0 011.414-1.414zM3 3l18 18" />
-                </svg>
+            <div class="w-24 h-24 rounded-3xl bg-[#0B1726] border border-blue-500/30 p-1.5 flex items-center justify-center shadow-2xl shadow-blue-950/80">
+                <img src="/images/branding/alerto-logo-web-256.png" alt="ALERTO APP" class="w-full h-full object-contain">
             </div>
             <span class="absolute -top-1 -right-1 flex h-4 w-4">
                 <span class="relative inline-flex rounded-full h-4 w-4 bg-[#DB4545] border-2 border-[#0B1726]"></span>

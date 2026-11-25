@@ -75,9 +75,7 @@
         {{-- Brand / Header --}}
         <div class="h-16 px-4 flex items-center justify-between border-b border-white/10 shrink-0 bg-[#101E2E]/70">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 overflow-hidden focus:outline-hidden">
-                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#DB4545] to-[#b53030] text-white flex items-center justify-center shadow-lg shadow-[#DB4545]/30 shrink-0">
-                    <i data-lucide="shield-alert" class="w-5 h-5"></i>
-                </div>
+                <img src="/images/branding/alerto-logo-web-128.png" alt="ALERTO APP" class="w-10 h-10 rounded-xl object-contain shrink-0">
                 <div x-show="sidebarOpen || mobileMenuOpen" class="truncate">
                     <span class="font-extrabold text-[#EDF4FC] tracking-wider text-sm block">DIAL DAPH</span>
                     <span class="text-[10px] text-[#34B9D4] font-mono tracking-widest block">COMMAND CENTER</span>
@@ -226,6 +224,7 @@
                 >
                     <i data-lucide="menu" class="w-5 h-5"></i>
                 </button>
+                <img src="/images/branding/alerto-logo-web-128.png" alt="ALERTO APP" class="w-8 h-8 rounded-lg object-contain lg:hidden shrink-0">
 
                 {{-- Live System Connection Status Pill --}}
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-full border text-[11px] font-bold"

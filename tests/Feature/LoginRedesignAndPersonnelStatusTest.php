@@ -329,4 +329,82 @@ class LoginRedesignAndPersonnelStatusTest extends TestCase
             'redirect_url' => route('personnel.dashboard'),
         ]);
     }
+
+    public function test_invalid_personnel_availability_status_returns_422_without_updating_presence(): void
+    {
+        $office = Office::first() ?? Office::factory()->create();
+        $user = User::factory()->create([
+            'account_type' => 'personnel',
+            'is_active' => true,
+        ]);
+        $profile = PersonnelProfile::create([
+            'user_id' => $user->id,
+            'office_id' => $office->id,
+            'badge_number' => 'B-INVALID-'.time(),
+            'rank_designation' => 'Responder',
+        ]);
+
+        $response = $this->actingAs($user)->postJson(route('personnel.availability.update'), [
+            'status' => 'not-a-status',
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonPath('errors.status.0', 'The selected status is invalid.');
+        $this->assertDatabaseMissing('personnel_availabilities', [
+            'personnel_id' => $profile->id,
+        ]);
+    }
+
+    public function test_personnel_without_profile_gets_409_without_being_assigned_to_an_office(): void
+    {
+        $user = User::factory()->create([
+            'account_type' => 'personnel',
+            'is_active' => true,
+        ]);
+
+        $response = $this->actingAs($user)->postJson(route('personnel.availability.update'), [
+            'status' => 'online',
+        ]);
+
+        $response->assertStatus(409);
+        $response->assertJsonPath('success', false);
+        $response->assertJsonPath('message', 'Your Personnel profile is not configured. Contact your Office administrator.');
+        $this->assertDatabaseMissing('personnel_profiles', [
+            'user_id' => $user->id,
+        ]);
+    }
+
+    public function test_personnel_without_a_profile_is_redirected_before_dashboard_access(): void
+    {
+        $user = User::factory()->create([
+            'account_type' => 'personnel',
+            'is_active' => true,
+        ]);
+
+        $response = $this->actingAs($user)->get(route('personnel.dashboard'));
+
+        $response->assertRedirect(route('personnel.availability'));
+        $this->assertDatabaseMissing('personnel_profiles', [
+            'user_id' => $user->id,
+        ]);
+    }
+
+    public function test_personnel_without_a_selected_status_is_redirected_to_availability(): void
+    {
+        $office = Office::first() ?? Office::factory()->create();
+        $user = User::factory()->create([
+            'account_type' => 'personnel',
+            'is_active' => true,
+        ]);
+        PersonnelProfile::create([
+            'user_id' => $user->id,
+            'office_id' => $office->id,
+            'badge_number' => 'B-NO-STATUS-'.time(),
+            'rank_designation' => 'Responder',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('personnel.dashboard'));
+
+        $response->assertRedirect(route('personnel.availability'));
+    }
 }

@@ -4,9 +4,7 @@
      class="sticky top-0 z-40 bg-gradient-to-r from-[#0B1726] via-[#173957] to-[#0B1726] text-white border-b border-blue-500/30 px-4 py-2.5 shadow-md">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-[#3187D8] text-white flex items-center justify-center shadow-md flex-shrink-0">
-                <i data-lucide="download" class="w-4 h-4"></i>
-            </div>
+            <img src="/images/branding/alerto-logo-web-128.png" alt="ALERTO APP" class="w-10 h-10 rounded-xl object-contain flex-shrink-0 drop-shadow-md">
             <div>
                 <div class="flex items-center gap-2">
                     <span class="font-extrabold text-xs tracking-tight">INSTALL ALERTO APP</span>

@@ -11,6 +11,10 @@
         </a>
 
         <div class="bg-slate-900/90 border border-purple-700/50 rounded-2xl p-8 shadow-2xl">
+            <div class="text-center mb-5">
+                <img src="/images/branding/alerto-logo-web-256.png" alt="ALERTO APP" class="w-16 h-16 rounded-2xl object-contain mx-auto mb-4 drop-shadow-lg">
+            </div>
+
             <div class="p-3 rounded-xl bg-purple-950/60 border border-purple-700/40 text-xs text-purple-200 font-semibold mb-6">
                 LDRRMO SUPER ADMIN — Highest System Governance & Oversight Authority
             </div>

@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Personnel;
 
 use App\Http\Controllers\Controller;
-use App\Models\Office;
-use App\Models\PersonnelProfile;
+use App\Http\Requests\Personnel\UpdateAvailabilityRequest;
 use App\Services\PersonnelManagementService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use InvalidArgumentException;
 
 class PersonnelAvailabilityController extends Controller
 {
@@ -30,44 +27,33 @@ class PersonnelAvailabilityController extends Controller
         return view('personnel.availability', compact('personnel', 'availability'));
     }
 
-    public function update(Request $request): RedirectResponse|JsonResponse
+    public function update(UpdateAvailabilityRequest $request): RedirectResponse|JsonResponse
     {
-        $statusInput = $request->input('status', $request->input('operational_status'));
-
         $user = Auth::user();
         if (! $user) {
             abort(401);
         }
 
         $personnel = $user->personnelProfile;
-
         if (! $personnel) {
-            $office = Office::first();
-            $personnel = PersonnelProfile::create([
-                'user_id' => $user->id,
-                'office_id' => $office?->id ?? 1,
-                'badge_number' => 'B-'.$user->id.'-'.time(),
-                'rank_designation' => 'Field Operative',
-            ]);
-            $user->load('personnelProfile');
-        }
+            $message = 'Your Personnel profile is not configured. Contact your Office administrator.';
 
-        try {
-            $result = $this->personnelService->setPersonnelAvailability(
-                $user,
-                (string) $statusInput,
-                $request->input('reason')
-            );
-        } catch (InvalidArgumentException $e) {
             if ($request->expectsJson() || $request->isJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => $e->getMessage(),
-                ], 422);
+                    'message' => $message,
+                ], 409);
             }
 
-            return back()->with('error', $e->getMessage())->withErrors(['status' => $e->getMessage()]);
+            return redirect()->route('personnel.availability');
         }
+
+        $validated = $request->validated();
+        $result = $this->personnelService->setPersonnelAvailability(
+            $user,
+            $validated['status'],
+            $validated['reason'] ?? null
+        );
 
         $message = $result['message'] ?? 'Availability status updated successfully.';
 

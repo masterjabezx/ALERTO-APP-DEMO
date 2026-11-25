@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
+    <x-pwa-meta />
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-full bg-[#0B1726] text-white antialiased selection:bg-[#3187D8] selection:text-white"
@@ -27,11 +29,7 @@
     <header class="w-full border-b border-slate-800/80 bg-[#0B1726]/80 backdrop-blur-md sticky top-0 z-20">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl bg-[#173957] text-white flex items-center justify-center shadow-lg shadow-[#173957]/40 border border-[#3187D8]/30">
-                    <svg class="w-6 h-6 text-[#3187D8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg>
-                </div>
+                <img src="/images/branding/alerto-logo-web-128.png" alt="ALERTO APP" class="w-11 h-11 rounded-2xl object-contain flex-shrink-0 drop-shadow-md">
                 <div>
                     <div class="flex items-center gap-2">
                         <span class="text-xl font-black tracking-tight text-white">ALERTO</span>
