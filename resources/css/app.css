@@ -1,0 +1,129 @@
+@import 'tailwindcss';
+@import './admin-command-center.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    /* Fonts */
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    /* Official ALERTO Brand Palette - Hinoba-an LDRRMO */
+    --color-alerto-navy: #173957;
+    --color-alerto-navy-dark: #0f2438;
+    --color-alerto-navy-light: #204e75;
+    --color-alerto-blue: #3187D8;
+    --color-alerto-blue-hover: #2672ba;
+    --color-alerto-blue-light: #eaf3fb;
+    --color-alerto-red: #DB4545;
+    --color-alerto-red-hover: #c43838;
+    --color-alerto-red-light: #fbeeed;
+    --color-alerto-green: #19865B;
+    --color-alerto-green-hover: #146e4b;
+    --color-alerto-green-light: #e8f5ef;
+    --color-alerto-amber: #F0A82E;
+    --color-alerto-amber-hover: #d89423;
+    --color-alerto-amber-light: #fef6e9;
+    --color-alerto-bg: #F5F7FA;
+    --color-alerto-surface: #FFFFFF;
+    --color-alerto-border: #E2E8F0;
+
+    /* Radius Design Tokens (18px - 24px for major cards) */
+    --radius-card: 20px;
+    --radius-card-sm: 18px;
+    --radius-card-lg: 24px;
+}
+
+:root {
+    /* CSS Variables for Dynamic Components and Scripts */
+    --brand-navy: #173957;
+    --brand-navy-dark: #0f2438;
+    --brand-navy-light: #204e75;
+    --brand-blue: #3187D8;
+    --brand-red: #DB4545;
+    --brand-green: #19865B;
+    --brand-amber: #F0A82E;
+    --brand-bg: #F5F7FA;
+    --brand-surface: #FFFFFF;
+    --brand-border: #E2E8F0;
+
+    --radius-card: 20px;
+    --radius-card-sm: 18px;
+    --radius-card-lg: 24px;
+
+    /* Soft Enterprise Shadows */
+    --shadow-soft-sm: 0 2px 8px -1px rgba(23, 57, 87, 0.05);
+    --shadow-soft: 0 4px 20px -2px rgba(23, 57, 87, 0.07);
+    --shadow-card: 0 6px 24px -4px rgba(23, 57, 87, 0.08), 0 2px 6px -1px rgba(23, 57, 87, 0.04);
+    --shadow-card-hover: 0 14px 32px -4px rgba(23, 57, 87, 0.12), 0 4px 12px -2px rgba(23, 57, 87, 0.06);
+    --shadow-elevated: 0 20px 40px -8px rgba(23, 57, 87, 0.18);
+}
+
+/* Base Body Styles */
+body {
+    background-color: var(--brand-bg);
+    color: #1e293b;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar for Command Center Panels */
+.alerto-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.alerto-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.alerto-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(23, 57, 87, 0.2);
+    border-radius: 9999px;
+}
+.alerto-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(23, 57, 87, 0.4);
+}
+
+/* Glassmorphism Surface for Command Center */
+.glass-surface {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.glass-surface-dark {
+    background: rgba(15, 36, 56, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Pulse animation for live status */
+@keyframes alerto-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.15); }
+}
+
+.animate-alerto-ping {
+    animation: alerto-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Touch friendly minimum target */
+.touch-target {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

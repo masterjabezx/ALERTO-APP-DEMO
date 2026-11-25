@@ -1,0 +1,268 @@
+/* ==========================================================================
+   ALERTO ULTIMATE EMERGENCY OPERATIONS CENTER — DESIGN TOKENS & THEME ENGINE
+   Official Palette: Hinoba-an LDRRMO Command Center
+   ========================================================================== */
+
+:root {
+    --eoc-navy: #173957;
+    --eoc-deep-navy: #0B1726;
+    --eoc-dark-surface: #101E2E;
+    --eoc-blue: #3187D8;
+    --eoc-cyan: #34B9D4;
+    --eoc-red: #DB4545;
+    --eoc-green: #19865B;
+    --eoc-amber: #F0A82E;
+    --eoc-light-text: #EDF4FC;
+    --eoc-muted-text: #93A4B8;
+}
+
+/* Default Dark Command Mode Tokens */
+.eoc-shell.theme-dark {
+    --eoc-bg: #0B1726;
+    --eoc-surface: #101E2E;
+    --eoc-surface-elevated: #15263B;
+    --eoc-surface-subtle: #0D1A2B;
+    --eoc-glass: rgba(16, 30, 46, 0.84);
+    --eoc-border: rgba(147, 164, 184, 0.16);
+    --eoc-border-strong: rgba(52, 185, 212, 0.28);
+    --eoc-text: #EDF4FC;
+    --eoc-text-secondary: #C6D4E5;
+    --eoc-text-muted: #93A4B8;
+    --eoc-grid-color: rgba(49, 135, 216, 0.08);
+    --eoc-input-bg: #0B1726;
+    --eoc-shadow: 0 12px 32px -8px rgba(4, 10, 18, 0.55);
+}
+
+/* Executive Light Mode Tokens */
+.eoc-shell.theme-light {
+    --eoc-bg: #F5F7FA;
+    --eoc-surface: #FFFFFF;
+    --eoc-surface-elevated: #FFFFFF;
+    --eoc-surface-subtle: #F8FAFC;
+    --eoc-glass: rgba(255, 255, 255, 0.92);
+    --eoc-border: rgba(203, 213, 225, 0.85);
+    --eoc-border-strong: rgba(23, 57, 87, 0.25);
+    --eoc-text: #0F172A;
+    --eoc-text-secondary: #334155;
+    --eoc-text-muted: #475569;
+    --eoc-grid-color: rgba(23, 57, 87, 0.04);
+    --eoc-input-bg: #FFFFFF;
+    --eoc-shadow: 0 8px 24px -4px rgba(23, 57, 87, 0.08);
+}
+
+.eoc-chart-well {
+    background-color: rgba(4, 10, 18, 0.28);
+    border: 1px solid var(--eoc-border);
+    border-radius: 1rem;
+}
+
+.eoc-shell.theme-light .eoc-chart-well {
+    background-color: #F8FAFC;
+    border-color: rgba(203, 213, 225, 0.85);
+}
+
+.eoc-shell.theme-light .eoc-card .text-slate-400,
+.eoc-shell.theme-light .text-slate-400.eoc-muted-adaptive {
+    color: #475569 !important;
+}
+
+.eoc-shell {
+    background-color: var(--eoc-bg);
+    color: var(--eoc-text);
+    transition: background-color 0.28s ease, color 0.28s ease;
+}
+
+/* Tactical Fine Grid Background Pattern */
+.eoc-tactical-grid {
+    background-image:
+        linear-gradient(to right, var(--eoc-grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--eoc-grid-color) 1px, transparent 1px);
+    background-size: 36px 36px;
+}
+
+/* Layered Surfaces */
+.eoc-card {
+    background-color: var(--eoc-surface);
+    border: 1px solid var(--eoc-border);
+    box-shadow: var(--eoc-shadow);
+    border-radius: 20px;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background-color 0.28s ease;
+}
+
+.eoc-card:hover {
+    border-color: var(--eoc-border-strong);
+}
+
+.eoc-panel-glass {
+    background: var(--eoc-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--eoc-border);
+}
+
+.eoc-topbar {
+    background: var(--eoc-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--eoc-border);
+}
+
+/* Restrained Meaningful Glow Effects */
+.eoc-glow-critical {
+    box-shadow: 0 0 0 1px rgba(219, 69, 69, 0.35), 0 0 22px -6px rgba(219, 69, 69, 0.45);
+}
+
+.eoc-glow-active {
+    box-shadow: 0 0 0 1px rgba(25, 134, 91, 0.35), 0 0 18px -6px rgba(25, 134, 91, 0.35);
+}
+
+.eoc-glow-info {
+    box-shadow: 0 0 0 1px rgba(49, 135, 216, 0.3), 0 0 18px -6px rgba(52, 185, 212, 0.28);
+}
+
+/* Radar Scanline Decoration */
+@keyframes eoc-scanline {
+    0% { transform: translateY(-100%); opacity: 0; }
+    20% { opacity: 0.35; }
+    80% { opacity: 0.35; }
+    100% { transform: translateY(350%); opacity: 0; }
+}
+
+.eoc-scanline {
+    animation: eoc-scanline 6s linear infinite;
+}
+
+/* Unified Dark Mode Adaptations for Sub-Views (Preserves existing Admin functional pages cleanly) */
+.eoc-shell.theme-dark .bg-white:not(.no-eoc-dark) {
+    background-color: var(--eoc-surface) !important;
+    color: var(--eoc-text);
+}
+
+.eoc-shell.theme-dark .bg-slate-50:not(.no-eoc-dark),
+.eoc-shell.theme-dark .bg-slate-50\/50:not(.no-eoc-dark),
+.eoc-shell.theme-dark .bg-slate-50\/70:not(.no-eoc-dark),
+.eoc-shell.theme-dark .bg-slate-50\/75:not(.no-eoc-dark),
+.eoc-shell.theme-dark .bg-slate-50\/80:not(.no-eoc-dark),
+.eoc-shell.theme-dark .bg-slate-100:not(.no-eoc-dark) {
+    background-color: var(--eoc-surface-subtle) !important;
+}
+
+.eoc-shell.theme-dark .text-slate-900:not(.no-eoc-dark),
+.eoc-shell.theme-dark .text-slate-800:not(.no-eoc-dark) {
+    color: var(--eoc-text) !important;
+}
+
+.eoc-shell.theme-dark .text-slate-700:not(.no-eoc-dark),
+.eoc-shell.theme-dark .text-slate-600:not(.no-eoc-dark) {
+    color: var(--eoc-text-secondary) !important;
+}
+
+.eoc-shell.theme-dark .text-slate-500:not(.no-eoc-dark),
+.eoc-shell.theme-dark .text-slate-400:not(.no-eoc-dark) {
+    color: var(--eoc-text-muted) !important;
+}
+
+.eoc-shell.theme-dark .border-slate-200,
+.eoc-shell.theme-dark .border-slate-200\/80,
+.eoc-shell.theme-dark .border-slate-200\/90,
+.eoc-shell.theme-dark .border-slate-100,
+.eoc-shell.theme-dark .border-slate-300,
+.eoc-shell.theme-dark .divide-slate-100 > :not(:last-child),
+.eoc-shell.theme-dark .divide-slate-200 > :not(:last-child) {
+    border-color: var(--eoc-border) !important;
+}
+
+.eoc-shell.theme-dark input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.eoc-shell.theme-dark select,
+.eoc-shell.theme-dark textarea {
+    background-color: var(--eoc-input-bg) !important;
+    color: var(--eoc-text) !important;
+    border-color: rgba(147, 164, 184, 0.25) !important;
+}
+
+.eoc-shell.theme-dark input::placeholder,
+.eoc-shell.theme-dark textarea::placeholder {
+    color: #6E8299 !important;
+}
+
+.eoc-shell.theme-dark tr:hover {
+    background-color: rgba(49, 135, 216, 0.08) !important;
+}
+
+/* Status Tinted Cards & Badges in Dark Mode */
+.eoc-shell.theme-dark .bg-amber-50\/70,
+.eoc-shell.theme-dark .bg-amber-50,
+.eoc-shell.theme-dark .bg-amber-100 { background-color: rgba(240, 168, 46, 0.14) !important; }
+.eoc-shell.theme-dark .border-amber-200,
+.eoc-shell.theme-dark .border-amber-200\/80 { border-color: rgba(240, 168, 46, 0.35) !important; }
+.eoc-shell.theme-dark .text-amber-900,
+.eoc-shell.theme-dark .text-amber-800,
+.eoc-shell.theme-dark .text-amber-700,
+.eoc-shell.theme-dark .text-amber-700\/80 { color: #F7C768 !important; }
+
+.eoc-shell.theme-dark .bg-blue-50\/70,
+.eoc-shell.theme-dark .bg-blue-50,
+.eoc-shell.theme-dark .bg-blue-100 { background-color: rgba(49, 135, 216, 0.16) !important; }
+.eoc-shell.theme-dark .border-blue-200,
+.eoc-shell.theme-dark .border-blue-200\/80 { border-color: rgba(49, 135, 216, 0.35) !important; }
+.eoc-shell.theme-dark .text-blue-900,
+.eoc-shell.theme-dark .text-blue-800,
+.eoc-shell.theme-dark .text-blue-700,
+.eoc-shell.theme-dark .text-blue-700\/80 { color: #82C3FF !important; }
+
+.eoc-shell.theme-dark .bg-emerald-50\/70,
+.eoc-shell.theme-dark .bg-emerald-50,
+.eoc-shell.theme-dark .bg-emerald-100 { background-color: rgba(25, 134, 91, 0.16) !important; }
+.eoc-shell.theme-dark .border-emerald-200,
+.eoc-shell.theme-dark .border-emerald-200\/80 { border-color: rgba(25, 134, 91, 0.38) !important; }
+.eoc-shell.theme-dark .text-emerald-900,
+.eoc-shell.theme-dark .text-emerald-800,
+.eoc-shell.theme-dark .text-emerald-700,
+.eoc-shell.theme-dark .text-emerald-700\/80 { color: #6AE0B0 !important; }
+
+.eoc-shell.theme-dark .bg-purple-50\/70,
+.eoc-shell.theme-dark .bg-purple-50,
+.eoc-shell.theme-dark .bg-purple-100 { background-color: rgba(139, 92, 246, 0.16) !important; }
+.eoc-shell.theme-dark .border-purple-200,
+.eoc-shell.theme-dark .border-purple-200\/80 { border-color: rgba(139, 92, 246, 0.35) !important; }
+.eoc-shell.theme-dark .text-purple-900,
+.eoc-shell.theme-dark .text-purple-800,
+.eoc-shell.theme-dark .text-purple-700,
+.eoc-shell.theme-dark .text-purple-700\/80 { color: #C4B5FD !important; }
+
+.eoc-shell.theme-dark .bg-rose-50\/70,
+.eoc-shell.theme-dark .bg-rose-50,
+.eoc-shell.theme-dark .bg-rose-100,
+.eoc-shell.theme-dark .bg-red-50\/60,
+.eoc-shell.theme-dark .bg-red-100 { background-color: rgba(219, 69, 69, 0.16) !important; }
+.eoc-shell.theme-dark .border-rose-200,
+.eoc-shell.theme-dark .border-rose-200\/80,
+.eoc-shell.theme-dark .border-red-200 { border-color: rgba(219, 69, 69, 0.38) !important; }
+.eoc-shell.theme-dark .text-rose-900,
+.eoc-shell.theme-dark .text-rose-800,
+.eoc-shell.theme-dark .text-rose-700,
+.eoc-shell.theme-dark .text-red-800,
+.eoc-shell.theme-dark .text-red-700 { color: #FDA4AF !important; }
+
+/* Keyboard Focus Ring for Operational Accessibility */
+.eoc-shell a:focus-visible,
+.eoc-shell button:focus-visible,
+.eoc-shell input:focus-visible,
+.eoc-shell select:focus-visible,
+.eoc-shell textarea:focus-visible {
+    outline: 2px solid var(--eoc-cyan);
+    outline-offset: 2px;
+}
+
+/* Reduced Motion Guarantee */
+@media (prefers-reduced-motion: reduce) {
+    .eoc-scanline {
+        animation: none !important;
+        display: none;
+    }
+    .eoc-shell * {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B1726" />
+      <stop offset="100%" stop-color="#173957" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3187D8" />
+      <stop offset="100%" stop-color="#173957" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  <circle cx="256" cy="256" r="215" fill="none" stroke="#3187D8" stroke-width="4" stroke-opacity="0.4" stroke-dasharray="12 8" />
+  
+  <!-- Shield Outline -->
+  <path d="M256 90 L390 140 C390 270 320 375 256 422 C192 375 122 270 122 140 Z" 
+        fill="url(#shieldGrad)" stroke="#34B9D4" stroke-width="6" />
+  
+  <!-- Inner Cross / Emergency Emblem -->
+  <path d="M228 170 H284 V330 H228 Z" fill="#FFFFFF" opacity="0.95" />
+  <path d="M176 222 H336 V278 H176 Z" fill="#FFFFFF" opacity="0.95" />
+  
+  <!-- Red Emergency Alert Beacon Center -->
+  <circle cx="256" cy="250" r="38" fill="#DB4545" filter="url(#glow)" />
+  <circle cx="256" cy="250" r="18" fill="#FFFFFF" />
+  
+  <!-- Hinoba-an LDRRMO Star/Accent -->
+  <circle cx="256" cy="120" r="8" fill="#F0A82E" />
+</svg>

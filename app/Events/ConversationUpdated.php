@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Events;
+
+use App\Models\Conversation;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class ConversationUpdated implements ShouldBroadcastNow
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public function __construct(
+        public Conversation $conversation,
+        public ?string $lastMessageBody = null
+    ) {}
+
+    public function broadcastOn(): array
+    {
+        return [
+            new PrivateChannel("conversation.{$this->conversation->id}"),
+        ];
+    }
+
+    public function broadcastWith(): array
+    {
+        return [
+            'conversation_id' => $this->conversation->id,
+            'title' => $this->conversation->title,
+            'type' => $this->conversation->type,
+            'last_message' => $this->lastMessageBody,
+            'updated_at' => $this->conversation->updated_at?->toIso8601String(),
+        ];
+    }
+}
