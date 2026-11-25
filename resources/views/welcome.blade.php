@@ -24,22 +24,22 @@
     <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-[#DB4545]/10 rounded-full blur-3xl"></div>
 </div>
 
-<div class="relative min-h-screen flex flex-col justify-between">
+<div class="relative min-h-[100svh] flex flex-col">
     {{-- Top Public Header --}}
-    <header class="w-full border-b border-slate-800/80 bg-[#0B1726]/80 backdrop-blur-md sticky top-0 z-20">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+    <header class="w-full border-b border-slate-800/80 bg-[#0B1726]/80 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <img src="/images/branding/alerto-logo-web-128.png" alt="ALERTO APP" class="w-11 h-11 rounded-2xl object-contain flex-shrink-0 drop-shadow-md">
+                <img src="/images/branding/alerto-logo-web-128.png" alt="ALERTO APP" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-contain flex-shrink-0 drop-shadow-md">
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="text-xl font-black tracking-tight text-white">ALERTO</span>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded-sm border border-emerald-500/30">Citizen Portal</span>
+                        <span class="text-lg font-black tracking-tight text-white">ALERTO</span>
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded-sm border border-emerald-500/30">Citizen Portal</span>
                     </div>
-                    <span class="block text-[11px] font-medium text-slate-400">Municipality of Hinoba-an · LDRRMO</span>
+                    <span class="hidden sm:block text-[11px] font-medium text-slate-400">Municipality of Hinoba-an · LDRRMO</span>
                 </div>
             </div>
 
-            <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-700/60 text-xs font-semibold text-slate-300">
+            <div class="flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-slate-900 border border-slate-700/60 text-[10px] sm:text-xs font-semibold text-slate-300">
                 <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -51,27 +51,27 @@
     </header>
 
     {{-- Main Content: Two Columns on Desktop (Sign In & Emergency Access) --}}
-    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    <main class="flex-1 flex items-center max-w-6xl w-full mx-auto px-3 sm:px-6 py-2 sm:py-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-5 items-center w-full">
 
             {{-- Column 1: Citizen Login & Registration Form (7 cols) --}}
-            <div class="lg:col-span-7 space-y-6" x-data="{ showPassword: false, submitting: false, showForgotModal: false }">
-                <div class="bg-slate-900/90 border border-slate-800 rounded-[24px] p-6 sm:p-8 shadow-2xl backdrop-blur-md">
-                    <div class="mb-6">
+            <div class="lg:col-span-7" x-data="{ showPassword: false, submitting: false, showForgotModal: false }">
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-2xl backdrop-blur-md">
+                    <div class="mb-3">
                         <span class="text-xs font-bold uppercase tracking-wider text-[#3187D8] bg-[#3187D8]/10 px-2.5 py-1 rounded-full border border-[#3187D8]/20">
                             Citizen Sign In
                         </span>
-                        <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight mt-3">
-                            Access Your Citizen Account
+                        <h1 class="text-xl sm:text-2xl font-black text-white tracking-tight mt-1.5">
+                            Sign in to your account
                         </h1>
-                        <p class="text-xs sm:text-sm text-slate-400 mt-1">
-                            Sign in with your registered mobile phone number or email to view your emergency records and follow up on incidents.
+                        <p class="text-xs text-slate-400 mt-1">
+                            Use your phone number or email to continue.
                         </p>
                     </div>
 
                     {{-- Flash Errors --}}
                     @if(session('error'))
-                        <div class="mb-5 p-4 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs font-medium flex items-center gap-3">
+                        <div class="mb-3 p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs font-medium flex items-center gap-3">
                             <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
@@ -80,7 +80,7 @@
                     @endif
 
                     @if($errors->any())
-                        <div class="mb-5 p-4 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs font-medium space-y-1">
+                        <div class="mb-3 p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs font-medium space-y-1">
                             @foreach($errors->all() as $err)
                                 <div class="flex items-center gap-2">
                                     <span class="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0"></span>
@@ -90,22 +90,22 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('citizen.login.post') }}" method="POST" @submit="submitting = true" class="space-y-4">
+                    <form action="{{ route('citizen.login.post') }}" method="POST" @submit="submitting = true" class="space-y-2.5">
                         @csrf
 
                         {{-- Mobile Number or Email --}}
                         <div>
                             <label for="citizen_login" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
-                                Mobile Number or Email Address *
+                                Phone number or email *
                             </label>
                             <input type="text" name="login" id="citizen_login" value="{{ old('login') }}" required autofocus
-                                   placeholder="e.g., 09171234567 or citizen@example.com"
-                                   class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:border-[#3187D8] focus:ring-1 focus:ring-[#3187D8] focus:outline-none transition-all">
+                                   placeholder="09xx xxx xxxx or name@email.com"
+                                   class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:border-[#3187D8] focus:ring-1 focus:ring-[#3187D8] focus:outline-none transition-all">
                         </div>
 
                         {{-- Password --}}
                         <div>
-                            <div class="flex items-center justify-between mb-1.5">
+                            <div class="flex items-center justify-between mb-1">
                                 <label for="citizen_password" class="block text-xs font-bold uppercase tracking-wider text-slate-300">
                                     Password *
                                 </label>
@@ -116,8 +116,8 @@
                             </div>
                             <div class="relative">
                                 <input :type="showPassword ? 'text' : 'password'" name="password" id="citizen_password" required
-                                       placeholder="Enter your account password"
-                                       class="w-full px-4 py-3 pr-11 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:border-[#3187D8] focus:ring-1 focus:ring-[#3187D8] focus:outline-none transition-all">
+                                       placeholder="Enter your password"
+                                       class="w-full px-3.5 py-2.5 pr-11 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:border-[#3187D8] focus:ring-1 focus:ring-[#3187D8] focus:outline-none transition-all">
                                 <button type="button" @click="showPassword = !showPassword"
                                         class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-white transition-colors cursor-pointer"
                                         tabindex="-1" title="Toggle password visibility">
@@ -133,32 +133,32 @@
                         </div>
 
                         {{-- Remember Me --}}
-                        <div class="flex items-center justify-between text-xs pt-1">
+                        <div class="flex items-center justify-between text-xs">
                             <label class="flex items-center gap-2 text-slate-300 cursor-pointer select-none">
                                 <input type="checkbox" name="remember" value="1" class="rounded bg-slate-950 border-slate-700 text-[#3187D8] focus:ring-[#3187D8]">
-                                <span>Keep me signed in on this device</span>
+                                <span>Remember me</span>
                             </label>
                         </div>
 
                         {{-- Submit Button --}}
                         <button type="submit" :disabled="submitting"
-                                class="w-full py-4 rounded-xl bg-[#173957] hover:bg-[#1f4b72] disabled:opacity-50 text-white font-extrabold text-sm shadow-lg shadow-[#173957]/30 border border-[#3187D8]/30 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2">
+                                class="w-full py-2.5 rounded-xl bg-[#173957] hover:bg-[#1f4b72] disabled:opacity-50 text-white font-extrabold text-sm shadow-lg shadow-[#173957]/30 border border-[#3187D8]/30 transition-all flex items-center justify-center gap-2 cursor-pointer">
                             <svg x-show="submitting" style="display:none;" class="w-4 h-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                             </svg>
-                            <span x-text="submitting ? 'Authenticating...' : 'Sign In to Citizen Portal'"></span>
+                            <span x-text="submitting ? 'Signing in...' : 'Sign in'"></span>
                         </button>
                     </form>
 
                     {{-- Registration Link --}}
-                    <div class="mt-6 pt-6 border-t border-slate-800 text-center">
-                        <p class="text-xs text-slate-400">
-                            Don't have an ALERTO Citizen Account?
+                    <div class="mt-3 pt-3 border-t border-slate-800 text-center">
+                        <p class="text-xs text-slate-400 inline">
+                            New to ALERTO?
                         </p>
                         <a href="{{ route('citizen.register') }}"
-                           class="inline-flex items-center gap-1.5 mt-2 px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-all border border-slate-700">
-                            <span>Register as a New Citizen</span>
+                           class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-emerald-300 hover:text-emerald-200 text-xs font-bold transition-all">
+                            <span>Create an account</span>
                             <span>&rarr;</span>
                         </a>
                     </div>
@@ -190,51 +190,47 @@
             </div>
 
             {{-- Column 2: Fast Public Emergency Access (5 cols) --}}
-            <div class="lg:col-span-5 space-y-6">
+            <div class="lg:col-span-5 space-y-3">
 
                 {{-- Fast Emergency Report & SOS Card (No Login Required) --}}
-                <div class="rounded-[24px] border border-rose-500/40 bg-slate-900/90 p-6 sm:p-7 shadow-2xl space-y-5">
-                    <div>
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/15 border border-rose-400/30 text-rose-300 text-xs font-bold uppercase tracking-wider mb-2">
-                            Emergency? Act Now
-                        </span>
-                        <h2 class="text-xl sm:text-2xl font-black text-white">
-                            No Login Required for Urgent Emergencies
+                <div class="rounded-2xl border border-rose-500/40 bg-slate-900/90 p-4 shadow-2xl space-y-2.5">
+                    <div class="flex items-center justify-between gap-2">
+                        <h2 class="text-base sm:text-lg font-black text-white">
+                            Need help now?
                         </h2>
-                        <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-                            You do not need to log in to report an emergency. Submit an immediate guest report or press SOS — DIAL DAPH Command Center will call and dispatch responders immediately.
-                        </p>
+                        <span class="text-[10px] font-bold uppercase tracking-wide text-rose-200 bg-rose-500/15 border border-rose-400/30 px-2 py-1 rounded-full whitespace-nowrap">No login needed</span>
                     </div>
+                    <p class="text-xs text-slate-300">
+                        Report an emergency or send an SOS.
+                    </p>
 
-                    <div class="flex flex-col gap-3">
+                    <div class="grid grid-cols-2 gap-2">
                         <a href="{{ route('guest.report') }}"
-                           class="w-full py-3.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm text-center shadow-lg shadow-emerald-500/20 transition-all cursor-pointer">
-                            Submit Emergency Report (No Login)
+                           class="w-full min-h-11 px-2 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs sm:text-sm text-center shadow-lg shadow-emerald-500/20 transition-all cursor-pointer flex items-center justify-center">
+                            Report emergency
                         </a>
 
                         <a href="{{ route('guest.sos') }}"
-                           class="w-full py-3.5 px-4 rounded-xl bg-[#DB4545] hover:bg-red-500 text-white font-black text-sm text-center shadow-lg shadow-red-600/30 border border-red-400/40 transition-all cursor-pointer">
-                            TRIGGER EMERGENCY SOS
+                           class="w-full min-h-11 px-2 py-2 rounded-xl bg-[#DB4545] hover:bg-red-500 text-white font-black text-xs sm:text-sm text-center shadow-lg shadow-red-600/30 border border-red-400/40 transition-all cursor-pointer flex items-center justify-center">
+                            Send SOS
                         </a>
                     </div>
                 </div>
 
                 {{-- Dual Hotlines Section --}}
-                <div class="rounded-[24px] bg-slate-900/90 border border-slate-800 p-6 shadow-xl space-y-3">
-                    <span class="text-xs font-extrabold uppercase tracking-wider text-slate-300 block">
-                        Direct Emergency Call Lines
-                    </span>
-                    <p class="text-xs text-slate-400">
-                        Tap either hotline below to connect immediately via direct voice call:
-                    </p>
-                    <x-dual-hotlines :hotlines="$hotlines" />
+                <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-3 sm:p-4 shadow-xl space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-xs font-extrabold text-slate-200">Call a hotline</span>
+                        <span class="text-[10px] text-slate-400">Tap to call</span>
+                    </div>
+                    <x-dual-hotlines :hotlines="$hotlines" compact />
                 </div>
             </div>
         </div>
     </main>
 
     {{-- Simple, Clean Public Footer --}}
-    <footer class="w-full border-t border-slate-800/80 bg-[#0B1726]/80 py-5 px-4 text-center text-xs text-slate-500">
+    <footer class="hidden sm:block w-full border-t border-slate-800/80 bg-[#0B1726]/80 py-3 px-4 text-center text-[10px] text-slate-500">
         &copy; {{ date('Y') }} ALERTO APP · Municipality of Hinoba-an LDRRMO · DIAL DAPH Command Center
     </footer>
 </div>

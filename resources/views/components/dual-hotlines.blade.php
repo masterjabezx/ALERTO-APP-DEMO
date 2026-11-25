@@ -1,6 +1,6 @@
-@props(['hotlines'])
+@props(['hotlines', 'compact' => false])
 
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full" data-component="dual-hotlines">
+<div class="{{ $compact ? 'grid grid-cols-2 gap-2' : 'grid grid-cols-1 sm:grid-cols-2 gap-4 w-full' }}" data-component="dual-hotlines">
     @foreach(['dial_daph', 'ldrrmo'] as $slotKey)
         @php
             $h = $hotlines[$slotKey] ?? ['title' => strtoupper($slotKey), 'number' => null, 'tel_href' => null, 'description' => '', 'is_configured' => false];
@@ -8,7 +8,18 @@
         @endphp
 
         @if(!empty($h['is_configured']) && !empty($h['tel_href']))
-            <a href="{{ $h['tel_href'] }}"
+            @if($compact)
+                <a href="{{ $h['tel_href'] }}"
+                   aria-label="Call {{ $h['title'] }} at {{ $h['number'] }}"
+                   class="flex min-h-12 flex-col justify-center rounded-xl border px-2 py-1 transition-colors
+                          {{ $isDialDaph
+                              ? 'bg-rose-950/70 border-rose-500/40 text-rose-100 hover:bg-rose-900/70'
+                              : 'bg-amber-950/60 border-amber-500/40 text-amber-100 hover:bg-amber-900/60' }}">
+                    <span class="text-[9px] font-bold uppercase tracking-wide opacity-80">{{ $h['title'] }}</span>
+                    <span class="font-mono text-[11px] font-bold tracking-tight whitespace-nowrap">{{ $h['number'] }}</span>
+                </a>
+            @else
+                <a href="{{ $h['tel_href'] }}"
                class="group relative flex flex-col items-center justify-center text-center aspect-[5/4] sm:aspect-square max-h-56 w-full rounded-2xl p-5 border-2 transition-all duration-200 shadow-lg hover:-translate-y-0.5
                       {{ $isDialDaph
                           ? 'bg-gradient-to-br from-rose-600 to-red-700 border-rose-400/60 text-white shadow-rose-600/25 hover:from-rose-500 hover:to-red-600'
@@ -29,8 +40,15 @@
                     <span class="mt-2 text-[11px] opacity-85 line-clamp-2 max-w-[22ch]">{{ $h['description'] }}</span>
                 @endif
             </a>
+            @endif
         @else
-            <div class="flex flex-col items-center justify-center text-center aspect-[5/4] sm:aspect-square max-h-56 w-full rounded-2xl p-5 border-2 border-dashed border-slate-400/50 bg-slate-800/40 text-slate-300">
+            @if($compact)
+                <div class="flex min-h-12 flex-col justify-center rounded-xl border border-dashed border-slate-500/50 bg-slate-800/40 px-2 py-1 text-slate-300">
+                    <span class="text-[9px] font-bold uppercase tracking-wide">{{ $h['title'] }}</span>
+                    <span class="text-[10px]">Not configured</span>
+                </div>
+            @else
+                <div class="flex flex-col items-center justify-center text-center aspect-[5/4] sm:aspect-square max-h-56 w-full rounded-2xl p-5 border-2 border-dashed border-slate-400/50 bg-slate-800/40 text-slate-300">
                 <div class="w-12 h-12 rounded-2xl bg-slate-700/60 flex items-center justify-center mb-3">
                     <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -40,6 +58,7 @@
                 <span class="mt-1 text-xs font-medium text-amber-300">Hotline Not Configured</span>
                 <span class="mt-1 text-[11px] text-slate-400">Command Center administrator has not activated this phone number yet.</span>
             </div>
+            @endif
         @endif
     @endforeach
 </div>
