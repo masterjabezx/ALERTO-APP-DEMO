@@ -36,13 +36,13 @@ flowchart LR
     Queue --> Media
 ```
 
-The Blueprint uses a private Render service for MySQL, with its data disk mounted at `/var/lib/mysql`. App DB host, port, and password are wired from that private service. MySQL has no public service endpoint. The MySQL image uses the documented Render self-hosted MySQL pattern; see [Deploy MySQL](https://render.com/docs/deploy-mysql).
+The Blueprint uses a private Render service for MySQL, with its data disk mounted at `/var/lib/mysql`. App DB host, port, and password are wired from that private service. `DB_URL` is explicitly blank so it cannot override those private connection references. MySQL has no public service endpoint. The MySQL image uses the documented Render self-hosted MySQL pattern; see [Deploy MySQL](https://render.com/docs/deploy-mysql).
 
 Render persistent disks require paid services. The Blueprint selects a `1c-2g` web plan with a 5 GB media disk and a `0.5c-512mb` private MySQL plan with a 1 GB database disk. Review current pricing before creating the Blueprint. A disk-backed service is single-instance and does not support zero-downtime deploys; Render’s [persistent disk limitations](https://render.com/docs/disks#disk-limitations-and-considerations) apply.
 
 The queue worker is co-located intentionally. `ProcessMediaAttachmentJob` reads uploaded source files from the app’s private disk. Render disks are attached to one service instance and are not shared with a separate worker service. If this demo later needs multiple app/worker instances, move file storage to a shared object store and install/configure its Laravel adapter first.
 
-The Blueprint does not define a pre-deploy migration command. Migrations and seeders are deliberately manual.
+The Blueprint does not define a pre-deploy migration command. Migrations and seeders are deliberately manual. With the media disk attached, Render does not allow a custom shutdown delay; Supervisor gives child processes 25 seconds. A longer-running queued job can be interrupted during a deploy and retried after its 120-second database reservation expires.
 
 ## Demo safety and data protection
 
@@ -61,7 +61,7 @@ The Blueprint does not define a pre-deploy migration command. Migrations and see
 2. In Render, connect the `masterjabezx/ALERTO-APP-DEMO` GitHub repository and select its `main` branch. Review the Singapore region, paid plans, and disk sizes before applying `render.yaml`.
 3. Render generates `APP_KEY`, `MYSQL_PASSWORD`, and `MYSQL_ROOT_PASSWORD` on initial Blueprint creation. Those values remain in Render’s service environment. Do not copy them into `.env.render.example` or Git.
 4. Let MySQL finish its initial startup. Use a Render Shell on the web service to review the pending migration SQL with `php artisan migrate --pretend`. Review every migration’s `up()` method; the history contains enum modifications and data updates, so use only the new, empty demo database. Then run `php artisan migrate --force` manually. Never run `migrate:fresh`, `db:wipe`, rollback, or a production seeder.
-5. Create synthetic demonstration accounts and records only. Review `DevelopmentAccountSeeder` before deciding whether it is appropriate; no seeder is run by the Docker image or Blueprint.
+5. Run `php artisan db:seed --force` only for baseline roles, geographic reference data with contact numbers unset, and incident categories. The default seeder excludes development accounts, operational offices, hotline settings, and Facebook configuration. The account, office, system-setting, and routing seeders also refuse to run when `APP_ENV=production`. Create demo accounts manually with synthetic contact details and unique credentials; never use the development account seeder or import real incidents.
 6. Check the public `/up` endpoint, login with test accounts, queue processing, and upload persistence. Keep SMTP, SMS, Reverb/Pusher, and Meta credentials unset.
 
 Render’s [Blueprint reference](https://render.com/docs/blueprint-spec) documents the service, image, disk, generated-secret, and cross-service environment references used here. The current CLI validation command is `render blueprints validate render.yaml` (Render CLI v2.7.0+).

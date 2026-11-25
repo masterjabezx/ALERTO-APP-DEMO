@@ -22,7 +22,20 @@ class DevelopmentAccountSeeder extends Seeder
 {
     public function run(): void
     {
-        $defaultPassword = Hash::make('AlertoDev2026!');
+        if (app()->isProduction()) {
+            throw new \LogicException('Development accounts cannot be seeded in production.');
+        }
+
+        if (! $this->command) {
+            throw new \LogicException('Run this development seeder through Artisan to enter its password securely.');
+        }
+
+        $password = $this->command->secret('Password for local development accounts');
+        if (! is_string($password) || $password === '') {
+            throw new \LogicException('A development account password is required.');
+        }
+
+        $defaultPassword = Hash::make($password);
         $superAdminRole = Role::where('name', 'super_admin')->first();
         $officeRole = Role::where('name', 'office')->first();
         $personnelRole = Role::where('name', 'personnel')->first();

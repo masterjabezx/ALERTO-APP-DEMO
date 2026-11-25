@@ -13,6 +13,10 @@ class IncidentRoutingRuleSeeder extends Seeder
 {
     public function run(): void
     {
+        if (app()->isProduction()) {
+            throw new \LogicException('Operational incident routing rules cannot be seeded in production.');
+        }
+
         $pnp = Office::where('department_type', 'police')->first() ?? Office::find(1);
         $bfp = Office::where('department_type', 'fire')->first() ?? Office::find(2);
         $cdrrmo = Office::where('department_type', 'disaster')->first() ?? Office::find(3);

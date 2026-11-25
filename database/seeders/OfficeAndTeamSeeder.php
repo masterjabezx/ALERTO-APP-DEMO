@@ -16,6 +16,10 @@ class OfficeAndTeamSeeder extends Seeder
 {
     public function run(): void
     {
+        if (app()->isProduction()) {
+            throw new \LogicException('Operational offices and emergency contacts cannot be seeded in production.');
+        }
+
         $primaryBarangay = Barangay::first();
         $barangayId = $primaryBarangay ? $primaryBarangay->id : 1;
 

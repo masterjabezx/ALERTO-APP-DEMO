@@ -13,6 +13,10 @@ class SystemSettingSeeder extends Seeder
 {
     public function run(): void
     {
+        if (app()->isProduction()) {
+            throw new \LogicException('Official hotline and Facebook settings cannot be seeded in production.');
+        }
+
         // System Settings
         $settings = [
             [

@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Seed baseline roles and reference data without accounts or operational contacts.
      */
     public function run(): void
     {
@@ -17,9 +17,6 @@ class DatabaseSeeder extends Seeder
             RoleAndPermissionSeeder::class,
             GeographicSeeder::class,
             IncidentCategorySeeder::class,
-            OfficeAndTeamSeeder::class,
-            DevelopmentAccountSeeder::class,
-            SystemSettingSeeder::class,
         ]);
     }
 }

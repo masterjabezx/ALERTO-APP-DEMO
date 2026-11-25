@@ -38,12 +38,12 @@ return [
     'meta' => [
         'app_id' => env('META_APP_ID'),
         'app_secret' => env('META_APP_SECRET'),
-        'verify_token' => env('META_VERIFY_TOKEN', 'alerto_hinobaan_webhook_token'),
+        'verify_token' => env('META_VERIFY_TOKEN'),
         'page_access_token' => env('META_PAGE_ACCESS_TOKEN'),
         'graph_version' => env('META_GRAPH_API_VERSION', 'v22.0'),
         'webhook_secret' => env('META_WEBHOOK_SECRET', env('META_APP_SECRET')),
         'page_id' => env('META_PAGE_ID'),
-        'page_name' => env('META_PAGE_NAME', 'Hinoba-an LDRRMO Official'),
+        'page_name' => env('META_PAGE_NAME', 'ALERTO APP Demo Page'),
     ],
 
 ];

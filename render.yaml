@@ -10,7 +10,6 @@ services:
     region: singapore
     autoDeployTrigger: off
     healthCheckPath: /up
-    maxShutdownDelaySeconds: 120
     disk:
       name: alerto-demo-media
       mountPath: /var/www/html/storage/app
@@ -39,6 +38,8 @@ services:
         value: info
       - key: DB_CONNECTION
         value: mysql
+      - key: DB_URL
+        value: ""
       - key: DB_HOST
         fromService:
           name: alerto-app-demo-mysql
@@ -82,6 +83,20 @@ services:
         value: "null"
       - key: MAIL_MAILER
         value: log
+      - key: META_APP_ID
+        value: ""
+      - key: META_APP_SECRET
+        value: ""
+      - key: META_WEBHOOK_SECRET
+        value: ""
+      - key: META_PAGE_ACCESS_TOKEN
+        value: ""
+      - key: META_PAGE_ID
+        value: ""
+      - key: META_VERIFY_TOKEN
+        value: ""
+      - key: META_PAGE_NAME
+        value: "ALERTO APP Demo Page"
       - key: BCRYPT_ROUNDS
         value: "12"
 
